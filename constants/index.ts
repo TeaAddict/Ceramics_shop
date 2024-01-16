@@ -14,11 +14,11 @@ export const NAV_BAR_LINKS = [
     route: "/shop",
     icon: BiShoppingBag,
   },
-  {
-    label: "Test",
-    route: "/test",
-    icon: BiShoppingBag,
-  },
+  // {
+  //   label: "Test",
+  //   route: "/test",
+  //   icon: BiShoppingBag,
+  // },
 ];
 
 export const TEST_MERCHANDISE = [
