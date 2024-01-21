@@ -38,8 +38,8 @@ const MyCartTable = ({
         <tr className="grid grid-cols-[1fr_1fr_1fr_1fr_1fr_0.2fr] justify-start">
           <th className="justify-start flex">PRODUCT</th>
           <th className="justify-start flex">PICTURE</th>
-          <th className="justify-start flex">QUANTITY</th>
           <th className="justify-start flex">UNIT PRICE</th>
+          <th className="justify-start flex">QUANTITY</th>
           <th className="justify-start flex">TOTAL</th>
         </tr>
       </thead>
@@ -59,6 +59,7 @@ const MyCartTable = ({
                 sizes="30vw"
               />
             </td>
+            <td>{formatToEuroCurrency(row.unitPrice)}</td>
             <td>
               <QuantityPicker
                 decreaseFunc={() => handleDecrease(row.id)}
@@ -66,7 +67,6 @@ const MyCartTable = ({
                 currentQuantity={row.quantity}
               />
             </td>
-            <td>{formatToEuroCurrency(row.unitPrice)}</td>
             <td>{formatToEuroCurrency(row.totalPrice)}</td>
             <td>
               <Button
