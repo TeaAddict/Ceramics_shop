@@ -51,6 +51,13 @@ export function PaginationCn({
             onClick={handlePrevious}
           />
         </PaginationItem>
+
+        {currentPage > 2 && (
+          <PaginationItem>
+            <PaginationEllipsis />
+          </PaginationItem>
+        )}
+
         {currentPage > 1 && (
           <PaginationItem>
             <PaginationLink className="cursor-default">
@@ -59,7 +66,10 @@ export function PaginationCn({
           </PaginationItem>
         )}
         <PaginationItem>
-          <PaginationLink className="cursor-default" isActive>
+          <PaginationLink
+            className="hover:bg-background cursor-default"
+            isActive
+          >
             {currentPage}
           </PaginationLink>
         </PaginationItem>

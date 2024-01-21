@@ -1,9 +1,10 @@
-import { PAGE_SIZE, TEST_MERCHANDISE } from "@/constants";
+import { PAGE_SIZE, TEST_MERCHANDISE, TEST_MERCHANDISE2 } from "@/constants";
 import PaginationCn from "../shared/PaginationCn";
 import Merchandise from "../cards/Merchandise";
 import { useSearchParams } from "next/navigation";
+import MerchandiseCard from "../cards/Merchandise";
 
-const ShopItems = ({ data }: { data: typeof TEST_MERCHANDISE }) => {
+const ShopItems = ({ data }: { data: typeof TEST_MERCHANDISE2 }) => {
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get("page")) || 1;
 
@@ -16,20 +17,25 @@ const ShopItems = ({ data }: { data: typeof TEST_MERCHANDISE }) => {
 
   return (
     <div className="min-h-52 w-full space-y-10 rounded-md p-5 bg-accent">
-      <ul className="grid grid-cols-6">
+      <ul className="grid grid-cols-5 justify-center">
         {currentItems.map((item) => {
           return (
-            <Merchandise
-              key={item.title}
-              currencyType={item.currencyType}
-              description={item.description}
-              image={item.image}
-              price={item.price}
-              title={item.title}
-            />
+            <li className="m-3" key={item.title}>
+              <MerchandiseCard
+                href={`/shop/${item.id}`}
+                cardType="shop"
+                currencyType={item.currencyType}
+                description={item.description}
+                images={item.images}
+                thumbnailImage={item.thumbnailImage}
+                price={item.price}
+                title={item.title}
+              />
+            </li>
           );
         })}
       </ul>
+
       <PaginationCn currentPage={currentPage} lastPage={lastPage} />
     </div>
   );

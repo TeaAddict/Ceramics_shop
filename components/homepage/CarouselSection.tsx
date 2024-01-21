@@ -1,5 +1,5 @@
 import Merchandise from "@/components/cards/Merchandise";
-import { TEST_MERCHANDISE } from "@/constants";
+import { TEST_MERCHANDISE, TEST_MERCHANDISE2 } from "@/constants";
 import React from "react";
 import {
   Carousel,
@@ -8,6 +8,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import MerchandiseCard from "@/components/cards/Merchandise";
 
 const CarouselSection = () => {
   return (
@@ -21,18 +22,20 @@ const CarouselSection = () => {
           className="w-full max-w-[50vw]"
         >
           <CarouselContent>
-            {TEST_MERCHANDISE.map((item, index) => (
+            {TEST_MERCHANDISE2.map((item, index) => (
               <CarouselItem
                 key={index}
-                className="md:basis-[60%] lg:basis-[45%] xl:basis-[35%] 2xl:basis-[29%]"
+                className="md:basis-[60%] lg:basis-[45%] xl:basis-[35%] 2xl:basis-[33%]"
               >
                 <div className="p-1">
-                  <Merchandise
+                  <MerchandiseCard
+                    href={`/shop/${item.id}`}
+                    cardType="featured"
                     currencyType={item.currencyType}
                     title={item.title}
                     price={item.price}
                     description={item.description}
-                    image={item.image}
+                    thumbnailImage={item.thumbnailImage}
                   />
                 </div>
               </CarouselItem>

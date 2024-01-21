@@ -1,5 +1,5 @@
 export function countProperties(
-  someArr: { [key: string]: number | string }[],
+  someArr: { [key: string]: number | string | object }[],
   someProp: string
 ) {
   let propCount: { [key: string]: number } = {};
@@ -8,5 +8,12 @@ export function countProperties(
     let propKey: string = String(item[someProp]);
     propCount[propKey] = (propCount[propKey] || 0) + 1;
   });
-  return propCount;
+
+  // Transform the counts into the desired array of objects
+  const resultArray = Object.keys(propCount).map((propKey) => ({
+    label: propKey,
+    value: propCount[propKey],
+  }));
+
+  return resultArray;
 }

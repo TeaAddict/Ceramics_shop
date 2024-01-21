@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../globals.css";
 import Footer from "@/components/shared/Footer";
-import Header from "@/components/shared/Header";
+import Header from "@/components/shared/header/Header";
+import { ReduxProvider } from "@/redux/provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,9 +20,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} min-h-screen flex flex-col`}>
-        <Header />
-        <main className="overflow-hidden flex flex-col flex-1">{children}</main>
-        <Footer />
+        <ReduxProvider>
+          <Header />
+          <main className="overflow-hidden flex flex-col flex-1">
+            {children}
+          </main>
+          <Footer />
+        </ReduxProvider>
       </body>
     </html>
   );
