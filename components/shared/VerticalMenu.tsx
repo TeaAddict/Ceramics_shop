@@ -6,10 +6,12 @@ import { useState } from "react";
 const VerticalMenu = ({
   menuList,
   onClick,
+  color = "default",
 }: {
   // menuList: { [key: string]: number };
   menuList: { label: string; value: number }[];
   onClick: Function;
+  color?: "default" | "inverted";
 }) => {
   const [active, setActive] = useState(menuList[0].label);
 
@@ -24,11 +26,19 @@ const VerticalMenu = ({
         <li key={item.label}>
           <button
             onClick={() => handleClick(item.label)}
-            className={`group flex items-center justify-between w-full rounded-lg rounded-r-none px-4 py-2 hover:bg-gray-100 ${
-              active === item.label
-                ? "text-foreground bg-gray-100"
-                : "text-gray-500"
-            }`}
+            className={
+              color === "default"
+                ? `group flex items-center justify-between w-full rounded-lg rounded-r-none px-4 py-2 hover:bg-gray-100 ${
+                    active === item.label
+                      ? "text-foreground bg-gray-100"
+                      : "text-gray-500"
+                  }`
+                : `group flex items-center justify-between w-full rounded-lg rounded-r-none px-4 py-2 hover:bg-background ${
+                    active === item.label
+                      ? "text-foreground bg-background"
+                      : "text-gray-500"
+                  }`
+            }
           >
             <span className="text-sm font-medium">
               {capitalizeFirstLetter(item.label)}

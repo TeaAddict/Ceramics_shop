@@ -39,7 +39,7 @@ const Hero = () => {
               <Button
                 size="lg"
                 onClick={() => {
-                  router.push("/shop/1");
+                  router.push("/shop");
                 }}
               >
                 Get Started

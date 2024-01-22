@@ -4,7 +4,13 @@ import Merchandise from "../cards/Merchandise";
 import { useSearchParams } from "next/navigation";
 import MerchandiseCard from "../cards/Merchandise";
 
-const ShopItems = ({ data }: { data: typeof TEST_MERCHANDISE2 }) => {
+const ShopItems = ({
+  data,
+  color = "default",
+}: {
+  data: typeof TEST_MERCHANDISE2;
+  color?: "default" | "inverted";
+}) => {
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get("page")) || 1;
 
@@ -16,7 +22,11 @@ const ShopItems = ({ data }: { data: typeof TEST_MERCHANDISE2 }) => {
   const currentItems = data.slice(currentPageStartItem, currentPageEndItem);
 
   return (
-    <div className="min-h-52 w-full space-y-10 rounded-md p-5 bg-accent">
+    <div
+      className={`min-h-52 w-full space-y-10 rounded-md p-5  ${
+        color === "default" ? "bg-accent" : "bg-background"
+      }`}
+    >
       <ul className="grid grid-cols-5 justify-center">
         {currentItems.map((item) => {
           return (
@@ -26,7 +36,6 @@ const ShopItems = ({ data }: { data: typeof TEST_MERCHANDISE2 }) => {
                 cardType="shop"
                 currencyType={item.currencyType}
                 description={item.description}
-                images={item.images}
                 thumbnailImage={item.thumbnailImage}
                 price={item.price}
                 title={item.title}

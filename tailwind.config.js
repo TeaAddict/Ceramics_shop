@@ -23,6 +23,7 @@ module.exports = {
         "4xl": "2200px",
       },
       colors: {
+        admin: "hsl(var(--admin))",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

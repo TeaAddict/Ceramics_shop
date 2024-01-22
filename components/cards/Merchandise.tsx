@@ -32,7 +32,7 @@ const MerchandiseCard = ({
     return (
       <div className="border-2 bg-white rounded-md flex flex-col w-64 space-y-4">
         <div className="w-full relative h-64 border-b-2">
-          <Link className="absolute w-64 h-64" href={href}>
+          <Link className="absolute w-full h-64" href={href}>
             <Image
               src={thumbnailImage.url}
               alt={title}

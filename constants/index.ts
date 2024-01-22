@@ -14,16 +14,20 @@ export const NAV_BAR_LINKS = [
     route: "/shop",
     icon: BiShoppingBag,
   },
-  // {
-  //   label: "Test",
-  //   route: "/test",
-  //   icon: BiShoppingBag,
-  // },
+  {
+    label: "Admin",
+    route: "/admin",
+    icon: BiShoppingBag,
+  },
 ];
 
 export const ADMIN_MENU = [
   {
     label: "Dashboard",
+    value: 0,
+  },
+  {
+    label: "Shopboard",
     value: 0,
   },
   {

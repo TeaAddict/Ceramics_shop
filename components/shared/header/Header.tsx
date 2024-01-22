@@ -38,7 +38,7 @@ const Header = () => {
                 key={link.label}
                 style={{
                   pointerEvents:
-                    isActive && pathname === "/shop" ? "none" : "auto",
+                    !isActive || pathname.includes("/shop/") ? "auto" : "none",
                 }}
                 className={`text-black flex ${
                   !isActive
