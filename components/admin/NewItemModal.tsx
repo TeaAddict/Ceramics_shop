@@ -137,6 +137,7 @@ export function NewItemModal() {
     if (responseData.success) {
       reset();
       setOpen(false);
+      setCustomError("");
     }
   }
 
