@@ -74,6 +74,7 @@ export function NewItemModal() {
     data.append("stock", formData.stock.toString());
     data.append("category", formData.category);
     data.append("description", formData.description);
+    data.append("thumbnailPicture", formData.thumbnailPicture);
     Array.from(formData.pictures as FileList).map((pictures: File) =>
       data.append("pictures", pictures)
     );

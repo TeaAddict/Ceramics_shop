@@ -1,39 +1,55 @@
 import { TItemSchema, itemSchema } from "@/lib/types";
 import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
+import { ValueOf } from "next/dist/shared/lib/constants";
+import { z } from "zod";
 
 export async function POST(request: NextRequest) {
-  // const body: TItemSchema = await request.json();
-
   const data: FormData = await request.formData();
 
-  let parsed: { [key: string]: string | File[] } = { pictures: [] };
-  Array.from(data).map((item: [string, any]) => {
-    if (item[0] === "pictures") {
-      parsed.pictures = parsed.pictures.concat(item[1]);
-    } else {
-      parsed[item[0]] = item[1];
+  let parsed: TItemSchema = {
+    title: "",
+    price: 0,
+    stock: 0,
+    category: "",
+    description: "",
+    thumbnailPicture: "",
+    pictures: undefined,
+  };
+
+  // Parsing BACK from formData to object similar to before hook form submit data(TItemSchema)
+  Array.from(data).map((item) => {
+    const key = item[0] as keyof TItemSchema;
+    const value = item[1];
+    if (key === "pictures") {
+      parsed.pictures = (parsed.pictures || []).concat(item[1]);
+    } else if (typeof parsed[key] === "string") {
+      (parsed[key] as string) = value.toString();
+    } else if (typeof parsed[key] === "number") {
+      (parsed[key] as number) = Number(value);
     }
   });
 
+  // Check if server got correct data type else return errors
   const result = itemSchema.safeParse(parsed);
-
   let zodErrors = {};
   if (!result.success) {
     result.error.issues.forEach((issue) => {
+      console.log(issue);
       zodErrors = { ...zodErrors, [issue.path[0]]: issue.message };
     });
     return NextResponse.json({ success: false });
   }
 
-  // const newItem = await prisma.item.create({
+  // const newItem = prisma.item.create({
   //   data: {
-  //     title: body.title,
-  //     price: body.price,
-  //     stock: body.stock,
-  //     category: body.category,
-  //     description: body.description,
-  //     // pictures: body.pictures,
+  //     title: parsed.title,
+  //     price: parsed.price,
+  //     stock: parsed.stock,
+  //     category: parsed.category,
+  //     description: parsed.description,
+  //     thumbnailPicture: parsed.thumbnailPicture,
+  //     pictures: parsed.pictures,
   //   },
   // });
 
