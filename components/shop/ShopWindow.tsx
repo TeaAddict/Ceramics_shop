@@ -26,6 +26,13 @@ const ShopWindow = ({
 
   const categoriesCounts = countProperties(TEST_MERCHANDISE2, "category");
 
+  useEffect(() => {
+    const params = new URLSearchParams(searchParams);
+    params.set("category", categoriesCounts[0].label);
+    params.set("page", "1");
+    router.replace(`${pathname}?${params.toString()}`);
+  }, []);
+
   function handleChangeParam(key: string) {
     const params = new URLSearchParams(searchParams);
 
@@ -34,14 +41,6 @@ const ShopWindow = ({
 
     router.replace(`${pathname}?${params.toString()}`);
   }
-
-  useEffect(() => {
-    const params = new URLSearchParams(searchParams);
-    params.set("category", categoriesCounts[0].label);
-    params.set("page", "1");
-    router.replace(`${pathname}?${params.toString()}`);
-  }, []);
-
   return (
     <div>
       <div className="flex justify-end mb-5">

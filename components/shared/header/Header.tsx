@@ -15,13 +15,12 @@ const Header = () => {
   const cartItemNum = useAppSelector((state) => state.cartReducer.cartItems);
 
   return (
-    <section className="sticky top-0 z-10 py-1 px-6 lg:px-20 3xl:px-24 flex items-center justify-between bg-white/90">
+    <section className="sticky top-0 z-10 px-6 lg:px-20 3xl:px-24 flex items-center justify-between bg-white/90">
       <Image
         src={"/assets/sk_logo.png"}
         alt="logo"
         width={100}
         height={100}
-        priority={true}
         style={{ width: "auto", height: "auto" }}
       />
 

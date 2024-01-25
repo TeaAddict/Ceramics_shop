@@ -9,25 +9,131 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "../ui/textarea";
-import { FieldValues, useForm } from "react-hook-form";
-import React, { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import React, { useEffect, useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { TItemSchema, itemSchema } from "@/lib/types";
+import Image from "next/image";
+import { ScrollArea } from "../ui/scroll-area";
 
 export function NewItemModal() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [images, setImages] = useState<FileList>();
+  const [processedImages, setProcessedImages] = useState<string[]>();
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-    getValues,
-  } = useForm();
+    setError,
+    setValue,
+    watch,
+    control,
+  } = useForm<TItemSchema>({
+    resolver: zodResolver(itemSchema),
+    defaultValues: {
+      title: "qwe",
+      price: 111,
+      stock: 222,
+      category: "asd",
+      description: "zxc",
+      thumbnailPicture: "",
+    },
+  });
 
-  async function onSubmit(data: FieldValues) {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log(data);
-    reset();
-    setOpen(false);
+  const thumbnailPicture = watch("thumbnailPicture");
+
+  useEffect(() => {
+    if (!images || images.length === 0) {
+      setValue("thumbnailPicture", "");
+      return;
+    } else if (images.length === 1) {
+      setValue("thumbnailPicture", images[0].name);
+    }
+
+    let tmp: string[] = [];
+
+    Array.from(images).map((image) => tmp.push(URL.createObjectURL(image)));
+
+    setProcessedImages(tmp);
+
+    Array.from(tmp).map((imgUrl) => {
+      return () => {
+        URL.revokeObjectURL(imgUrl);
+      };
+    });
+  }, [images, setValue]);
+
+  async function onSubmit(formData: TItemSchema) {
+    console.log(formData, "ON SUBMIT");
+
+    let data = new FormData();
+    data.append("title", formData.title);
+    data.append("price", formData.price.toString());
+    data.append("stock", formData.stock.toString());
+    data.append("category", formData.category);
+    data.append("description", formData.description);
+    Array.from(formData.pictures as FileList).map((pictures: File) =>
+      data.append("pictures", pictures)
+    );
+
+    const response = await fetch("/api/addItem", {
+      method: "POST",
+      body: data,
+      // headers: {
+      //   "Content-type": "application/json",
+      // },
+    });
+    const responseData = await response.json();
+    if (!response.ok) {
+      // response status is not 2xx
+      alert("Submitting form failed!");
+      return;
+    }
+
+    if (responseData.errors) {
+      const errors = responseData.errors;
+
+      if (errors.title) {
+        setError("title", {
+          type: "server",
+          message: errors.title,
+        });
+      } else if (errors.price) {
+        setError("price", {
+          type: "server",
+          message: errors.price,
+        });
+      } else if (errors.stock) {
+        setError("stock", {
+          type: "server",
+          message: errors.stock,
+        });
+      } else if (errors.category) {
+        setError("category", {
+          type: "server",
+          message: errors.category,
+        });
+      } else if (errors.description) {
+        setError("description", {
+          type: "server",
+          message: errors.description,
+        });
+      } else if (errors.pictures) {
+        setError("pictures", {
+          type: "server",
+          message: errors.pictures,
+        });
+      } else {
+        alert("Something went wrong!");
+      }
+    }
+
+    console.log(responseData);
+
+    // reset();
+    // setOpen(false);
   }
 
   return (
@@ -48,30 +154,14 @@ export function NewItemModal() {
         <form onSubmit={handleSubmit(onSubmit)} className="grid gap-6 pt-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <p>Title</p>
-            <Input
-              {...register("title", {
-                required: "Title is required",
-              })}
-              id="title"
-              className="col-span-3"
-            />
+            <Input {...register("title")} id="title" className="col-span-3" />
             {errors.title && (
               <p className="text-destructive col-span-3">{`${errors.title.message}`}</p>
             )}
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <p>Price</p>
-            <Input
-              {...register("price", {
-                required: "Price is required",
-                pattern: {
-                  value: /^[0-9]+(\.[0-9]{1,2})?$/,
-                  message: "Enter valid price, e.g. 11.99",
-                },
-              })}
-              id="price"
-              className="col-span-3"
-            />
+            <Input {...register("price")} id="price" className="col-span-3" />
             {errors.price && (
               <p className="text-destructive col-span-3">{`${errors.price.message}`}</p>
             )}
@@ -79,9 +169,7 @@ export function NewItemModal() {
           <div className="grid grid-cols-4 items-center gap-4">
             <p>Stock</p>
             <Input
-              {...register("stock", {
-                required: "Stock is required",
-              })}
+              {...register("stock")}
               type="number"
               id="stock"
               className="col-span-3"
@@ -93,9 +181,7 @@ export function NewItemModal() {
           <div className="grid grid-cols-4 items-center gap-4">
             <p>Category</p>
             <Input
-              {...register("category", {
-                required: "Category is required",
-              })}
+              {...register("category")}
               id="category"
               className="col-span-3"
             />
@@ -111,20 +197,58 @@ export function NewItemModal() {
             )}
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
-            <p>Picture</p>
+            <p>Pictures</p>
             <Input
-              {...register("picture", {
-                required: "Picture is required",
-              })}
-              id="picture"
+              {...register("pictures")}
+              id="pictures"
               type="file"
+              accept="image/*"
+              multiple
               className="col-span-3"
+              onChange={(e) => setImages(e.target.files ?? undefined)}
             />
-            {errors.picture && (
-              <p className="text-destructive col-span-3">{`${errors.picture.message}`}</p>
+            {errors.pictures && (
+              <p className="text-destructive col-span-3">{`${errors.pictures.message}`}</p>
             )}
           </div>
 
+          {images && images.length > 0 && processedImages && (
+            <Controller
+              control={control}
+              name="thumbnailPicture"
+              render={(field) => (
+                <div className="space-y-2">
+                  <p>Thumbnail picture</p>
+                  <ScrollArea className="flex justify-center h-64">
+                    <div className="grid grid-cols-2">
+                      {processedImages.map((image, index) => (
+                        <div
+                          onClick={() =>
+                            setValue("thumbnailPicture", images[index].name)
+                          }
+                          className={`w-auto aspect-square relative hover:brightness-50 ${
+                            thumbnailPicture === images[index]?.name &&
+                            "border-4 border-primary"
+                          }`}
+                          key={image}
+                        >
+                          <Image
+                            alt=""
+                            fill
+                            src={image}
+                            style={{ objectFit: "cover" }}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </ScrollArea>
+                  {errors.thumbnailPicture && (
+                    <p className="text-destructive col-span-3">{`${errors.thumbnailPicture.message}`}</p>
+                  )}
+                </div>
+              )}
+            />
+          )}
           <DialogFooter>
             <Button type="submit">Add item</Button>
           </DialogFooter>
