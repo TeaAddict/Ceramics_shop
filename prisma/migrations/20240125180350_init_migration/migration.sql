@@ -6,9 +6,10 @@ CREATE TABLE `Item` (
     `stock` INTEGER NOT NULL,
     `category` VARCHAR(191) NOT NULL,
     `description` VARCHAR(191) NULL,
-    `thumbnailImage` VARCHAR(191) NOT NULL,
+    `thumbnailPicture` VARCHAR(191) NOT NULL,
 
     UNIQUE INDEX `Item_title_key`(`title`),
+    UNIQUE INDEX `Item_thumbnailPicture_key`(`thumbnailPicture`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -19,7 +20,6 @@ CREATE TABLE `Picture` (
     `itemId` INTEGER NOT NULL,
 
     UNIQUE INDEX `Picture_name_key`(`name`),
-    UNIQUE INDEX `Picture_itemId_key`(`itemId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 

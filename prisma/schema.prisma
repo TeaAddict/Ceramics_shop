@@ -17,7 +17,7 @@ model Item {
   stock Int
   category String
   description String?
-  thumbnailPicture String
+  thumbnailPicture String @unique
   
   pictures Picture[]
 }

@@ -1,8 +1,7 @@
 import { TItemSchema, itemSchema } from "@/lib/types";
 import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
-import { ValueOf } from "next/dist/shared/lib/constants";
-import { z } from "zod";
+import { Prisma } from "@prisma/client";
 
 export async function POST(request: NextRequest) {
   const data: FormData = await request.formData();
@@ -32,30 +31,59 @@ export async function POST(request: NextRequest) {
 
   // Check if server got correct data type else return errors
   const result = itemSchema.safeParse(parsed);
-  let zodErrors = {};
+  let backendErrors = {};
   if (!result.success) {
     result.error.issues.forEach((issue) => {
       console.log(issue);
-      zodErrors = { ...zodErrors, [issue.path[0]]: issue.message };
+      backendErrors = { ...backendErrors, [issue.path[0]]: issue.message };
     });
     return NextResponse.json({ success: false });
   }
 
-  // const newItem = prisma.item.create({
-  //   data: {
-  //     title: parsed.title,
-  //     price: parsed.price,
-  //     stock: parsed.stock,
-  //     category: parsed.category,
-  //     description: parsed.description,
-  //     thumbnailPicture: parsed.thumbnailPicture,
-  //     pictures: parsed.pictures,
-  //   },
-  // });
+  const pictureNames = parsed.pictures.reduce(
+    (acc: { name: string }[], picture: File) => {
+      acc.push({
+        name: picture.name,
+      });
+      return acc;
+    },
+    []
+  );
+
+  try {
+    const item = await prisma.item.create({
+      data: {
+        title: parsed.title,
+        price: parsed.price,
+        stock: parsed.stock,
+        category: parsed.category,
+        description: parsed.description,
+        thumbnailPicture: parsed.thumbnailPicture,
+        pictures: {
+          createMany: {
+            data: pictureNames,
+          },
+        },
+      },
+    });
+  } catch (e) {
+    let customError: { customError: string } = { customError: "" };
+
+    if (e instanceof Prisma.PrismaClientKnownRequestError) {
+      if (e.code === "P2002") {
+        customError = {
+          customError:
+            "Title or picture name is already in use, rename title or picture",
+        };
+      }
+
+      return NextResponse.json({ errors: customError });
+    }
+  }
 
   return NextResponse.json(
-    Object.keys(zodErrors).length > 0
-      ? { errors: zodErrors }
+    Object.keys(backendErrors).length > 0
+      ? { errors: backendErrors }
       : { success: true }
   );
 }

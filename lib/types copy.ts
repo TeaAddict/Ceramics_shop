@@ -16,7 +16,7 @@ export const itemSchema = z.object({
   description: z.string(),
   thumbnailPicture: z.string().min(1, "Thumbnail is required, select image"),
   pictures: z
-    .any()
+    .custom<FileList>()
     .refine((files) => Array.from(files).length > 0, "Image is required.")
     .refine(
       (files: FileList) =>

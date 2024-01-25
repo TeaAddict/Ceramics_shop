@@ -20,6 +20,7 @@ export function NewItemModal() {
   const [open, setOpen] = useState(false);
   const [images, setImages] = useState<FileList>();
   const [processedImages, setProcessedImages] = useState<string[]>();
+  const [customError, setCustomError] = useState("");
 
   const {
     register,
@@ -47,6 +48,7 @@ export function NewItemModal() {
   useEffect(() => {
     if (!images || images.length === 0) {
       setValue("thumbnailPicture", "");
+      setCustomError("");
       return;
     } else if (images.length === 1) {
       setValue("thumbnailPicture", images[0].name);
@@ -66,8 +68,6 @@ export function NewItemModal() {
   }, [images, setValue]);
 
   async function onSubmit(formData: TItemSchema) {
-    console.log(formData, "ON SUBMIT");
-
     let data = new FormData();
     data.append("title", formData.title);
     data.append("price", formData.price.toString());
@@ -126,15 +126,18 @@ export function NewItemModal() {
           type: "server",
           message: errors.pictures,
         });
+      } else if (errors.customError) {
+        setCustomError(errors.customError);
       } else {
         alert("Something went wrong!");
       }
     }
 
     console.log(responseData);
-
-    // reset();
-    // setOpen(false);
+    if (responseData.success) {
+      reset();
+      setOpen(false);
+    }
   }
 
   return (
@@ -251,6 +254,9 @@ export function NewItemModal() {
             />
           )}
           <DialogFooter>
+            {customError && (
+              <p className="text-destructive col-span-3">{customError}</p>
+            )}
             <Button type="submit">Add item</Button>
           </DialogFooter>
         </form>
