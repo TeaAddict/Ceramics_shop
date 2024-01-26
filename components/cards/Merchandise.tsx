@@ -26,6 +26,7 @@ const MerchandiseCard = ({
   description,
   price,
 }: Props) => {
+  if (!thumbnailPicture) return; // REMOVE LATER
   if (cardType === "shop")
     return (
       <div className="border-2 bg-white rounded-md flex flex-col w-64 space-y-4">

@@ -3,6 +3,9 @@ import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 import { Prisma } from "@prisma/client";
 
+import { join } from "path";
+import { writeFile } from "fs/promises";
+
 export async function POST(request: NextRequest) {
   const data: FormData = await request.formData();
 
@@ -81,6 +84,21 @@ export async function POST(request: NextRequest) {
     }
   }
 
+  // UPLOAD PICTURES TO LOCAL STORAGE
+  const files: File[] | null = data.getAll("pictures") as unknown as File[];
+
+  if (!files) return NextResponse.json({ success: false });
+
+  files.map(async (file) => {
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+
+    const projPath = process.cwd();
+
+    const path = join(projPath, "/public/uploads", file.name);
+    await writeFile(path, buffer);
+  });
+
   return NextResponse.json(
     Object.keys(backendErrors).length > 0
       ? { errors: backendErrors }
@@ -88,7 +106,7 @@ export async function POST(request: NextRequest) {
   );
 }
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   const items = await prisma.item.findMany({ include: { pictures: true } });
 
   return NextResponse.json(items);

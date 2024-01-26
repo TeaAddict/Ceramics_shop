@@ -134,11 +134,11 @@ export function NewItemModal() {
     }
 
     console.log(responseData);
-    if (responseData.success) {
-      reset();
-      setOpen(false);
-      setCustomError("");
-    }
+    // if (responseData.success) {
+    //   reset();
+    //   setOpen(false);
+    //   setCustomError("");
+    // }
   }
 
   return (
