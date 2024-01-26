@@ -87,3 +87,9 @@ export async function POST(request: NextRequest) {
       : { success: true }
   );
 }
+
+export async function GET(request: NextRequest) {
+  const items = await prisma.item.findMany({ include: { pictures: true } });
+
+  return NextResponse.json(items);
+}

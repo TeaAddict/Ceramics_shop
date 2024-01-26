@@ -79,7 +79,7 @@ export function NewItemModal() {
       data.append("pictures", pictures)
     );
 
-    const response = await fetch("/api/addItem", {
+    const response = await fetch("/api/item", {
       method: "POST",
       body: data,
       // headers: {

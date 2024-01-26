@@ -7,8 +7,8 @@ import Link from "next/link";
 interface Props {
   cardType: "featured" | "shop";
   href: string;
-  thumbnailImage: {
-    url: string;
+  thumbnailPicture: {
+    name: string;
     width: number;
     height: number;
   };
@@ -16,17 +16,15 @@ interface Props {
   title: string;
   description: string;
   price: number;
-  currencyType: string;
 }
 
 const MerchandiseCard = ({
   href,
   cardType,
-  thumbnailImage,
+  thumbnailPicture,
   title,
   description,
   price,
-  currencyType,
 }: Props) => {
   if (cardType === "shop")
     return (
@@ -34,7 +32,7 @@ const MerchandiseCard = ({
         <div className="w-full relative h-64 border-b-2">
           <Link className="absolute w-full h-64" href={href}>
             <Image
-              src={thumbnailImage.url}
+              src={`uploads/${thumbnailPicture.name}`}
               alt={title}
               fill
               sizes="30vw"
@@ -54,7 +52,7 @@ const MerchandiseCard = ({
             </Button>
             <div className="flex gap-1">
               <p>{price}</p>
-              <p>{currencyType}</p>
+              <p>eur</p>
             </div>
           </div>
         </div>
@@ -66,7 +64,7 @@ const MerchandiseCard = ({
       <div className="border-2 bg-white rounded-md flex flex-col w-56 h-[30rem] space-y-4">
         <div className="w-full h-[30rem] relative border-b-2">
           <Image
-            src={thumbnailImage.url}
+            src={`uploads/${thumbnailPicture.name}`}
             alt={title}
             fill
             sizes="30vw"
@@ -85,7 +83,7 @@ const MerchandiseCard = ({
             </Button>
             <div className="flex gap-1">
               <p>{price}</p>
-              <p>{currencyType}</p>
+              <p>eur</p>
             </div>
           </div>
         </div>
