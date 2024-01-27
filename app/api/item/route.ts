@@ -1,58 +1,68 @@
-import { TItemSchema, itemSchema } from "@/lib/types";
+import {
+  ParsedItem,
+  TItemSchema,
+  itemSchema,
+  productSchema,
+} from "@/lib/types";
 import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 import { Prisma } from "@prisma/client";
 
 import { join } from "path";
 import { writeFile } from "fs/promises";
+import { parsePictureData } from "./myFunctions";
 
 export async function POST(request: NextRequest) {
   const data: FormData = await request.formData();
 
-  let parsed: TItemSchema = {
+  // Parse formData to usable data
+  let parsed: ParsedItem = {
     title: "",
     price: 0,
     stock: 0,
     category: "",
     description: "",
     thumbnailPicture: "",
-    pictures: undefined,
+    //@ts-ignore
+    pictures: [],
   };
-
-  // Parsing BACK from formData to object similar to before hook form submit data(TItemSchema)
+  let addedList: string[] = [];
   Array.from(data).map((item) => {
-    const key = item[0] as keyof TItemSchema;
-    const value = item[1];
-    if (key === "pictures") {
-      parsed.pictures = (parsed.pictures || []).concat(item[1]);
+    const key = item[0] as keyof ParsedItem;
+    const val = item[1];
+    if (key.startsWith("picture") && !addedList.includes(key)) {
+      addedList.push(key);
+      const res = data.getAll(key);
+      const picObj: {
+        dimensions: { width: number; height: number };
+        picture: File;
+      } = {
+        dimensions: JSON.parse(res[0] as string),
+        picture: res[1] as File,
+      };
+      parsed.pictures.push(picObj);
     } else if (typeof parsed[key] === "string") {
-      (parsed[key] as string) = value.toString();
+      (parsed[key] as string) = val.toString();
     } else if (typeof parsed[key] === "number") {
-      (parsed[key] as number) = Number(value);
+      (parsed[key] as number) = Number(val);
     }
   });
 
   // Check if server got correct data type else return errors
-  const result = itemSchema.safeParse(parsed);
+  const schemaResult = productSchema.safeParse(parsed);
   let backendErrors = {};
-  if (!result.success) {
-    result.error.issues.forEach((issue) => {
+  if (!schemaResult.success) {
+    schemaResult.error.issues.forEach((issue) => {
       console.log(issue);
       backendErrors = { ...backendErrors, [issue.path[0]]: issue.message };
     });
     return NextResponse.json({ success: false });
   }
 
-  const pictureNames = parsed.pictures.reduce(
-    (acc: { name: string }[], picture: File) => {
-      acc.push({
-        name: picture.name,
-      });
-      return acc;
-    },
-    []
-  );
+  // parse picture data for DB
+  const pictureData = parsePictureData(parsed);
 
+  // ADD item/pictures to database
   try {
     const item = await prisma.item.create({
       data: {
@@ -64,14 +74,13 @@ export async function POST(request: NextRequest) {
         thumbnailPicture: parsed.thumbnailPicture,
         pictures: {
           createMany: {
-            data: pictureNames,
+            data: pictureData,
           },
         },
       },
     });
   } catch (e) {
     let customError: { customError: string } = { customError: "" };
-
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       if (e.code === "P2002") {
         customError = {
@@ -79,26 +88,18 @@ export async function POST(request: NextRequest) {
             "Title or picture name is already in use, rename title or picture",
         };
       }
-
       return NextResponse.json({ errors: customError });
     }
   }
 
-  // UPLOAD PICTURES TO LOCAL STORAGE
-  const files: File[] | null = data.getAll("pictures") as unknown as File[];
-
-  if (!files) return NextResponse.json({ success: false });
-
-  files.map(async (file) => {
-    const bytes = await file.arrayBuffer();
+  // TODO: currently for old input data, UPLOAD PICTURES TO LOCAL STORAGE
+  parsed.pictures.map(async (element) => {
+    const bytes = await element.picture.arrayBuffer();
     const buffer = Buffer.from(bytes);
-
     const projPath = process.cwd();
-
-    const path = join(projPath, "/public/uploads", file.name);
+    const path = join(projPath, "/public/uploads", element.picture.name);
     await writeFile(path, buffer);
   });
-
   return NextResponse.json(
     Object.keys(backendErrors).length > 0
       ? { errors: backendErrors }

@@ -15,6 +15,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { TItemSchema, itemSchema } from "@/lib/types";
 import Image from "next/image";
 import { ScrollArea } from "../ui/scroll-area";
+import { getImagesWithDimensions } from "@/utils/helper";
 
 export function NewItemModal() {
   const [open, setOpen] = useState(false);
@@ -54,12 +55,10 @@ export function NewItemModal() {
       setValue("thumbnailPicture", images[0].name);
     }
 
+    // Show images in form
     let tmp: string[] = [];
-
     Array.from(images).map((image) => tmp.push(URL.createObjectURL(image)));
-
     setProcessedImages(tmp);
-
     Array.from(tmp).map((imgUrl) => {
       return () => {
         URL.revokeObjectURL(imgUrl);
@@ -68,6 +67,8 @@ export function NewItemModal() {
   }, [images, setValue]);
 
   async function onSubmit(formData: TItemSchema) {
+    const pictureArray = await getImagesWithDimensions(formData.pictures);
+
     let data = new FormData();
     data.append("title", formData.title);
     data.append("price", formData.price.toString());
@@ -75,16 +76,14 @@ export function NewItemModal() {
     data.append("category", formData.category);
     data.append("description", formData.description);
     data.append("thumbnailPicture", formData.thumbnailPicture);
-    Array.from(formData.pictures as FileList).map((pictures: File) =>
-      data.append("pictures", pictures)
-    );
+    pictureArray.map((picture, index) => {
+      data.append(`picture${index}`, picture.picture);
+      data.append(`picture${index}`, JSON.stringify(picture.dimensions));
+    });
 
     const response = await fetch("/api/item", {
       method: "POST",
       body: data,
-      // headers: {
-      //   "Content-type": "application/json",
-      // },
     });
     const responseData = await response.json();
     if (!response.ok) {

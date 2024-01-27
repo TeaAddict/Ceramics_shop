@@ -25,7 +25,29 @@ model Item {
 model Picture{
   id Int @id @default(autoincrement())
   name String @unique
+  width Int
+  height Int
   
   itemId Int
   item Item @relation(fields: [itemId], references: [id])
 }
+
+// model Item {
+//   id Int @id @default(autoincrement())
+//   title String @unique
+//   price Float
+//   stock Int
+//   category String
+//   description String?
+//   thumbnailPicture String @unique
+  
+//   pictures Picture[]
+// }
+
+// model Picture{
+//   id Int @id @default(autoincrement())
+//   name String @unique
+  
+//   itemId Int
+//   item Item @relation(fields: [itemId], references: [id])
+// }

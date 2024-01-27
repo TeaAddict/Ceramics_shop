@@ -31,4 +31,33 @@ export const itemSchema = z.object({
     }, ".jpg, .jpeg, .png and .webp files are accepted."),
 });
 
+export const pictureSchema = z.object({
+  dimensions: z.object({
+    width: z.number().min(1),
+    height: z.number().min(1),
+  }),
+  picture: z.instanceof(File),
+});
+
+export const productSchema = z.object({
+  title: z.string().min(1),
+  price: z.number().min(1),
+  stock: z.number().min(1),
+  category: z.string().min(1),
+  description: z.string(),
+  thumbnailPicture: z.string().min(1),
+  pictures: z.array(pictureSchema).min(1),
+});
+
+export type ParsedItem = {
+  title: string;
+  price: number;
+  stock: number;
+  category: string;
+  description: string;
+  thumbnailPicture: string;
+  pictures: [{ dimensions: { width: number; height: number }; picture: File }];
+};
+
 export type TItemSchema = z.infer<typeof itemSchema>;
+export type TProductSchema = z.infer<typeof productSchema>;

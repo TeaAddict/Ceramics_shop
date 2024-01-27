@@ -17,6 +17,8 @@ CREATE TABLE `Item` (
 CREATE TABLE `Picture` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(191) NOT NULL,
+    `width` INTEGER NOT NULL,
+    `height` INTEGER NOT NULL,
     `itemId` INTEGER NOT NULL,
 
     UNIQUE INDEX `Picture_name_key`(`name`),
