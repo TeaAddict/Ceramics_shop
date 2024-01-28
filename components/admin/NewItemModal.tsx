@@ -132,7 +132,6 @@ export function NewItemModal() {
       }
     }
 
-    console.log(responseData);
     // if (responseData.success) {
     //   reset();
     //   setOpen(false);

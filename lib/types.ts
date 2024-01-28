@@ -40,6 +40,7 @@ export const pictureSchema = z.object({
 });
 
 export const productSchema = z.object({
+  id: z.number().optional(),
   title: z.string().min(1),
   price: z.number().min(1),
   stock: z.number().min(1),

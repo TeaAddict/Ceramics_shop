@@ -1,13 +1,7 @@
-import {
-  ParsedItem,
-  TItemSchema,
-  itemSchema,
-  productSchema,
-} from "@/lib/types";
+import { ParsedItem, productSchema } from "@/lib/types";
 import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 import { Prisma } from "@prisma/client";
-
 import { join } from "path";
 import { writeFile } from "fs/promises";
 import { parsePictureData } from "./myFunctions";
@@ -61,7 +55,6 @@ export async function POST(request: NextRequest) {
 
   // parse picture data for DB
   const pictureData = parsePictureData(parsed);
-
   // ADD item/pictures to database
   try {
     const item = await prisma.item.create({
@@ -71,7 +64,6 @@ export async function POST(request: NextRequest) {
         stock: parsed.stock,
         category: parsed.category,
         description: parsed.description,
-        thumbnailPicture: parsed.thumbnailPicture,
         pictures: {
           createMany: {
             data: pictureData,
@@ -79,13 +71,20 @@ export async function POST(request: NextRequest) {
         },
       },
     });
+    const thumbnailInDb = await prisma.picture.findFirst({
+      where: { name: parsed.thumbnailPicture },
+    });
+    await prisma.item.update({
+      where: { id: item.id },
+      data: { thumbnailId: thumbnailInDb!.id },
+    });
   } catch (e) {
     let customError: { customError: string } = { customError: "" };
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       if (e.code === "P2002") {
         customError = {
           customError:
-            "Title or picture name is already in use, rename title or picture",
+            "Picture name is already in use, rename or change picture",
         };
       }
       return NextResponse.json({ errors: customError });

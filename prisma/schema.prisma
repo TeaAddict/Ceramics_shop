@@ -11,43 +11,24 @@ datasource db {
 }
 
 model Item {
-  id Int @id @default(autoincrement())
-  title String @unique
-  price Float
-  stock Int
-  category String
+  id          String    @id @default(uuid())
+  title       String    @unique
+  price       Float
+  stock       Int
+  category    String
   description String?
-  thumbnailPicture String @unique
-  
-  pictures Picture[]
+  pictures    Picture[] @relation("itemPictures")
+  thumbnailId String?  @unique
+  thumbnail   Picture?  @relation("thumbnail", fields: [thumbnailId], references: [id])
 }
 
-model Picture{
-  id Int @id @default(autoincrement())
-  name String @unique
-  width Int
-  height Int
-  
-  itemId Int
-  item Item @relation(fields: [itemId], references: [id])
+model Picture {
+  id          String @id @default(uuid())
+  name        String @unique
+  width       Int
+  height      Int
+  itemId      String
+  item        Item   @relation("itemPictures", fields: [itemId], references: [id])
+  itemThumbnailId Item? @relation("thumbnail")
+ 
 }
-
-// model Item {
-//   id Int @id @default(autoincrement())
-//   title String @unique
-//   price Float
-//   stock Int
-//   category String
-//   description String?
-//   thumbnailPicture String @unique
-  
-//   pictures Picture[]
-// }
-
-// model Picture{
-//   id Int @id @default(autoincrement())
-//   name String @unique
-  
-//   itemId Int
-//   item Item @relation(fields: [itemId], references: [id])
-// }
