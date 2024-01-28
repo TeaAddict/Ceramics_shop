@@ -44,6 +44,7 @@ export async function POST(request: NextRequest) {
 
   // Check if server got correct data type else return errors
   const schemaResult = productSchemaServer.safeParse(parsed);
+
   let backendErrors = {};
   if (!schemaResult.success) {
     schemaResult.error.issues.forEach((issue) => {
@@ -91,7 +92,7 @@ export async function POST(request: NextRequest) {
     }
   }
 
-  // TODO: currently for old input data, UPLOAD PICTURES TO LOCAL STORAGE
+  // Saves images in servers local storage hopefully lol
   parsed.pictures.map(async (element) => {
     const bytes = await element.picture.arrayBuffer();
     const buffer = Buffer.from(bytes);
