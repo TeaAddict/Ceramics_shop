@@ -31,7 +31,7 @@ export const itemSchema = z.object({
     }, ".jpg, .jpeg, .png and .webp files are accepted."),
 });
 
-export const pictureSchema = z.object({
+export const pictureSchemaServer = z.object({
   dimensions: z.object({
     width: z.number().min(1),
     height: z.number().min(1),
@@ -39,7 +39,7 @@ export const pictureSchema = z.object({
   picture: z.instanceof(File),
 });
 
-export const productSchema = z.object({
+export const productSchemaServer = z.object({
   id: z.number().optional(),
   title: z.string().min(1),
   price: z.number().min(1),
@@ -47,8 +47,28 @@ export const productSchema = z.object({
   category: z.string().min(1),
   description: z.string(),
   thumbnailPicture: z.string().min(1),
-  pictures: z.array(pictureSchema).min(1),
+  pictures: z.array(pictureSchemaServer).min(1),
 });
+
+export type pictureSchema = {
+  id: string;
+  itemId: string;
+  name: string;
+  width: number;
+  height: number;
+};
+
+export type productSchema = {
+  id: string;
+  title: string;
+  price: number;
+  stock: number;
+  category: string;
+  description?: string;
+  thumbnail: pictureSchema;
+  thumbnailId: string;
+  pictures: pictureSchema[];
+};
 
 export type ParsedItem = {
   title: string;
@@ -61,4 +81,4 @@ export type ParsedItem = {
 };
 
 export type TItemSchema = z.infer<typeof itemSchema>;
-export type TProductSchema = z.infer<typeof productSchema>;
+export type TProductSchemaServer = z.infer<typeof productSchemaServer>;

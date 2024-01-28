@@ -14,7 +14,7 @@ interface Props {
   };
 
   title: string;
-  description: string;
+  description?: string;
   price: number;
 }
 
@@ -65,7 +65,7 @@ const MerchandiseCard = ({
       <div className="border-2 bg-white rounded-md flex flex-col w-56 h-[30rem] space-y-4">
         <div className="w-full h-[30rem] relative border-b-2">
           <Image
-            src={`uploads/${thumbnailPicture.name}`}
+            src={`/uploads/${thumbnailPicture.name}`}
             alt={title}
             fill
             sizes="30vw"

@@ -9,10 +9,10 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import MerchandiseCard from "@/components/cards/Merchandise";
-import { TProductSchema } from "@/lib/types";
+import { productSchema } from "@/lib/types";
 
 const CarouselSection = () => {
-  const [items, setItems] = useState<TProductSchema[]>();
+  const [items, setItems] = useState<productSchema[]>();
 
   useEffect(() => {
     fetch("/api/item", {
@@ -52,9 +52,9 @@ const CarouselSection = () => {
                       price={item.price}
                       description={item.description}
                       thumbnailPicture={{
-                        name: item.thumbnailPicture,
-                        width: 1,
-                        height: 1,
+                        name: item.thumbnail.name,
+                        width: item.thumbnail.width,
+                        height: item.thumbnail.height,
                       }}
                     />
                   </div>

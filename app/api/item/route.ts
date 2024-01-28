@@ -1,4 +1,4 @@
-import { ParsedItem, productSchema } from "@/lib/types";
+import { ParsedItem, productSchemaServer } from "@/lib/types";
 import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 import { Prisma } from "@prisma/client";
@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
   });
 
   // Check if server got correct data type else return errors
-  const schemaResult = productSchema.safeParse(parsed);
+  const schemaResult = productSchemaServer.safeParse(parsed);
   let backendErrors = {};
   if (!schemaResult.success) {
     schemaResult.error.issues.forEach((issue) => {
@@ -107,7 +107,9 @@ export async function POST(request: NextRequest) {
 }
 
 export async function GET() {
-  const items = await prisma.item.findMany({ include: { pictures: true } });
+  const items = await prisma.item.findMany({
+    include: { pictures: true, thumbnail: true },
+  });
 
   return NextResponse.json(items);
 }
