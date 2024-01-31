@@ -1,13 +1,16 @@
 "use client";
 
-import { SelectCn } from "@/components/homepage/SelectCn";
+import { SelectCn } from "@/components/cart/SelectCn";
 import VerticalMenu from "@/components/shared/VerticalMenu";
 import ShopItems from "@/components/shop/ShopItems";
-import { TEST_MERCHANDISE, TEST_MERCHANDISE2 } from "@/constants";
 import { countProperties } from "@/utils/countProperties";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
 import { NewItemModal } from "../admin/NewItemModal";
+import { useItems } from "@/utils/useItems";
+
+type TSort = {
+  price: number;
+};
 
 const ShopWindow = ({
   color = "default",
@@ -19,28 +22,36 @@ const ShopWindow = ({
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
-  const filter = searchParams.get("category");
-  const filteredData = TEST_MERCHANDISE2.filter(
-    (item) => item.category === filter
-  );
 
-  const categoriesCounts = countProperties(TEST_MERCHANDISE2, "category");
+  const { data } = useItems();
+  if (!data || data?.length === 0) return null;
 
-  useEffect(() => {
-    const params = new URLSearchParams(searchParams);
-    params.set("category", categoriesCounts[0].label);
-    params.set("page", "1");
-    router.replace(`${pathname}?${params.toString()}`);
-  }, []);
+  const categoriesCounts = countProperties(data, "category");
+
+  // const page = searchParams.get("page") ?? "1";
+  const category = searchParams.get("category") ?? categoriesCounts[0].label;
+  const sortBy =
+    (searchParams.get("sortBy") as "price-asc" | "price-desc") ?? "price-asc";
+
+  const sort = sortBy.split("-");
+
+  const filtered = data.filter((item) => item.category === category);
+
+  const sorted = filtered.sort((a, b) => {
+    if (sort[1] === "asc") {
+      return a[sort[0] as keyof TSort] - b[sort[0] as keyof TSort];
+    } else {
+      return b[sort[0] as keyof TSort] - a[sort[0] as keyof TSort];
+    }
+  });
 
   function handleChangeParam(key: string) {
     const params = new URLSearchParams(searchParams);
-
     params.set("category", key);
     params.set("page", "1");
-
     router.replace(`${pathname}?${params.toString()}`);
   }
+
   return (
     <div>
       <div className="flex justify-end mb-5">
@@ -61,7 +72,7 @@ const ShopWindow = ({
             </div>
           )}
         </div>
-        <ShopItems data={filteredData} color={color} />
+        <ShopItems data={sorted} color={color} />
       </div>
     </div>
   );

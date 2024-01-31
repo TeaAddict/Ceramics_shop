@@ -107,7 +107,8 @@ export async function POST(request: NextRequest) {
   );
 }
 
-export async function GET() {
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
   const items = await prisma.item.findMany({
     include: { pictures: true, thumbnail: true },
   });

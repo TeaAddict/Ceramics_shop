@@ -1,4 +1,5 @@
 import ShopWindow from "@/components/shop/ShopWindow";
+import { useItems } from "@/utils/useItems";
 
 const ShopPage = ({
   color = "default",

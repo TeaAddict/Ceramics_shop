@@ -35,11 +35,11 @@ export function NewItemModal() {
   } = useForm<TItemSchema>({
     resolver: zodResolver(itemSchema),
     defaultValues: {
-      title: "qwe",
-      price: 111,
-      stock: 222,
-      category: "asd",
-      description: "zxc",
+      title: "",
+      price: undefined,
+      stock: undefined,
+      category: "",
+      description: "",
       thumbnailPicture: "",
     },
   });

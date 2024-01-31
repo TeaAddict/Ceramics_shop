@@ -20,7 +20,6 @@ const CarouselSection = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setItems(data);
       });
   }, []);

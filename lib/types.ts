@@ -58,7 +58,7 @@ export type pictureSchema = {
   height: number;
 };
 
-export type productSchema = {
+export type ProductSchema = {
   id: string;
   title: string;
   price: number;

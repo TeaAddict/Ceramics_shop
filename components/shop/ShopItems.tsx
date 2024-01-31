@@ -3,12 +3,13 @@ import PaginationCn from "../shared/PaginationCn";
 import Merchandise from "../cards/Merchandise";
 import { useSearchParams } from "next/navigation";
 import MerchandiseCard from "../cards/Merchandise";
+import { ProductSchema } from "@/lib/types";
 
 const ShopItems = ({
   data,
   color = "default",
 }: {
-  data: typeof TEST_MERCHANDISE2;
+  data: ProductSchema[];
   color?: "default" | "inverted";
 }) => {
   const searchParams = useSearchParams();
@@ -34,9 +35,8 @@ const ShopItems = ({
               <MerchandiseCard
                 href={`/shop/${item.id}`}
                 cardType="shop"
-                currencyType={item.currencyType}
                 description={item.description}
-                thumbnailImage={item.thumbnailImage}
+                thumbnail={item.thumbnail}
                 price={item.price}
                 title={item.title}
               />
