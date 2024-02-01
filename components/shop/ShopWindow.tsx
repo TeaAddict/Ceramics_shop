@@ -54,12 +54,12 @@ const ShopWindow = ({
 
   return (
     <div>
-      <div className="flex justify-end mb-5">
+      <div className="sm:flex justify-end mb-5 hidden">
         <SelectCn color={color} />
       </div>
 
       <div className="flex flex-col sm:flex-row">
-        <div className="space-y-10 w-52">
+        <div className="space-y-10 w-52 hidden sm:block">
           <h3 className="font-semibold">Categories</h3>
           <VerticalMenu
             menuList={categoriesCounts}
