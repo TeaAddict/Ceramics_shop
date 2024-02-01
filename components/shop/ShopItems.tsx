@@ -24,7 +24,7 @@ const ShopItems = ({
 
   return (
     <div
-      className={`w-full sm:space-y-10 rounded-md sm:p-5 ${
+      className={`w-full sm:space-y-10 rounded-md pb-3 sm:p-5 ${
         color === "default" ? "bg-accent" : "bg-background"
       }`}
     >
