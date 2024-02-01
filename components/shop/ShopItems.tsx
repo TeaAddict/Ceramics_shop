@@ -24,11 +24,11 @@ const ShopItems = ({
 
   return (
     <div
-      className={`min-h-52 w-full space-y-10 rounded-md p-5  ${
+      className={`w-full sm:space-y-10 rounded-md sm:p-5 ${
         color === "default" ? "bg-accent" : "bg-background"
       }`}
     >
-      <ul className="grid grid-cols-5 justify-center">
+      <ul className="sm:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 flex flex-col">
         {currentItems.map((item) => {
           return (
             <li className="m-3" key={item.title}>

@@ -7,7 +7,7 @@ const ShopPage = ({
   color?: "default" | "inverted";
 }) => {
   return (
-    <section className="flex flex-col padding-container">
+    <section className="padding-container">
       <ShopWindow color={color} />
     </section>
   );

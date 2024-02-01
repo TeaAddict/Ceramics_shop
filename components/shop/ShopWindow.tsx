@@ -58,7 +58,7 @@ const ShopWindow = ({
         <SelectCn color={color} />
       </div>
 
-      <div className="flex">
+      <div className="flex flex-col sm:flex-row">
         <div className="space-y-10 w-52">
           <h3 className="font-semibold">Categories</h3>
           <VerticalMenu
