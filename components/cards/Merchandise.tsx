@@ -63,9 +63,9 @@ const MerchandiseCard = ({
 
   if (cardType === "featured")
     return (
-      <div className="border-2 bg-white rounded-md flex flex-col sm:w-56 sm:h-[30rem] space-y-4">
-        <div className="w-full sm:h-[30rem] h-48 relative border-b-2">
-          <Link className="absolute w-full h-48" href={href}>
+      <div className="border-2 bg-white rounded-md grid grid-rows-[1.2fr_0.8fr] sm:grid-rows-2 h-[20rem] xs:h-[25rem] sm:h-[30rem] space-y-4">
+        <div className="w-full relative border-b-2">
+          <Link className="absolute w-full h-full" href={href}>
             <Image
               src={`/uploads/${thumbnail.name}`}
               alt={title}
@@ -92,7 +92,8 @@ const MerchandiseCard = ({
             </div>
           </div>
         </div>
-        <div className="flex flex-col !m-2 gap-2 sm:hidden">
+        <div className="flex flex-col !m-2 gap-2 justify-center sm:hidden">
+          <h3 className="font-bold text-xl">{capitalizeFirstLetter(title)}</h3>
           <div className="flex gap-1">
             <p>{formatToEuroCurrency(price)}</p>
           </div>
