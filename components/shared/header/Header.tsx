@@ -24,7 +24,7 @@ const Header = () => {
         style={{ width: "auto", height: "auto" }}
       />
 
-      <div className="hidden lg:flex">
+      <div className="hidden md:flex">
         <ul className="flex gap-7 text-2xl">
           {NAV_BAR_LINKS.map((link) => {
             const isActive =
@@ -53,11 +53,11 @@ const Header = () => {
         </ul>
       </div>
 
-      <div className="hidden lg:flex lg:items-center">
+      <div className="hidden md:flex md:items-center">
         <CartBadge value={cartItemNum.length} />
         <Button>Login</Button>
       </div>
-      <div className="lg:hidden">
+      <div className="md:hidden">
         <HamburgerSvg size={10} />
       </div>
     </section>
