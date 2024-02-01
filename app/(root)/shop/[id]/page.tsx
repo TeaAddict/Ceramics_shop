@@ -9,8 +9,12 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useItem } from "@/utils/useItem";
 import { formatToEuroCurrency } from "@/utils/helper";
+import { IoMdArrowBack } from "react-icons/io";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const ItemPage = ({ params }: { params: { id: string } }) => {
+  const router = useRouter();
   const cart = useAppSelector((state) => state.cartReducer.cartItems);
   const cartItem = cart.find((item) => item.id === params.id);
   const { data: item } = useItem(params.id);
@@ -46,40 +50,55 @@ const ItemPage = ({ params }: { params: { id: string } }) => {
   }
 
   return (
-    <section className="padding-container flex justify-center gap-48">
+    <section className="padding-container flex flex-col gap-5">
       <div>
-        <PhotoSwipeCarousel
-          galleryID="testing"
-          images={item.pictures.map((image) => {
-            return {
-              largeURL: image.name,
-              thumbnailURL: image.name,
-              width: image.width,
-              height: image.height,
-            };
-          })}
-        />
-        <p>===IDK SOME FANCY IMAGE SLIDE===</p>
+        <Button
+          onClick={() => {
+            router.back();
+          }}
+          variant={"secondary"}
+          className="gap-1"
+        >
+          <IoMdArrowBack />
+          Go back
+        </Button>
       </div>
-      <div className="flex flex-col gap-10">
-        <h3 className="font-semibold text-3xl">{item.title}</h3>
 
-        {!cartItem ? (
-          <div className="space-y-5">
-            <div className="space-y-1">
-              <QuantityPicker2
-                currentQuantity={quantity}
-                decreaseFunc={handleDecrease}
-                increaseFunc={handleIncrease}
-              />
-              <p>in stock: {item.stock}</p>
+      <div className="flex gap-40 justify-center">
+        <div>
+          <PhotoSwipeCarousel
+            galleryID="testing"
+            images={item.pictures.map((image) => {
+              return {
+                largeURL: image.name,
+                thumbnailURL: image.name,
+                width: image.width,
+                height: image.height,
+              };
+            })}
+          />
+          <p>===IDK SOME FANCY IMAGE SLIDE===</p>
+        </div>
+        <div className="flex flex-col gap-10">
+          <h3 className="font-semibold text-3xl">{item.title}</h3>
+
+          {!cartItem ? (
+            <div className="space-y-5">
+              <div className="space-y-1">
+                <QuantityPicker2
+                  currentQuantity={quantity}
+                  decreaseFunc={handleDecrease}
+                  increaseFunc={handleIncrease}
+                />
+                <p>in stock: {item.stock}</p>
+              </div>
+              <Button onClick={handleAddToCart}>ADD TO CART</Button>
             </div>
-            <Button onClick={handleAddToCart}>ADD TO CART</Button>
-          </div>
-        ) : (
-          <Button onClick={handleRemoveFromCart}>Remove from cart</Button>
-        )}
-        <p className="max-w-72">{item.description}</p>
+          ) : (
+            <Button onClick={handleRemoveFromCart}>Remove from cart</Button>
+          )}
+          <p className="max-w-72">{item.description}</p>
+        </div>
       </div>
     </section>
   );
