@@ -29,12 +29,9 @@ const MerchandiseCard = ({
 }: Props) => {
   if (cardType === "shop")
     return (
-      // <div className="border-2 bg-white rounded-md flex flex-col  space-y-4">
       <div className="border-2 bg-white rounded-md flex flex-col  space-y-4">
-        {/* <div className="w-full relative h-64 border-b-2"> */}
-        <div className="w-full relative h-60 border-b-2">
-          {/* <Link className="absolute w-full h-64" href={href}> */}
-          <Link className="absolute w-full h-60" href={href}>
+        <div className="w-full relative h-60 xs:h-96 md:h-60 border-b-2">
+          <Link className="absolute w-full h-60 xs:h-96 md:h-60" href={href}>
             <Image
               src={`/uploads/${thumbnail.name}`}
               alt={title}
