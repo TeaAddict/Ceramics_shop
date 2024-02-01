@@ -8,11 +8,9 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import HamburgerSvg from "./HamburgerSvg";
 import CartBadge from "./CartBadge";
-import { useAppSelector } from "@/redux/store";
 
 const Header = () => {
   const pathname = usePathname();
-  const cartItemNum = useAppSelector((state) => state.cartReducer.cartItems);
 
   return (
     <section className="sticky top-0 z-10 px-6 lg:px-20 3xl:px-24 flex items-center justify-between bg-white/90">
@@ -53,8 +51,8 @@ const Header = () => {
         </ul>
       </div>
 
-      <div className="hidden md:flex md:items-center">
-        <CartBadge value={cartItemNum.length} />
+      <div className="hidden md:flex md:items-center gap-4">
+        <CartBadge />
         <Button>Login</Button>
       </div>
       <div className="md:hidden">

@@ -2,7 +2,7 @@ import React from "react";
 import { FaFilter } from "react-icons/fa";
 
 import { FaSortAlphaUpAlt } from "react-icons/fa";
-import MobileCartBadge from "./MobileCartBadge";
+import CartBadge from "../shared/header/CartBadge";
 
 const MobileFooter = () => {
   return (
@@ -19,7 +19,7 @@ const MobileFooter = () => {
       </div>
       <div className="flex justify-center">
         <div className="bg-primary/75 rounded-full w-10 h-10 justify-center flex items-center">
-          <MobileCartBadge value={0} />
+          <CartBadge size="small" />
         </div>
       </div>
     </div>
