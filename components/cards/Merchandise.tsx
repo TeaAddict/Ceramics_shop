@@ -63,18 +63,20 @@ const MerchandiseCard = ({
 
   if (cardType === "featured")
     return (
-      <div className="border-2 bg-white rounded-md flex flex-col w-56 h-[30rem] space-y-4">
-        <div className="w-full h-[30rem] relative border-b-2">
-          <Image
-            src={`/uploads/${thumbnail.name}`}
-            alt={title}
-            fill
-            sizes="30vw"
-            className="object-cover rounded-t-md"
-          />
+      <div className="border-2 bg-white rounded-md flex flex-col sm:w-56 sm:h-[30rem] space-y-4">
+        <div className="w-full sm:h-[30rem] h-48 relative border-b-2">
+          <Link className="absolute w-full h-48" href={href}>
+            <Image
+              src={`/uploads/${thumbnail.name}`}
+              alt={title}
+              fill
+              sizes="30vw"
+              className="object-cover rounded-t-md"
+            />
+          </Link>
         </div>
 
-        <div className="flex flex-col h-full !mt-0 gap-3 p-2">
+        <div className="sm:flex flex-col h-full !mt-0 gap-3 p-2 hidden">
           <div className="flex flex-col h-48">
             <h3 className="font-bold text-xl">
               {capitalizeFirstLetter(title)}
@@ -89,6 +91,14 @@ const MerchandiseCard = ({
               <p>{formatToEuroCurrency(price)}</p>
             </div>
           </div>
+        </div>
+        <div className="flex flex-col !m-2 gap-2 sm:hidden">
+          <div className="flex gap-1">
+            <p>{formatToEuroCurrency(price)}</p>
+          </div>
+          <Button variant="default">
+            <Link href={href}>Details</Link>
+          </Button>
         </div>
       </div>
     );
