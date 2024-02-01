@@ -1,26 +1,23 @@
 "use client";
 
-import QuantityPicker from "@/components/shared/QuantityPicker2";
 import QuantityPicker2 from "@/components/shared/QuantityPicker";
 import PhotoSwipeCarousel from "@/components/shop/PhotoSwipeCarousel";
 import { Button } from "@/components/ui/button";
-import { TEST_MERCHANDISE, TEST_MERCHANDISE2 } from "@/constants";
 import { addItem, removeItem } from "@/redux/features/cartSlice";
 import { AppDispatch, useAppSelector } from "@/redux/store";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useItem } from "@/utils/useItem";
+import { formatToEuroCurrency } from "@/utils/helper";
 
 const ItemPage = ({ params }: { params: { id: string } }) => {
   const cart = useAppSelector((state) => state.cartReducer.cartItems);
-
   const cartItem = cart.find((item) => item.id === params.id);
-
-  const item = TEST_MERCHANDISE2.find((item) => item.id === params.id);
-
+  const { data: item } = useItem(params.id);
   const dispatch = useDispatch<AppDispatch>();
   const [quantity, setQuantity] = useState(1);
 
-  if (!item) return <p>Error</p>;
+  if (!item || Object.keys(item).length === 0) return;
 
   function handleAddToCart() {
     if (item)
@@ -31,7 +28,7 @@ const ItemPage = ({ params }: { params: { id: string } }) => {
           stock: item.stock,
           unitPrice: item.price,
           totalPrice: quantity * item.price,
-          picture: item.thumbnailImage.url,
+          picture: item.thumbnail.name,
           title: item.title,
         })
       );
@@ -53,10 +50,10 @@ const ItemPage = ({ params }: { params: { id: string } }) => {
       <div>
         <PhotoSwipeCarousel
           galleryID="testing"
-          images={item.images.map((image) => {
+          images={item.pictures.map((image) => {
             return {
-              largeURL: image.url,
-              thumbnailURL: image.url,
+              largeURL: image.name,
+              thumbnailURL: image.name,
               width: image.width,
               height: image.height,
             };

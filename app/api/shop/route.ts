@@ -107,11 +107,9 @@ export async function POST(request: NextRequest) {
   );
 }
 
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
+export async function GET() {
   const items = await prisma.item.findMany({
     include: { pictures: true, thumbnail: true },
   });
-
   return NextResponse.json(items);
 }

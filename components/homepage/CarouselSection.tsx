@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   Carousel,
   CarouselContent,
@@ -9,22 +9,13 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import MerchandiseCard from "@/components/cards/Merchandise";
-import { productSchema } from "@/lib/types";
+import { useItems } from "@/utils/useItems";
 
 const CarouselSection = () => {
-  const [items, setItems] = useState<productSchema[]>();
+  const { data } = useItems();
 
-  useEffect(() => {
-    fetch("/api/item", {
-      method: "GET",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setItems(data);
-      });
-  }, []);
-
-  if (items?.length === 0) return;
+  if (!data || data?.length === 0) return;
+  const items = data.slice(0, 6);
 
   return (
     <article className="justify-center flex my-10">
@@ -41,7 +32,7 @@ const CarouselSection = () => {
               items.map((item, index) => (
                 <CarouselItem
                   key={index}
-                  className="md:basis-[60%] lg:basis-[45%] xl:basis-[35%] 2xl:basis-[33%]"
+                  className="md:basis-[60%] lg:basis-[45%] xl:basis-[35%] 2xl:basis-[25%]"
                 >
                   <div className="p-1">
                     <MerchandiseCard
@@ -50,7 +41,7 @@ const CarouselSection = () => {
                       title={item.title}
                       price={item.price}
                       description={item.description}
-                      thumbnailPicture={{
+                      thumbnail={{
                         name: item.thumbnail.name,
                         width: item.thumbnail.width,
                         height: item.thumbnail.height,

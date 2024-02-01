@@ -3,6 +3,7 @@ import React from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { capitalizeFirstLetter, formatToEuroCurrency } from "@/utils/helper";
 
 interface Props {
   cardType: "featured" | "shop";
@@ -26,7 +27,6 @@ const MerchandiseCard = ({
   description,
   price,
 }: Props) => {
-  if (!thumbnail) return; // REMOVE LATER
   if (cardType === "shop")
     return (
       <div className="border-2 bg-white rounded-md flex flex-col w-64 space-y-4">
@@ -44,7 +44,9 @@ const MerchandiseCard = ({
 
         <div className="flex flex-col !mt-0 gap-3 px-4 py-3 justify-between">
           <div className="flex flex-col">
-            <h3 className="font-bold text-xl">{title}</h3>
+            <h3 className="font-bold text-xl">
+              {capitalizeFirstLetter(title)}
+            </h3>
           </div>
 
           <div className="flex justify-between items-center">
@@ -52,8 +54,7 @@ const MerchandiseCard = ({
               <Link href={href}>Details</Link>
             </Button>
             <div className="flex gap-1">
-              <p>{price}</p>
-              <p>eur</p>
+              <p>{formatToEuroCurrency(price)}</p>
             </div>
           </div>
         </div>
@@ -75,7 +76,9 @@ const MerchandiseCard = ({
 
         <div className="flex flex-col h-full !mt-0 gap-3 p-2">
           <div className="flex flex-col h-48">
-            <h3 className="font-bold text-xl">{title}</h3>
+            <h3 className="font-bold text-xl">
+              {capitalizeFirstLetter(title)}
+            </h3>
             <ScrollArea className="pr-2">{description}</ScrollArea>
           </div>
           <div className="flex justify-around items-center">
@@ -83,8 +86,7 @@ const MerchandiseCard = ({
               <Link href={href}>Details</Link>
             </Button>
             <div className="flex gap-1">
-              <p>{price}</p>
-              <p>eur</p>
+              <p>{formatToEuroCurrency(price)}</p>
             </div>
           </div>
         </div>

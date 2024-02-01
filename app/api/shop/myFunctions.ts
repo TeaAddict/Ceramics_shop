@@ -1,6 +1,6 @@
-import { TProductSchema } from "@/lib/types";
+import { ParsedItem } from "@/lib/types";
 
-export function parsePictureData(data: TProductSchema) {
+export function parsePictureData(data: ParsedItem) {
   // Parse picture data into nice object array
   const pictureDataArr = data.pictures.reduce(
     (

@@ -59,7 +59,7 @@ const PhotoSwipeCarousel: React.FC<SimpleGalleryProps> = (props) => {
               <div className="p-1">
                 <Card>
                   <a
-                    href={image.largeURL}
+                    href={`/uploads/${image.largeURL}`}
                     data-pswp-width={image.width}
                     data-pswp-height={image.height}
                     key={props.galleryID + "-" + index}
@@ -69,7 +69,7 @@ const PhotoSwipeCarousel: React.FC<SimpleGalleryProps> = (props) => {
                     <CardContent className="flex aspect-square items-center justify-center p-6 relative">
                       <Image
                         className="object-cover rounded-md"
-                        src={image.thumbnailURL}
+                        src={`/uploads/${image.thumbnailURL}`}
                         alt=""
                         fill
                         sizes="30vw"

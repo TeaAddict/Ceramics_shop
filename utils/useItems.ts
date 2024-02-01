@@ -5,7 +5,7 @@ export function useItems() {
   const res = useQuery<ProductSchema[]>({
     queryKey: ["items"],
     queryFn: () =>
-      fetch("/api/item", { method: "GET" }).then((res) => res.json()),
+      fetch("/api/shop", { method: "GET" }).then((res) => res.json()),
   });
 
   return res;
