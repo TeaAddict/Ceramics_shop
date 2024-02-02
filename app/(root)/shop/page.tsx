@@ -1,6 +1,6 @@
 import MobileFooter from "@/components/shop/MobileFooter";
 import ShopWindow from "@/components/shop/ShopWindow";
-import { useItems } from "@/utils/useItems";
+import { useItems } from "@/hooks/useItems";
 
 const ShopPage = ({
   color = "default",

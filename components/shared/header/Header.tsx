@@ -51,12 +51,16 @@ const Header = () => {
         </ul>
       </div>
 
-      <div className="hidden md:flex md:items-center gap-4">
-        <CartBadge />
-        <Button>Login</Button>
-      </div>
-      <div className="md:hidden">
-        <HamburgerSvg size={10} />
+      <div className="sm:flex items-center gap-4">
+        <div className="hidden sm:block">
+          <CartBadge />
+        </div>
+        <div className="hidden md:block">
+          <Button>Login</Button>
+        </div>
+        <div className="md:hidden">
+          <HamburgerSvg size={10} />
+        </div>
       </div>
     </section>
   );

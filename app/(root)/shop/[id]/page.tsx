@@ -7,10 +7,8 @@ import { addItem, removeItem } from "@/redux/features/cartSlice";
 import { AppDispatch, useAppSelector } from "@/redux/store";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useItem } from "@/utils/useItem";
-import { formatToEuroCurrency } from "@/utils/helper";
+import { useItem } from "@/hooks/useItem";
 import { IoMdArrowBack } from "react-icons/io";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 const ItemPage = ({ params }: { params: { id: string } }) => {

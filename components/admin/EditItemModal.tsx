@@ -2,29 +2,28 @@ import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useState } from "react";
-import AddItemForm from "./AddItemForm";
+import EditItemForm from "./EditItemForm";
 
-export function NewItemModal() {
+export function EditItemModal() {
   const [open, setOpen] = useState(false);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button onClick={() => setOpen(true)} variant="default">
-          Add item
+          Edit
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Add new item</DialogTitle>
+          <DialogTitle>Edit item</DialogTitle>
         </DialogHeader>
-        <AddItemForm setOpen={setOpen} />
+        <EditItemForm setOpen={setOpen} />
       </DialogContent>
     </Dialog>
   );

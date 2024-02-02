@@ -9,7 +9,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import MerchandiseCard from "@/components/cards/Merchandise";
-import { useItems } from "@/utils/useItems";
+import { useItems } from "@/hooks/useItems";
 
 const CarouselSection = () => {
   const { data } = useItems();

@@ -1,9 +1,11 @@
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { capitalizeFirstLetter, formatToEuroCurrency } from "@/utils/helper";
+import { usePathname } from "next/navigation";
+import { EditItemModal } from "../admin/EditItemModal";
 
 interface Props {
   cardType: "featured" | "shop";
@@ -27,6 +29,9 @@ const MerchandiseCard = ({
   description,
   price,
 }: Props) => {
+  const pathname = usePathname();
+  const isAdmin = pathname.includes("admin");
+
   if (cardType === "shop")
     return (
       <div className="border-2 bg-white rounded-md flex flex-col  space-y-4">
@@ -50,9 +55,15 @@ const MerchandiseCard = ({
           </div>
 
           <div className="flex justify-between items-center">
-            <Button variant="default">
-              <Link href={href}>Details</Link>
-            </Button>
+            {isAdmin ? (
+              <div className="justify-center flex">
+                <EditItemModal />
+              </div>
+            ) : (
+              <Button variant="default">
+                <Link href={href}>Details</Link>
+              </Button>
+            )}
             <div className="flex gap-1">
               <p>{formatToEuroCurrency(price)}</p>
             </div>
@@ -97,9 +108,6 @@ const MerchandiseCard = ({
           <div className="flex gap-1">
             <p>{formatToEuroCurrency(price)}</p>
           </div>
-          <Button variant="default">
-            <Link href={href}>Details</Link>
-          </Button>
         </div>
       </div>
     );

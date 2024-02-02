@@ -6,7 +6,7 @@ import ShopItems from "@/components/shop/ShopItems";
 import { countProperties } from "@/utils/countProperties";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { NewItemModal } from "../admin/NewItemModal";
-import { useItems } from "@/utils/useItems";
+import { useItems } from "@/hooks/useItems";
 
 type TSort = {
   price: number;
