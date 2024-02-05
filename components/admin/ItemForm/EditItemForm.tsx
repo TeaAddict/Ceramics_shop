@@ -1,26 +1,22 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "../ui/textarea";
-import { Controller, useForm } from "react-hook-form";
-import React, { useEffect, useState } from "react";
+import { Textarea } from "../../ui/textarea";
+import { useForm } from "react-hook-form";
+import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { TItemSchema, itemSchema } from "@/lib/types";
-import Image from "next/image";
-import { ScrollArea } from "../ui/scroll-area";
+import { ProductSchema, TItemInDb, TItemSchema, itemSchema } from "@/lib/types";
 import { getImagesWithDimensions } from "@/utils/helper";
-import { useConvertToDisplayable } from "@/hooks/admin/useConvertToDisplayable";
+import ImageDrop from "./imageFeature/ImageDrop";
+import { getPictures } from "./imageFeature/getPictures";
 
 const EditItemForm = ({
+  item,
   setOpen,
 }: {
+  item: TItemInDb;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const [images, setImages] = useState<FileList | undefined>();
-  const [processedImages, setProcessedImages] = useState<string[]>();
   const [customError, setCustomError] = useState("");
-
-  const displayableImages = useConvertToDisplayable(images);
-
   const {
     register,
     handleSubmit,
@@ -30,33 +26,29 @@ const EditItemForm = ({
     setValue,
     watch,
     control,
+    getValues,
+    trigger,
   } = useForm<TItemSchema>({
     resolver: zodResolver(itemSchema),
-    defaultValues: {
-      title: "",
-      price: undefined,
-      stock: undefined,
-      category: "",
-      description: "",
-      thumbnailPicture: "",
+    defaultValues: async () => {
+      const res = await getPictures(item);
+      return {
+        title: item.title,
+        price: item.price,
+        stock: item.stock,
+        category: item.category,
+        description: item.description,
+        thumbnailPicture: item.thumbnail.name,
+        pictures: res,
+      };
     },
   });
 
   const thumbnailPicture = watch("thumbnailPicture");
 
-  useEffect(() => {
-    if (!images || images.length === 0) {
-      setValue("thumbnailPicture", "");
-      setCustomError("");
-      return;
-    } else if (images.length === 1) {
-      setValue("thumbnailPicture", images[0].name);
-    }
-
-    setProcessedImages(displayableImages);
-  }, [images, setValue, displayableImages]);
-
   async function onSubmit(formData: TItemSchema) {
+    console.log(formData);
+
     const pictureArray = await getImagesWithDimensions(formData.pictures);
 
     let data = new FormData();
@@ -71,7 +63,7 @@ const EditItemForm = ({
       data.append(`picture${index}`, JSON.stringify(picture.dimensions));
     });
 
-    const response = await fetch("/api/item", {
+    const response = await fetch(`/api/admin/item/${item.id}`, {
       method: "POST",
       body: data,
     });
@@ -128,6 +120,7 @@ const EditItemForm = ({
       setCustomError("");
     }
   }
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="grid gap-6 pt-4">
       <div className="grid grid-cols-4 items-center gap-4">
@@ -170,64 +163,21 @@ const EditItemForm = ({
           <p className="text-destructive col-span-3">{`${errors.description.message}`}</p>
         )}
       </div>
-      <div className="grid grid-cols-4 items-center gap-4">
-        <p>Pictures</p>
-        <Input
-          {...register("pictures")}
-          id="pictures"
-          type="file"
-          accept="image/*"
-          multiple
-          className="col-span-3"
-          onChange={(e) => setImages(e.target.files ?? undefined)}
-        />
-        {errors.pictures && (
-          <p className="text-destructive col-span-3">{`${errors.pictures.message}`}</p>
-        )}
-      </div>
-
-      {images && images.length > 0 && processedImages && (
-        <Controller
-          control={control}
-          name="thumbnailPicture"
-          render={(field) => (
-            <div className="space-y-2">
-              <p>Thumbnail picture</p>
-              <ScrollArea className="flex justify-center h-64">
-                <div className="grid grid-cols-2">
-                  {processedImages.map((image, index) => (
-                    <div
-                      onClick={() =>
-                        setValue("thumbnailPicture", images[index].name)
-                      }
-                      className={`w-auto aspect-square relative hover:brightness-50 ${
-                        thumbnailPicture === images[index]?.name &&
-                        "border-4 border-primary"
-                      }`}
-                      key={image}
-                    >
-                      <Image
-                        alt=""
-                        fill
-                        src={image}
-                        style={{ objectFit: "cover" }}
-                      />
-                    </div>
-                  ))}
-                </div>
-              </ScrollArea>
-              {errors.thumbnailPicture && (
-                <p className="text-destructive col-span-3">{`${errors.thumbnailPicture.message}`}</p>
-              )}
-            </div>
-          )}
-        />
-      )}
+      <ImageDrop
+        item={item}
+        errors={errors}
+        register={register}
+        control={control}
+        setValue={setValue}
+        thumbnailPicture={thumbnailPicture}
+        trigger={trigger}
+        getValues={getValues}
+      />
       {customError && (
         <p className="text-destructive col-span-3">{customError}</p>
       )}
       <Button disabled={isSubmitting} type="submit">
-        Add item
+        Edit item
       </Button>
     </form>
   );

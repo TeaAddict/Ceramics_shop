@@ -6,9 +6,11 @@ import Link from "next/link";
 import { capitalizeFirstLetter, formatToEuroCurrency } from "@/utils/helper";
 import { usePathname } from "next/navigation";
 import { EditItemModal } from "../admin/EditItemModal";
+import { ProductSchema } from "@/lib/types";
 
 interface Props {
   cardType: "featured" | "shop";
+  item: ProductSchema;
   href: string;
   thumbnail: {
     name: string;
@@ -22,6 +24,7 @@ interface Props {
 }
 
 const MerchandiseCard = ({
+  item,
   href,
   cardType,
   thumbnail,
@@ -57,7 +60,7 @@ const MerchandiseCard = ({
           <div className="flex justify-between items-center">
             {isAdmin ? (
               <div className="justify-center flex">
-                <EditItemModal />
+                <EditItemModal item={item} />
               </div>
             ) : (
               <Button variant="default">

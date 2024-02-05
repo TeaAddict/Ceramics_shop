@@ -1,14 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "../ui/textarea";
+import { Textarea } from "../../ui/textarea";
 import { Controller, useForm } from "react-hook-form";
 import React, { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TItemSchema, itemSchema } from "@/lib/types";
 import Image from "next/image";
-import { ScrollArea } from "../ui/scroll-area";
+import { ScrollArea } from "../../ui/scroll-area";
 import { getImagesWithDimensions } from "@/utils/helper";
-import { useConvertToDisplayable } from "@/hooks/admin/useConvertToDisplayable";
+import { useImgBlobUrl } from "@/hooks/admin/useImgBlobUrl";
 
 const AddItemForm = ({
   setOpen,
@@ -19,7 +19,7 @@ const AddItemForm = ({
   const [processedImages, setProcessedImages] = useState<string[]>();
   const [customError, setCustomError] = useState("");
 
-  const displayableImages = useConvertToDisplayable(images);
+  const displayableImages = useImgBlobUrl(images);
 
   const {
     register,
@@ -128,6 +128,7 @@ const AddItemForm = ({
       setCustomError("");
     }
   }
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="grid gap-6 pt-4">
       <div className="grid grid-cols-4 items-center gap-4">
@@ -195,25 +196,28 @@ const AddItemForm = ({
               <p>Thumbnail picture</p>
               <ScrollArea className="flex justify-center h-64">
                 <div className="grid grid-cols-2">
-                  {processedImages.map((image, index) => (
-                    <div
-                      onClick={() =>
-                        setValue("thumbnailPicture", images[index].name)
-                      }
-                      className={`w-auto aspect-square relative hover:brightness-50 ${
-                        thumbnailPicture === images[index]?.name &&
-                        "border-4 border-primary"
-                      }`}
-                      key={image}
-                    >
-                      <Image
-                        alt=""
-                        fill
-                        src={image}
-                        style={{ objectFit: "cover" }}
-                      />
-                    </div>
-                  ))}
+                  {processedImages.map((image, index) => {
+                    console.log(image);
+                    return (
+                      <div
+                        onClick={() =>
+                          setValue("thumbnailPicture", images[index].name)
+                        }
+                        className={`w-auto aspect-square relative hover:brightness-50 ${
+                          thumbnailPicture === images[index]?.name &&
+                          "border-4 border-primary"
+                        }`}
+                        key={image}
+                      >
+                        <Image
+                          alt=""
+                          fill
+                          src={image}
+                          style={{ objectFit: "cover" }}
+                        />
+                      </div>
+                    );
+                  })}
                 </div>
               </ScrollArea>
               {errors.thumbnailPicture && (

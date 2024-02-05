@@ -28,12 +28,12 @@ const VerticalMenu = ({
             onClick={() => handleClick(item.label)}
             className={
               color === "default"
-                ? `group flex items-center justify-between w-full rounded-lg rounded-r-none px-4 py-2 hover:bg-gray-100 ${
+                ? `group flex items-center justify-between w-full rounded-lg sm:rounded-r-none px-4 py-2 hover:bg-gray-100 ${
                     active === item.label
                       ? "text-foreground bg-gray-100"
                       : "text-gray-500"
                   }`
-                : `group flex items-center justify-between w-full rounded-lg rounded-r-none px-4 py-2 hover:bg-background ${
+                : `group flex items-center justify-between w-full rounded-lg sm:rounded-r-none px-4 py-2 hover:bg-background ${
                     active === item.label
                       ? "text-foreground bg-background"
                       : "text-gray-500"

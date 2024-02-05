@@ -12,23 +12,35 @@ const AdminPage = () => {
   function handleChangeTab(label: string) {
     setTab(label);
   }
-
   return (
-    <section className="padding-container flex flex-col gap-5">
-      {/* <p>{tab}</p> */}
+    <>
+      <section className="hidden padding-container sm:flex flex-col gap-5">
+        <div className="flex">
+          <div className="pt-20">
+            <VerticalMenu menuList={ADMIN_MENU} onClick={handleChangeTab} />
+          </div>
 
-      <div className="flex">
-        <div className="pt-20">
-          <VerticalMenu menuList={ADMIN_MENU} onClick={handleChangeTab} />
+          <div className=" w-full rounded-md bg-accent">
+            {tab === "Dashboard" && <Dashboard />}
+            {tab === "Account" && <Account />}
+            {tab === "Shopboard" && <Shopboard />}
+          </div>
         </div>
+      </section>
+      <section className="sm:hidden padding-container">
+        <div className="flex flex-col gap-5">
+          <div className="pt-20">
+            <VerticalMenu menuList={ADMIN_MENU} onClick={handleChangeTab} />
+          </div>
 
-        <div className=" w-full rounded-md bg-accent">
-          {tab === "Dashboard" && <Dashboard />}
-          {tab === "Account" && <Account />}
-          {tab === "Shopboard" && <Shopboard />}
+          <div className=" w-full rounded-md bg-accent">
+            {tab === "Dashboard" && <Dashboard />}
+            {tab === "Account" && <Account />}
+            {tab === "Shopboard" && <Shopboard />}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 

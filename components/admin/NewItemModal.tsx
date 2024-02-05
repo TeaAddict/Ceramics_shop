@@ -8,7 +8,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useState } from "react";
-import AddItemForm from "./AddItemForm";
+import AddItemForm from "./ItemForm/AddItemForm";
 
 export function NewItemModal() {
   const [open, setOpen] = useState(false);

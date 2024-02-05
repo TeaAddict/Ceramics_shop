@@ -40,6 +40,7 @@ const ShopItems = ({
           return (
             <li className="m-3" key={item.title}>
               <MerchandiseCard
+                item={item}
                 href={`/shop/${item.id}`}
                 cardType="shop"
                 description={item.description}

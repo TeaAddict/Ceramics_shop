@@ -1,6 +1,7 @@
 import { BiShoppingBag } from "react-icons/bi";
 import { BiHomeAlt2 } from "react-icons/bi";
 import { MdLockOutline } from "react-icons/md";
+import { FaRegUser } from "react-icons/fa";
 
 export const PAGE_SIZE = 10;
 
@@ -18,7 +19,7 @@ export const NAV_BAR_LINKS = [
   {
     label: "Admin",
     route: "/admin",
-    icon: MdLockOutline,
+    icon: FaRegUser,
   },
 ];
 

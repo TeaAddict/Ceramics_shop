@@ -80,5 +80,29 @@ export type ParsedItem = {
   pictures: [{ dimensions: { width: number; height: number }; picture: File }];
 };
 
+type TThumbnail = {
+  width: number;
+  height: number;
+  name: string;
+};
+
+type TPictures = {
+  width: number;
+  height: number;
+  name: string;
+};
+
+export type TItemInDb = {
+  id: string;
+  title: string;
+  price: number;
+  stock: number;
+  category: string;
+  description: string;
+  thumbnail: TThumbnail;
+  thumbnailId: string;
+  pictures: TPictures[];
+};
+
 export type TItemSchema = z.infer<typeof itemSchema>;
 export type TProductSchemaServer = z.infer<typeof productSchemaServer>;
