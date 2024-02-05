@@ -45,7 +45,11 @@ const ImageDrop = (props: Props) => {
   const { data: imgFiles } = useImageFiles(item);
 
   function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setImages(e.target.files);
+    if (e.target.files?.length) {
+      setImages(e.target.files);
+    } else {
+      setImages(null);
+    }
 
     if (e.target.files?.length === 1)
       setValue("thumbnailPicture", e.target.files[0].name);
@@ -58,7 +62,7 @@ const ImageDrop = (props: Props) => {
   }, [imgFiles]);
 
   return (
-    <div className="grid grid-cols-4 items-center gap-4 border-2 p-1">
+    <div className="grid grid-cols-4 items-center gap-4">
       <p>Pictures</p>
       <Input
         {...register("pictures")}
