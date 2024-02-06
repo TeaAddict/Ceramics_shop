@@ -53,11 +53,8 @@ const ImageDrop = (props: Props) => {
       setImages(null);
     }
 
-    if (e.target.files?.length === 1) {
+    if (e.target.files?.length === 1)
       setValue("thumbnailPicture", e.target.files[0].name);
-    } else {
-      setValue("thumbnailPicture", "");
-    }
   }
 
   useEffect(() => {
@@ -83,18 +80,24 @@ const ImageDrop = (props: Props) => {
       )}
 
       {imgBlobUrl && images && (
-        <div className="space-y-2 col-span-4">
-          <p>Thumbnail with pictures</p>
-          <SelectedImages
-            images={images}
-            imgBlobUrl={imgBlobUrl}
-            setValue={setValue}
-            thumbnailPicture={watchValues[0]}
-          />
-          {errors.thumbnailPicture && (
-            <p className="text-destructive col-span-4">{`${errors.thumbnailPicture.message}`}</p>
+        <Controller
+          control={control}
+          name="thumbnailPicture"
+          render={(field) => (
+            <div className="space-y-2 col-span-4">
+              <p>Thumbnail with pictures</p>
+              <SelectedImages
+                images={images}
+                imgBlobUrl={imgBlobUrl}
+                setValue={setValue}
+                thumbnailPicture={watchValues[0]}
+              />
+              {errors.thumbnailPicture && (
+                <p className="text-destructive col-span-4">{`${errors.thumbnailPicture.message}`}</p>
+              )}
+            </div>
           )}
-        </div>
+        />
       )}
     </div>
   );
