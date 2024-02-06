@@ -44,18 +44,18 @@ export async function POST(request: NextRequest) {
 
   // Check if server got correct data type else return errors
   const schemaResult = productSchemaServer.safeParse(parsed);
-
   let backendErrors = {};
   if (!schemaResult.success) {
     schemaResult.error.issues.forEach((issue) => {
       console.log(issue);
       backendErrors = { ...backendErrors, [issue.path[0]]: issue.message };
     });
-    return NextResponse.json({ success: false });
+    return NextResponse.json({ success: false }); // TODO return errors not just false
   }
 
   // parse picture data for DB
   const pictureData = parsePictureData(parsed);
+
   // ADD item/pictures to database
   try {
     const item = await prisma.item.create({

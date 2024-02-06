@@ -24,7 +24,13 @@ const ShopWindow = ({
   const pathname = usePathname();
 
   const { data } = useItems();
-  if (!data || data?.length === 0) return null;
+  if (!data || (data?.length === 0 && !isAdmin)) return <p>Out of stock</p>;
+  else if (!data || (data?.length === 0 && isAdmin))
+    return (
+      <div className="justify-center flex">
+        <NewItemModal />
+      </div>
+    );
 
   const categoriesCounts = countProperties(data, "category");
 

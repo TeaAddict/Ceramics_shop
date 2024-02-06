@@ -26,9 +26,7 @@ const ItemForm = ({
     setError,
     setValue,
     watch,
-    control,
     getValues,
-    trigger,
   } = useForm<TItemSchema>({
     resolver: zodResolver(itemSchema),
     defaultValues: async () => {
