@@ -1,44 +1,25 @@
 import { Input } from "@/components/ui/input";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   UseFormRegister,
   FieldValues,
   FieldErrors,
-  Controller,
-  Control,
   UseFormSetValue,
-  UseFormTrigger,
-  UseFormGetValues,
 } from "react-hook-form";
 import SelectedImages from "../SelectedImages";
-import { ProductSchema, TItemSchema } from "@/lib/types";
+import { TItemSchema } from "@/lib/types";
 import { useImgBlobUrl } from "@/hooks/admin/useImgBlobUrl";
-import { useImageFiles } from "../useImageFiles";
 
 type Props = {
   initPictures: FileList | File[] | undefined | null;
-  item?: ProductSchema;
   register: UseFormRegister<TItemSchema>;
   errors: FieldErrors<FieldValues>;
-  control: Control<TItemSchema>;
   setValue: UseFormSetValue<TItemSchema>;
   watchValues: [string, any];
-  trigger: UseFormTrigger<TItemSchema>;
-  getValues: UseFormGetValues<TItemSchema>;
 };
 
 const ImageDrop = (props: Props) => {
-  const {
-    item,
-    initPictures,
-    register,
-    errors,
-    control,
-    setValue,
-    watchValues,
-    trigger,
-    getValues,
-  } = props;
+  const { initPictures, register, errors, setValue, watchValues } = props;
 
   const [images, setImages] = useState<FileList | File[] | undefined | null>(
     initPictures
@@ -61,7 +42,6 @@ const ImageDrop = (props: Props) => {
   }
 
   useEffect(() => {
-    // console.log(watchValues[1]);
     setImages(watchValues[1]);
   }, [watchValues]);
 
@@ -81,7 +61,6 @@ const ImageDrop = (props: Props) => {
       {errors.pictures && (
         <p className="text-destructive col-span-4">{`${errors.pictures.message}`}</p>
       )}
-
       {imgBlobUrl && images && (
         <div className="space-y-2 col-span-4">
           <p>Thumbnail with pictures</p>

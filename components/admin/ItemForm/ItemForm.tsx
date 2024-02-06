@@ -57,9 +57,7 @@ const ItemForm = ({
     },
   });
   const watchValues = watch(["thumbnailPicture", "pictures"]);
-
   const initPictures = getValues("pictures");
-  // console.log(initPictures);
 
   async function onSubmit(formData: TItemSchema) {
     console.log(formData);
@@ -194,28 +192,20 @@ const ItemForm = ({
       {isEdit && initPictures && (
         <ImageDrop
           initPictures={initPictures}
-          item={item}
           errors={errors}
           register={register}
-          control={control}
           setValue={setValue}
           watchValues={watchValues}
-          trigger={trigger}
-          getValues={getValues}
         />
       )}
 
       {!isEdit && (
         <ImageDrop
           initPictures={initPictures}
-          item={item}
           errors={errors}
           register={register}
-          control={control}
           setValue={setValue}
           watchValues={watchValues}
-          trigger={trigger}
-          getValues={getValues}
         />
       )}
       {customError && (
