@@ -8,3 +8,10 @@ export async function POST(request: NextRequest) {
 
   return NextResponse.json({ success: true });
 }
+
+export async function PUT(request: NextRequest) {
+  const result = await request.formData();
+  console.log(result);
+
+  return NextResponse.json({ success: true });
+}

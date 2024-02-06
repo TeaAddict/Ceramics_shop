@@ -13,7 +13,7 @@ export const itemSchema = z.object({
   price: z.coerce.number().min(1, "Price is required"),
   stock: z.coerce.number().min(1, "minimum 1 in stock"),
   category: z.string().min(1, "Category is required").max(255),
-  description: z.string(),
+  description: z.string().optional(),
   thumbnailPicture: z.string().min(1, "Thumbnail is required, select image"),
   pictures: z
     .any()
@@ -66,8 +66,13 @@ export type ProductSchema = {
   category: string;
   description?: string;
   thumbnail: pictureSchema;
-  thumbnailId: string;
+  // thumbnailId: string;
   pictures: pictureSchema[];
+};
+
+type ParsedPicture = {
+  dimensions: { width: number; height: number };
+  picture: File;
 };
 
 export type ParsedItem = {
@@ -77,31 +82,8 @@ export type ParsedItem = {
   category: string;
   description: string;
   thumbnailPicture: string;
-  pictures: [{ dimensions: { width: number; height: number }; picture: File }];
-};
-
-type TThumbnail = {
-  width: number;
-  height: number;
-  name: string;
-};
-
-type TPictures = {
-  width: number;
-  height: number;
-  name: string;
-};
-
-export type TItemInDb = {
-  id: string;
-  title: string;
-  price: number;
-  stock: number;
-  category: string;
-  description: string;
-  thumbnail: TThumbnail;
-  thumbnailId: string;
-  pictures: TPictures[];
+  // pictures: [{ dimensions: { width: number; height: number }; picture: File }];
+  pictures: ParsedPicture[];
 };
 
 export type TItemSchema = z.infer<typeof itemSchema>;

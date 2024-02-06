@@ -1,6 +1,6 @@
-import { TItemInDb, TItemSchema } from "@/lib/types";
+import { ProductSchema } from "@/lib/types";
 
-export async function getPictures(item?: TItemInDb) {
+export async function getPictures(item?: ProductSchema) {
   if (!item) return;
 
   const pictures = item.pictures.map((pic) => `${pic.name}`);

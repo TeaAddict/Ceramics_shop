@@ -4,7 +4,7 @@ import { Textarea } from "../../ui/textarea";
 import { useForm } from "react-hook-form";
 import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ProductSchema, TItemInDb, TItemSchema, itemSchema } from "@/lib/types";
+import { ProductSchema, TItemSchema, itemSchema } from "@/lib/types";
 import { getImagesWithDimensions } from "@/utils/helper";
 import ImageDrop from "./imageFeature/ImageDrop";
 import { getPictures } from "./imageFeature/getPictures";
@@ -13,9 +13,11 @@ const EditItemForm = ({
   item,
   setOpen,
 }: {
-  item: TItemInDb;
+  item: ProductSchema;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
+  const isEdit = item ? true : false;
+  console.log(isEdit);
   const [customError, setCustomError] = useState("");
   const {
     register,
@@ -31,16 +33,28 @@ const EditItemForm = ({
   } = useForm<TItemSchema>({
     resolver: zodResolver(itemSchema),
     defaultValues: async () => {
-      const res = await getPictures(item);
-      return {
-        title: item.title,
-        price: item.price,
-        stock: item.stock,
-        category: item.category,
-        description: item.description,
-        thumbnailPicture: item.thumbnail.name,
-        pictures: res,
-      };
+      if (isEdit) {
+        const res = await getPictures(item);
+        return {
+          title: item.title,
+          price: item.price,
+          stock: item.stock,
+          category: item.category,
+          description: item.description,
+          thumbnailPicture: item.thumbnail.name,
+          pictures: res,
+        };
+      } else {
+        return {
+          title: "",
+          price: 0,
+          stock: 0,
+          category: "",
+          description: "",
+          thumbnailPicture: "",
+          pictures: null,
+        };
+      }
     },
   });
 
@@ -63,10 +77,18 @@ const EditItemForm = ({
       data.append(`picture${index}`, JSON.stringify(picture.dimensions));
     });
 
-    const response = await fetch(`/api/admin/item/${item.id}`, {
-      method: "POST",
-      body: data,
-    });
+    let response;
+    if (isEdit) {
+      response = await fetch(`/api/admin/item/${item.id}`, {
+        method: "PUT",
+        body: data,
+      });
+    } else {
+      response = await fetch(`/api/shop`, {
+        method: "POST",
+        body: data,
+      });
+    }
     const responseData = await response.json();
     if (!response.ok) {
       // response status is not 2xx

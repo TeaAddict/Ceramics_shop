@@ -1,8 +1,8 @@
-import { TItemInDb } from "@/lib/types";
+import { ProductSchema } from "@/lib/types";
 import { useQuery } from "@tanstack/react-query";
 
-export const useImageFiles = (item: TItemInDb) => {
-  const pictureNames = item.pictures.map((pic) => `${pic.name}`);
+export const useImageFiles = (item?: ProductSchema) => {
+  const pictureNames = item?.pictures.map((pic) => `${pic.name}`) ?? [];
   const { data, error, isLoading } = useQuery({
     queryKey: ["formPictures"],
     queryFn: async () => {

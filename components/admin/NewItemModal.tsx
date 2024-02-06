@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { useState } from "react";
 import AddItemForm from "./ItemForm/AddItemForm";
+import ItemForm from "./ItemForm/ItemForm";
 
 export function NewItemModal() {
   const [open, setOpen] = useState(false);
@@ -24,7 +25,8 @@ export function NewItemModal() {
         <DialogHeader>
           <DialogTitle>Add new item</DialogTitle>
         </DialogHeader>
-        <AddItemForm setOpen={setOpen} />
+        {/* <AddItemForm setOpen={setOpen} /> */}
+        <ItemForm setOpen={setOpen} />
       </DialogContent>
     </Dialog>
   );

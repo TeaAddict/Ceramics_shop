@@ -7,7 +7,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useState } from "react";
-import EditItemForm from "./ItemForm/EditItemForm";
+import ItemForm from "./ItemForm/ItemForm";
 import { ProductSchema } from "@/lib/types";
 
 export function EditItemModal({ item }: { item: ProductSchema }) {
@@ -24,7 +24,7 @@ export function EditItemModal({ item }: { item: ProductSchema }) {
         <DialogHeader>
           <DialogTitle>Edit item</DialogTitle>
         </DialogHeader>
-        <EditItemForm setOpen={setOpen} item={item} />
+        <ItemForm setOpen={setOpen} item={item} />
       </DialogContent>
     </Dialog>
   );

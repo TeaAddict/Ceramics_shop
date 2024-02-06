@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export function useImgBlobUrl(images: FileList | File[] | null) {
+export function useImgBlobUrl(images: FileList | File[] | undefined | null) {
   const [imgBlobUrl, setImgBlobUrl] = useState<string[]>();
 
   useEffect(() => {
@@ -18,5 +18,5 @@ export function useImgBlobUrl(images: FileList | File[] | null) {
       urls.forEach((url) => URL.revokeObjectURL(url));
     };
   }, [images]);
-  return { imgBlobUrl, setImgBlobUrl };
+  return { imgBlobUrl };
 }
