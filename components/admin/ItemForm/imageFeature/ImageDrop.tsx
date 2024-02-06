@@ -44,7 +44,7 @@ const ImageDrop = (props: Props) => {
     initPictures
   );
 
-  const { imgBlobUrl } = useImgBlobUrl(images); // TODO convert to simple function?
+  const { imgBlobUrl } = useImgBlobUrl(images);
 
   function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.files?.length) {
