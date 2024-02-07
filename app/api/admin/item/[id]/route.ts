@@ -5,6 +5,7 @@ import { parsePictureData } from "@/utils/myFunctions";
 import { writeFile } from "fs/promises";
 import { join } from "path";
 import { Prisma } from "@prisma/client";
+import { deleteFile, parseFormData, writeFiles } from "../myFunctions";
 
 export async function POST(request: NextRequest) {
   const data = await request.formData();
@@ -19,41 +20,22 @@ export async function PUT(request: NextRequest) {
   const id = request.url.split("item/")[1];
   const data: FormData = await request.formData();
 
-  // Parse formData to usable data
-  let parsed: ParsedItem = {
-    title: "",
-    price: 0,
-    stock: 0,
-    category: "",
-    description: "",
-    thumbnailPicture: "",
-    //@ts-ignore
-    pictures: [],
-  };
-  let addedList: string[] = [];
-  Array.from(data).map((item) => {
-    const key = item[0] as keyof ParsedItem;
-    const val = item[1];
-    if (key.startsWith("picture") && !addedList.includes(key)) {
-      addedList.push(key);
-      const res = data.getAll(key);
-      const picObj: {
-        dimensions: { width: number; height: number };
-        picture: File;
-      } = {
-        dimensions: JSON.parse(res[0] as string),
-        picture: res[1] as File,
-      };
-      parsed.pictures.push(picObj);
-    } else if (typeof parsed[key] === "string") {
-      (parsed[key] as string) = val.toString();
-    } else if (typeof parsed[key] === "number") {
-      (parsed[key] as number) = Number(val);
-    }
-  });
-
+  // formData is messy so we parse it into usable object
+  const parsed = parseFormData(data);
   const pictureData = parsePictureData(parsed);
 
+  // check which images need uploading which deleting
+  const oldPictures = await prisma.picture.findMany({ where: { itemId: id } });
+  const oldPictureNames = oldPictures.map((pic) => pic.name);
+  const newPictureNames = pictureData.map((pic) => pic.name);
+  const picturesNeedDeleting = oldPictureNames.filter(
+    (str) => !newPictureNames.includes(str)
+  );
+  const picturesNeedUploading = newPictureNames.filter(
+    (str) => !oldPictureNames.includes(str)
+  );
+
+  // update data in db
   try {
     const item = await prisma.item.update({
       where: { id: id },
@@ -87,13 +69,15 @@ export async function PUT(request: NextRequest) {
     }
   }
 
-  // Saves images in servers local storage hopefully lol
-  parsed.pictures.map(async (element) => {
-    const bytes = await element.picture.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-    const projPath = process.cwd();
-    const path = join(projPath, "/public/uploads", element.picture.name);
-    await writeFile(path, buffer);
-  });
+  // Delete old images and save new ones in servers local storage
+  // delete then upload images
+  picturesNeedDeleting.forEach((picture) => deleteFile(picture));
+  const filesToSave = parsed.pictures
+    .filter((picture) => {
+      if (picturesNeedUploading.includes(picture.picture.name)) return picture;
+    })
+    .map((el) => el.picture);
+  if (filesToSave !== undefined) writeFiles(filesToSave, "/public/uploads");
+
   return NextResponse.json({ success: true });
 }
