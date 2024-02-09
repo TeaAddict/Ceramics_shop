@@ -18,24 +18,22 @@ const CarouselSection = () => {
   const items = data.slice(0, 6);
 
   return (
-    <article className="justify-center flex my-10">
+    <article className="my-10 flex justify-center">
       <div className="flex flex-col gap-5">
         <h2 className="text-2xl font-semibold">Featured Works</h2>
         <Carousel
           opts={{
             align: "start",
           }}
-          className="w-full max-w-[50vw]"
+          className="px-10 sm:px-20 md:px-0 w-full max-w-3xl"
         >
           <CarouselContent>
             {items &&
               items.map((item, index) => (
-                <CarouselItem
-                  key={index}
-                  className="md:basis-[60%] lg:basis-[45%] xl:basis-[35%] 2xl:basis-[25%]"
-                >
+                <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
                   <div className="p-1">
                     <MerchandiseCard
+                      item={item}
                       href={`/shop/${item.id}`}
                       cardType="featured"
                       title={item.title}

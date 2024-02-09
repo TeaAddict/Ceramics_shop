@@ -37,9 +37,9 @@ const MerchandiseCard = ({
 
   if (cardType === "shop")
     return (
-      <div className="border-2 bg-white rounded-md flex flex-col  space-y-4">
-        <div className="w-full relative h-60 xs:h-96 md:h-60 border-b-2">
-          <Link className="absolute w-full h-60 xs:h-96 md:h-60" href={href}>
+      <div className="border-2 bg-white rounded-md flex flex-col space-y-4">
+        <div className="relative border-b-2 aspect-square">
+          <Link className="absolute w-full h-full" href={href}>
             <Image
               src={`/uploads/${thumbnail.name}`}
               alt={title}
@@ -50,12 +50,8 @@ const MerchandiseCard = ({
           </Link>
         </div>
 
-        <div className="flex flex-col !mt-0 gap-3 px-4 py-3 justify-between">
-          <div className="flex flex-col">
-            <h3 className="font-bold text-xl">
-              {capitalizeFirstLetter(title)}
-            </h3>
-          </div>
+        <div className="flex flex-col !mt-0 gap-3 px-4 py-3 justify-between overflow-hidden">
+          <h3 className="font-bold text-xl">{capitalizeFirstLetter(title)}</h3>
 
           <div className="flex justify-between items-center">
             {isAdmin ? (
@@ -77,8 +73,8 @@ const MerchandiseCard = ({
 
   if (cardType === "featured")
     return (
-      <div className="border-2 bg-white rounded-md grid grid-rows-[1.2fr_0.8fr] sm:grid-rows-2 h-[20rem] xs:h-[25rem] sm:h-[30rem] space-y-4">
-        <div className="w-full relative border-b-2">
+      <div className="border-2 bg-white rounded-md flex flex-col space-y-4 overflow-hidden">
+        <div className="relative border-b-2 aspect-square">
           <Link className="absolute w-full h-full" href={href}>
             <Image
               src={`/uploads/${thumbnail.name}`}
@@ -90,26 +86,29 @@ const MerchandiseCard = ({
           </Link>
         </div>
 
-        <div className="sm:flex flex-col h-full !mt-0 gap-3 p-2 hidden">
-          <div className="flex flex-col h-48">
+        <div className="sm:flex flex-col !mt-0 gap-3 p-2 hidden">
+          <div className="flex flex-col gap-2 overflow-hidden">
             <h3 className="font-bold text-xl">
               {capitalizeFirstLetter(title)}
             </h3>
-            <ScrollArea className="pr-2">{description}</ScrollArea>
           </div>
-          <div className="flex justify-around items-center">
+          <div className="flex justify-around items-center gap-2">
             <Button variant="default">
               <Link href={href}>Details</Link>
             </Button>
-            <div className="flex gap-1">
+            <div className="flex gap-1 break-all">
               <p>{formatToEuroCurrency(price)}</p>
             </div>
           </div>
         </div>
-        <div className="flex flex-col !m-2 gap-2 justify-center sm:hidden">
-          <h3 className="font-bold text-xl">{capitalizeFirstLetter(title)}</h3>
-          <div className="flex gap-1">
-            <p>{formatToEuroCurrency(price)}</p>
+        <div className="grid grid-cols-[2fr_1fr] !m-2 gap-2 justify-around sm:hidden ">
+          <div className="overflow-hidden break-all">
+            <h3 className="font-bold text-xl">
+              {capitalizeFirstLetter(title)}
+            </h3>
+          </div>
+          <div className="flex gap-1 justify-center overflow-hidden break-all">
+            <p className="">{formatToEuroCurrency(price)}</p>
           </div>
         </div>
       </div>
