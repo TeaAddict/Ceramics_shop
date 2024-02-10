@@ -8,7 +8,7 @@ const LabelButton = ({
 }: {
   children: ReactNode;
   isActive?: boolean;
-  onClick: MouseEventHandler;
+  onClick?: MouseEventHandler;
 }) => {
   return (
     <button

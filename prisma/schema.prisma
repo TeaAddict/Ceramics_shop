@@ -20,6 +20,7 @@ model Item {
   pictures    Picture[] @relation("itemPictures")
   thumbnailId String?  @unique
   thumbnail   Picture?  @relation("thumbnail", fields: [thumbnailId], references: [id])
+  createdAt DateTime @default(now())
 }
 
 model Picture {
@@ -30,5 +31,4 @@ model Picture {
   itemId      String
   item        Item   @relation("itemPictures", fields: [itemId], references: [id])
   itemThumbnailId Item? @relation("thumbnail")
- 
 }

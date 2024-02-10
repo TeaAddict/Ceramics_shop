@@ -59,7 +59,7 @@ const ShopWindow = ({
     const params = new URLSearchParams(searchParams);
     params.set("category", key);
     params.set("page", "1");
-    // router.replace(`${pathname}?${params.toString()}`);
+    router.replace(`${pathname}?${params.toString()}`);
   }
 
   return (

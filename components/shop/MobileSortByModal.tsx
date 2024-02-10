@@ -28,6 +28,7 @@ export function MobileSortByModal() {
     const params = new URLSearchParams(searchParams);
     params.set("sortBy", value);
     router.replace(`${pathname}?${params.toString()}`);
+    setOpen(false);
   }
 
   return (

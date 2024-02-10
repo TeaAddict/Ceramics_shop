@@ -5,11 +5,24 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { useState } from "react";
+import { MouseEvent, useState } from "react";
 import { FaFilter, FaSortAlphaUpAlt } from "react-icons/fa";
+import LabelButton from "../shared/LabelButton";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-export function MobileFilterByModal() {
+export function MobileFilterByModal({ categories }: { categories: string[] }) {
   const [open, setOpen] = useState(false);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const activeFilter = searchParams.get("category");
+
+  function handleClick(value: string) {
+    const params = new URLSearchParams(searchParams);
+    params.set("category", value.toString());
+    router.replace(`${pathname}?${params.toString()}`);
+    setOpen(false);
+  }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -22,6 +35,17 @@ export function MobileFilterByModal() {
         <DialogHeader>
           <DialogTitle>Category</DialogTitle>
         </DialogHeader>
+        <div className="flex flex-col gap-3 divide-y-2">
+          {categories.map((el) => (
+            <LabelButton
+              isActive={activeFilter === el}
+              onClick={() => handleClick(el)}
+              key={el}
+            >
+              {el}
+            </LabelButton>
+          ))}
+        </div>
       </DialogContent>
     </Dialog>
   );

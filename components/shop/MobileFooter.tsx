@@ -7,12 +7,12 @@ import CartBadge from "../shared/header/CartBadge";
 import { MobileSortByModal } from "./MobileSortByModal";
 import { MobileFilterByModal } from "./MobileFilterByModal";
 
-const MobileFooter = () => {
+const MobileFooter = ({ categories }: { categories: string[] }) => {
   return (
     <div className="fixed bottom-0 left-0 bg-accent/75 w-full grid grid-cols-3 py-3 items-center">
       <div className="flex justify-center">
         <div className="bg-primary/75 rounded-full w-10 h-10 justify-center flex items-center">
-          <MobileFilterByModal />
+          <MobileFilterByModal categories={categories} />
         </div>
       </div>
 
