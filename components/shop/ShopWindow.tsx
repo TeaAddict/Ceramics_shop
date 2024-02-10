@@ -37,7 +37,11 @@ const ShopWindow = ({
   // const page = searchParams.get("page") ?? "1";
   const category = searchParams.get("category") ?? categoriesCounts[0].label;
   const sortBy =
-    (searchParams.get("sortBy") as "price-asc" | "price-desc") ?? "price-asc";
+    (searchParams.get("sortBy") as
+      | "price-asc"
+      | "price-desc"
+      | "date-desc"
+      | "date-asc") ?? "price-asc";
 
   const sort = sortBy.split("-");
 
@@ -55,7 +59,7 @@ const ShopWindow = ({
     const params = new URLSearchParams(searchParams);
     params.set("category", key);
     params.set("page", "1");
-    router.replace(`${pathname}?${params.toString()}`);
+    // router.replace(`${pathname}?${params.toString()}`);
   }
 
   return (

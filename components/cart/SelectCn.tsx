@@ -39,6 +39,8 @@ export function SelectCn({
           <SelectLabel>Sort by</SelectLabel>
           <SelectItem value="price-asc">Price: lowest first</SelectItem>
           <SelectItem value="price-desc">Price: highest first</SelectItem>
+          <SelectItem value="date-desc">Date: newest first</SelectItem>
+          <SelectItem value="date-asc">Date: oldest first</SelectItem>
         </SelectGroup>
       </SelectContent>
     </Select>

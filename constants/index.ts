@@ -37,3 +37,22 @@ export const ADMIN_MENU = [
     value: 0,
   },
 ];
+
+export const sortOptions = [
+  {
+    name: "Price: lowest first",
+    value: "price-asc",
+  },
+  {
+    name: "Price: highest first",
+    value: "price-desc",
+  },
+  {
+    name: "Date: newest first",
+    value: "date-desc",
+  },
+  {
+    name: "Date: oldest first",
+    value: "date-asc",
+  },
+];
