@@ -86,19 +86,14 @@ const MerchandiseCard = ({
           </Link>
         </div>
 
-        <div className="sm:flex flex-col !mt-0 gap-3 p-2 hidden">
+        <div className="sm:flex flex-col !mt-0 gap-1 p-2 hidden">
           <div className="flex flex-col gap-2 overflow-hidden">
             <h3 className="font-bold text-xl">
               {capitalizeFirstLetter(title)}
             </h3>
           </div>
-          <div className="flex justify-around items-center gap-2">
-            <Button variant="default">
-              <Link href={href}>Details</Link>
-            </Button>
-            <div className="flex gap-1 break-all">
-              <p>{formatToEuroCurrency(price)}</p>
-            </div>
+          <div className="flex gap-2 break-all">
+            <p>{formatToEuroCurrency(price)}</p>
           </div>
         </div>
         <div className="grid grid-cols-[2fr_1fr] !m-2 gap-2 justify-around sm:hidden ">

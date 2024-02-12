@@ -4,13 +4,16 @@ import { NAV_BAR_LINKS } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import HamburgerSvg from "./HamburgerSvg";
 import CartBadge from "./CartBadge";
+import MobileNavbar from "./MobileNavbar";
+import Hamburger from "./Hamburger";
 
 const Header = () => {
   const pathname = usePathname();
+  const [isMobileMenuActive, setIsMobileMenuActive] = useState(false);
 
   return (
     <section className="sticky top-0 z-10 px-6 lg:px-20 3xl:px-24 flex items-center justify-between bg-white/90">
@@ -59,7 +62,14 @@ const Header = () => {
           <Button>Login</Button>
         </div>
         <div className="md:hidden">
-          <HamburgerSvg size={10} />
+          <Hamburger
+            isActive={isMobileMenuActive}
+            setIsActive={setIsMobileMenuActive}
+          />
+          <MobileNavbar
+            isActive={isMobileMenuActive}
+            setIsActive={setIsMobileMenuActive}
+          />
         </div>
       </div>
     </section>
