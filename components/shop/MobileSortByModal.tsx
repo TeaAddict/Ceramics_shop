@@ -8,21 +8,14 @@ import {
 import { useState } from "react";
 import { FaSortAlphaUpAlt } from "react-icons/fa";
 import LabelButton from "../shared/LabelButton";
-import {
-  useParams,
-  usePathname,
-  useRouter,
-  useSearchParams,
-} from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { sortOptions } from "@/constants";
 
-export function MobileSortByModal() {
+export function MobileSortByModal({ sortBy }: { sortBy: string }) {
   const [open, setOpen] = useState(false);
-
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
-  const activeSort = searchParams.get("sortBy");
 
   function handleClick(value: string) {
     const params = new URLSearchParams(searchParams);
@@ -48,7 +41,7 @@ export function MobileSortByModal() {
               <LabelButton
                 key={option.value}
                 onClick={() => handleClick(option.value)}
-                isActive={activeSort === option.value}
+                isActive={sortBy === option.value}
               >
                 {option.name}
               </LabelButton>

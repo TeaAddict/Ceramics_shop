@@ -12,13 +12,20 @@ import { useState } from "react";
 
 export function SelectCn({
   color = "default",
+  selectOptions,
+  initialSelection,
 }: {
   color?: "default" | "inverted";
+  selectOptions: { name: string; value: string }[];
+  initialSelection?: string;
 }) {
-  const [currentSelection, setCurrentSelection] = useState("");
   const router = useRouter();
   const pathname = usePathname();
   const params = useSearchParams();
+
+  const [currentSelection, setCurrentSelection] = useState(
+    initialSelection ?? ""
+  );
 
   function handleChange(value: string) {
     setCurrentSelection(value);
@@ -37,10 +44,11 @@ export function SelectCn({
       <SelectContent>
         <SelectGroup>
           <SelectLabel>Sort by</SelectLabel>
-          <SelectItem value="price-asc">Price: lowest first</SelectItem>
-          <SelectItem value="price-desc">Price: highest first</SelectItem>
-          <SelectItem value="date-desc">Date: newest first</SelectItem>
-          <SelectItem value="date-asc">Date: oldest first</SelectItem>
+          {selectOptions.map((option) => (
+            <SelectItem value={option.value} key={option.value}>
+              {option.name}
+            </SelectItem>
+          ))}
         </SelectGroup>
       </SelectContent>
     </Select>

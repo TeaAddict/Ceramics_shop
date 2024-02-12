@@ -1,4 +1,4 @@
-import { PAGE_SIZE, TEST_MERCHANDISE, TEST_MERCHANDISE2 } from "@/constants";
+import { PAGE_SIZE } from "@/constants";
 import PaginationCn from "../shared/PaginationCn";
 import Merchandise from "../cards/Merchandise";
 import { usePathname, useSearchParams } from "next/navigation";
@@ -32,7 +32,7 @@ const ShopItems = ({
       <ul
         className={
           isAdmin
-            ? "sm:grid lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 flex flex-col"
+            ? "sm:grid md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 flex flex-col"
             : "sm:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 flex flex-col"
         }
       >
@@ -42,7 +42,6 @@ const ShopItems = ({
               <MerchandiseCard
                 item={item}
                 href={`/shop/${item.id}`}
-                cardType="shop"
                 description={item.description}
                 thumbnail={item.thumbnail}
                 price={item.price}

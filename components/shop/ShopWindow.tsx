@@ -7,19 +7,21 @@ import { countProperties } from "@/utils/countProperties";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { NewItemModal } from "../admin/NewItemModal";
 import { useItems } from "@/hooks/useItems";
+import { sortOptions } from "@/constants";
 
 type TSort = {
   price: number;
 };
 
 const ShopWindow = ({
+  searchParams,
   color = "default",
   isAdmin = false,
 }: {
+  searchParams: { category: string; sortBy: string };
   color?: "default" | "inverted";
   isAdmin?: boolean;
 }) => {
-  const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
 
@@ -34,10 +36,10 @@ const ShopWindow = ({
 
   const categoriesCounts = countProperties(data, "category");
 
-  // const page = searchParams.get("page") ?? "1";
-  const category = searchParams.get("category") ?? categoriesCounts[0].label;
+  // const category = searchParams.get("category") ?? categoriesCounts[0].label;
+  const category = searchParams["category"] ?? categoriesCounts[0].label;
   const sortBy =
-    (searchParams.get("sortBy") as
+    (searchParams["sortBy"] as
       | "price-asc"
       | "price-desc"
       | "date-desc"
@@ -65,7 +67,11 @@ const ShopWindow = ({
   return (
     <div>
       <div className="sm:flex justify-end mb-5 hidden">
-        <SelectCn color={color} />
+        <SelectCn
+          selectOptions={sortOptions}
+          initialSelection={sortBy}
+          color={color}
+        />
       </div>
 
       <div className="flex flex-col sm:flex-row">
