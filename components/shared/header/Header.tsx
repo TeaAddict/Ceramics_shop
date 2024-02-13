@@ -67,8 +67,8 @@ const Header = () => {
             setIsActive={setIsMobileMenuActive}
           />
           <MobileNavbar
-            isActive={isMobileMenuActive}
-            setIsActive={setIsMobileMenuActive}
+            isMobileMenuActive={isMobileMenuActive}
+            setIsMobileMenuActive={setIsMobileMenuActive}
           />
         </div>
       </div>

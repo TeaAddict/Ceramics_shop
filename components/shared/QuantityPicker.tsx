@@ -8,25 +8,44 @@ const QuantityPicker = ({
   currentQuantity,
   increaseFunc,
   decreaseFunc,
+  orientation = "horizontal",
+  id,
 }: {
-  currentQuantity: number;
-  increaseFunc: MouseEventHandler<HTMLButtonElement>;
-  decreaseFunc: MouseEventHandler<HTMLButtonElement>;
+  currentQuantity?: number;
+  increaseFunc: Function;
+  decreaseFunc: Function;
+  orientation?: "horizontal" | "vertical";
+  id?: string;
 }) => {
   return (
-    <div className="inline-block">
-      <div className="grid grid-cols-3 items-center justify-between border-2 rounded-md">
+    <div className="flex">
+      <div
+        className={`grid ${
+          orientation === "horizontal" ? "grid-cols-3" : "grid-rows-3"
+        } items-center justify-between border-2 rounded-md`}
+      >
         <button
-          onClick={decreaseFunc}
-          className="text-2xl p-2 hover:bg-accent transition-all duration-200"
+          onClick={() => decreaseFunc(id)}
+          className={`${
+            orientation === "vertical" && "order-3"
+          } text-2xl p-2 hover:bg-accent transition-all duration-200`}
         >
           <FiMinus />
         </button>
-        <p className="text-md text-center  p-2">{currentQuantity}</p>
+
+        <p
+          className={`${
+            orientation === "vertical" && "order-2"
+          } text-md text-center  p-2`}
+        >
+          {currentQuantity ?? 0}
+        </p>
 
         <button
-          onClick={increaseFunc}
-          className="text-2xl p-2 hover:bg-accent transition-all duration-200"
+          onClick={() => increaseFunc(id)}
+          className={`${
+            orientation === "vertical" && "order-1"
+          } text-2xl p-2 hover:bg-accent transition-all duration-200`}
         >
           <FiPlus />
         </button>

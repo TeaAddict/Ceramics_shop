@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { useItem } from "@/hooks/useItem";
 import { IoMdArrowBack } from "react-icons/io";
 import { useRouter } from "next/navigation";
+import BackButton from "@/components/shared/BackButton";
 
 const ItemPage = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
@@ -49,18 +50,7 @@ const ItemPage = ({ params }: { params: { id: string } }) => {
 
   return (
     <section className="padding-container flex flex-col gap-5">
-      <div>
-        <Button
-          onClick={() => {
-            router.back();
-          }}
-          variant={"secondary"}
-          className="gap-1"
-        >
-          <IoMdArrowBack />
-          Go back
-        </Button>
-      </div>
+      <BackButton />
 
       <div className="flex gap-40 justify-center">
         <div>

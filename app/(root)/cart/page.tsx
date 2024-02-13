@@ -2,17 +2,18 @@
 
 import React from "react";
 import { useAppSelector } from "@/redux/store";
-import { TEST_MERCHANDISE2 } from "@/constants";
-import { ProgressBar } from "@/components/cart/ProgressBar";
-import { CartTable } from "@/components/cart/CartTable";
 import MyCartTable from "@/components/cart/MyCartTable";
 import { Button } from "@/components/ui/button";
 import { useDispatch } from "react-redux";
 import { clearCart } from "@/redux/features/cartSlice";
 import Link from "next/link";
 import { formatToEuroCurrency } from "@/utils/helper";
+import { useRouter } from "next/navigation";
+import { IoMdArrowBack } from "react-icons/io";
+import BackButton from "@/components/shared/BackButton";
 
 const CartPage = () => {
+  const router = useRouter();
   const dispatch = useDispatch();
   const cart = useAppSelector((state) => state.cartReducer.cartItems);
   const orderTotal = formatToEuroCurrency(
@@ -33,11 +34,8 @@ const CartPage = () => {
 
   return (
     <section className="padding-container flex flex-col gap-10 my-10">
-      {/* <div className="justify-center flex">
-        <ProgressBar />
-      </div> */}
+      <BackButton />
       <div className="space-y-10">
-        {/* <h1 className="text-2xl font-semibold">Cart</h1> */}
         <MyCartTable data={cart} />
       </div>
       <div className="flex justify-end">

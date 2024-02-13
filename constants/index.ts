@@ -25,15 +25,15 @@ export const NAV_BAR_LINKS = [
 
 export const ADMIN_MENU = [
   {
-    label: "Dashboard",
+    label: "dashboard",
     value: 0,
   },
   {
-    label: "Shopboard",
+    label: "shopboard",
     value: 0,
   },
   {
-    label: "Account",
+    label: "account",
     value: 0,
   },
 ];

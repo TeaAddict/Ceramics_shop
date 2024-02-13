@@ -5,15 +5,17 @@ import { useState } from "react";
 
 const VerticalMenu = ({
   menuList,
+  activeValue,
   onClick,
   color = "default",
 }: {
   // menuList: { [key: string]: number };
   menuList: { label: string; value: number }[];
+  activeValue: string;
   onClick: Function;
   color?: "default" | "inverted";
 }) => {
-  const [active, setActive] = useState(menuList[0].label);
+  const [active, setActive] = useState(activeValue);
 
   function handleClick(key: string) {
     setActive(key);

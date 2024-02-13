@@ -79,6 +79,7 @@ const ShopWindow = ({
           <h3 className="font-semibold">Categories</h3>
           <VerticalMenu
             menuList={categoriesCounts}
+            activeValue={category}
             onClick={handleChangeParam}
             color={color}
           />

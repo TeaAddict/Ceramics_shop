@@ -8,21 +8,21 @@ import {
   removeItem,
 } from "@/redux/features/cartSlice";
 import QuantityPicker from "../shared/QuantityPicker";
-import { formatToEuroCurrency } from "@/utils/helper";
+import { capitalizeFirstLetter, formatToEuroCurrency } from "@/utils/helper";
+import PcCartTable from "./PcCartTable";
+import MobileCartTable from "./MobileCartTable";
 
-const MyCartTable = ({
-  data,
-}: {
-  data: {
-    id: string;
-    title: string;
-    picture: string;
-    stock: number;
-    quantity: number;
-    unitPrice: number;
-    totalPrice: number;
-  }[];
-}) => {
+export type CartItem = {
+  id: string;
+  title: string;
+  picture: string;
+  stock: number;
+  quantity: number;
+  unitPrice: number;
+  totalPrice: number;
+};
+
+const MyCartTable = ({ data }: { data: CartItem[] }) => {
   const dispatch = useDispatch();
 
   function handleIncrease(id: string) {
@@ -33,55 +33,22 @@ const MyCartTable = ({
   }
 
   return (
-    <table className="w-full flex flex-col gap-10">
-      <thead>
-        <tr className="grid grid-cols-[1fr_1fr_1fr_1fr_1fr_0.2fr] justify-start">
-          <th className="justify-start flex">PRODUCT</th>
-          <th className="justify-start flex">PICTURE</th>
-          <th className="justify-start flex">UNIT PRICE</th>
-          <th className="justify-start flex">QUANTITY</th>
-          <th className="justify-start flex">TOTAL</th>
-        </tr>
-      </thead>
-      <tbody>
-        {data.map((row, index) => (
-          <tr
-            className="grid grid-cols-[1fr_1fr_1fr_1fr_1fr_0.2fr] items-center h-full border-t-2"
-            key={index}
-          >
-            <td className="h-full flex items-center">{row.title}</td>
-            <td className="aspect-square h-40 my-2 relative">
-              <Image
-                alt=""
-                src={row.picture}
-                className="object-cover"
-                fill
-                sizes="30vw"
-              />
-            </td>
-            <td>{formatToEuroCurrency(row.unitPrice)}</td>
-            <td>
-              <QuantityPicker
-                decreaseFunc={() => handleDecrease(row.id)}
-                increaseFunc={() => handleIncrease(row.id)}
-                currentQuantity={row.quantity}
-              />
-            </td>
-            <td>{formatToEuroCurrency(row.totalPrice)}</td>
-            <td>
-              <Button
-                variant={"outline"}
-                onClick={() => {
-                  dispatch(removeItem(row.id));
-                }}
-              >
-                X
-              </Button>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <div>
+      <div className="hidden md:block">
+        <PcCartTable
+          data={data}
+          handleIncrease={handleIncrease}
+          handleDecrease={handleDecrease}
+        />
+      </div>
+      <div className="md:hidden">
+        <MobileCartTable
+          data={data}
+          handleIncrease={handleIncrease}
+          handleDecrease={handleDecrease}
+        />
+      </div>
+    </div>
   );
 };
 
