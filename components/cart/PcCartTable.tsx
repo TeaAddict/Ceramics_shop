@@ -38,7 +38,7 @@ const PcCartTable = ({
             <td className="h-full flex items-center">
               {capitalizeFirstLetter(row.title)}
             </td>
-            <td className="aspect-square my-2 relative">
+            <td className="aspect-square max-w-32 my-2 relative">
               <Image
                 alt=""
                 src={`/uploads/${row.picture}`}

@@ -1,20 +1,17 @@
 "use client";
 
-import React from "react";
+import React, { useRef, useState } from "react";
 import { useAppSelector } from "@/redux/store";
 import MyCartTable from "@/components/cart/MyCartTable";
 import { Button } from "@/components/ui/button";
-import { useDispatch } from "react-redux";
-import { clearCart } from "@/redux/features/cartSlice";
 import Link from "next/link";
 import { formatToEuroCurrency } from "@/utils/helper";
-import { useRouter } from "next/navigation";
-import { IoMdArrowBack } from "react-icons/io";
 import BackButton from "@/components/shared/BackButton";
+import OrderSummary from "@/components/cart/OrderSummary";
+import CheckOutForm from "@/components/form/CheckOutForm";
 
 const CartPage = () => {
-  const router = useRouter();
-  const dispatch = useDispatch();
+  const [progress, setProgress] = useState(1);
   const cart = useAppSelector((state) => state.cartReducer.cartItems);
   const orderTotal = formatToEuroCurrency(
     cart.reduce((acc, item) => item.totalPrice + acc, 0)
@@ -35,29 +32,13 @@ const CartPage = () => {
   return (
     <section className="padding-container flex flex-col gap-10 my-10">
       <BackButton />
-      <div className="space-y-10">
-        <MyCartTable data={cart} />
-      </div>
-      <div className="flex justify-end">
-        <div className="flex flex-col gap-5">
-          <div className="flex justify-between font-semibold gap-5">
-            <p className="">ORDER TOTAL</p>
-            <p className="">{orderTotal}</p>
-          </div>
-          <div className="flex gap-10">
-            <Button
-              onClick={() => {
-                dispatch(clearCart());
-              }}
-              variant={"secondary"}
-              size={"lg"}
-            >
-              Clear cart
-            </Button>
-            <Button size={"lg"}>Next</Button>
-          </div>
-        </div>
-      </div>
+      {progress === 1 && <MyCartTable data={cart} />}
+      {progress === 2 && <CheckOutForm />}
+      <OrderSummary
+        orderTotal={orderTotal}
+        progress={progress}
+        setProgress={setProgress}
+      />
     </section>
   );
 };

@@ -15,5 +15,5 @@ export function useImgBlobUrl(images: FileList | File[] | undefined | null) {
       urls.forEach((url) => URL.revokeObjectURL(url));
     };
   }, [images]);
-  return { imgBlobUrl };
+  return imgBlobUrl;
 }

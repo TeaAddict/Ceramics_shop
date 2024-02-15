@@ -64,7 +64,7 @@ const AddItemForm = ({
     data.append("price", formData.price.toString());
     data.append("stock", formData.stock.toString());
     data.append("category", formData.category);
-    data.append("description", formData.description);
+    data.append("description", formData.description ?? "");
     data.append("thumbnailPicture", formData.thumbnailPicture);
     pictureArray.map((picture, index) => {
       data.append(`picture${index}`, picture.picture);
