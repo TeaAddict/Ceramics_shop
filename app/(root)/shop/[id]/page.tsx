@@ -1,6 +1,6 @@
 "use client";
 
-import QuantityPicker2 from "@/components/shared/QuantityPicker";
+import QuantityPicker from "@/components/shared/QuantityPicker";
 import PhotoSwipeCarousel from "@/components/shop/PhotoSwipeCarousel";
 import { Button } from "@/components/ui/button";
 import { addItem, removeItem } from "@/redux/features/cartSlice";
@@ -8,12 +8,10 @@ import { AppDispatch, useAppSelector } from "@/redux/store";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useItem } from "@/hooks/useItem";
-import { IoMdArrowBack } from "react-icons/io";
-import { useRouter } from "next/navigation";
 import BackButton from "@/components/shared/BackButton";
+import { capitalizeFirstLetter } from "@/utils/helper";
 
 const ItemPage = ({ params }: { params: { id: string } }) => {
-  const router = useRouter();
   const cart = useAppSelector((state) => state.cartReducer.cartItems);
   const cartItem = cart.find((item) => item.id === params.id);
   const { data: item } = useItem(params.id);
@@ -52,7 +50,8 @@ const ItemPage = ({ params }: { params: { id: string } }) => {
     <section className="padding-container flex flex-col gap-5">
       <BackButton />
 
-      <div className="flex gap-40 justify-center">
+      <div className="flex flex-col md:flex-row gap-5 md:gap-40 justify-center">
+        <h3 className="font-semibold text-3xl md:hidden">{item.title}</h3>
         <div>
           <PhotoSwipeCarousel
             galleryID="testing"
@@ -65,27 +64,34 @@ const ItemPage = ({ params }: { params: { id: string } }) => {
               };
             })}
           />
-          <p>===IDK SOME FANCY IMAGE SLIDE===</p>
+          <p className="hidden md:block">===IDK SOME FANCY IMAGE SLIDE===</p>
         </div>
         <div className="flex flex-col gap-10">
-          <h3 className="font-semibold text-3xl">{item.title}</h3>
+          <h3 className="font-semibold text-3xl hidden md:block">
+            {item.title}
+          </h3>
 
           {!cartItem ? (
-            <div className="space-y-5">
+            <div className="space-y-5 flex md:flex-col justify-between md:justify-normal">
               <div className="space-y-1">
-                <QuantityPicker2
+                <QuantityPicker
                   currentQuantity={quantity}
                   decreaseFunc={handleDecrease}
                   increaseFunc={handleIncrease}
                 />
                 <p>in stock: {item.stock}</p>
               </div>
+
               <Button onClick={handleAddToCart}>ADD TO CART</Button>
             </div>
           ) : (
             <Button onClick={handleRemoveFromCart}>Remove from cart</Button>
           )}
-          <p className="max-w-72">{item.description}</p>
+          {item.description && (
+            <p className="md:max-w-72">
+              {capitalizeFirstLetter(item.description)}
+            </p>
+          )}
         </div>
       </div>
     </section>
