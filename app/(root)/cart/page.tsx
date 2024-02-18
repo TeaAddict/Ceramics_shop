@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { useAppSelector } from "@/redux/store";
 import MyCartTable from "@/components/cart/MyCartTable";
 import { Button } from "@/components/ui/button";
