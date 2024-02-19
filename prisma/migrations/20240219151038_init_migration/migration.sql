@@ -7,6 +7,7 @@ CREATE TABLE `Item` (
     `category` VARCHAR(191) NOT NULL,
     `description` VARCHAR(191) NULL,
     `thumbnailId` VARCHAR(191) NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
     UNIQUE INDEX `Item_title_key`(`title`),
     UNIQUE INDEX `Item_thumbnailId_key`(`thumbnailId`),

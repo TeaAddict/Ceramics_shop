@@ -25,7 +25,6 @@ export function NewItemModal() {
         <DialogHeader>
           <DialogTitle>Add new item</DialogTitle>
         </DialogHeader>
-        {/* <AddItemForm setOpen={setOpen} /> */}
         <ItemForm setOpen={setOpen} />
       </DialogContent>
     </Dialog>

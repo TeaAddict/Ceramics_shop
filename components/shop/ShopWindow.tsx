@@ -4,7 +4,7 @@ import { SelectCn } from "@/components/cart/SelectCn";
 import VerticalMenu from "@/components/shared/VerticalMenu";
 import ShopItems from "@/components/shop/ShopItems";
 import { countProperties } from "@/utils/countProperties";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { NewItemModal } from "../admin/NewItemModal";
 import { useItems } from "@/hooks/useItems";
 import { sortOptions } from "@/constants";
@@ -36,7 +36,6 @@ const ShopWindow = ({
 
   const categoriesCounts = countProperties(data, "category");
 
-  // const category = searchParams.get("category") ?? categoriesCounts[0].label;
   const category = searchParams["category"] ?? categoriesCounts[0].label;
   const sortBy =
     (searchParams["sortBy"] as
@@ -50,6 +49,16 @@ const ShopWindow = ({
   const filtered = data.filter((item) => item.category === category);
 
   const sorted = filtered.sort((a, b) => {
+    if (sort[0] === "date") {
+      const dateA = new Date(a.createdAt).getTime();
+      const dateB = new Date(b.createdAt).getTime();
+
+      if (sort[1] === "asc") {
+        return dateA - dateB;
+      } else {
+        return dateB - dateA;
+      }
+    }
     if (sort[1] === "asc") {
       return a[sort[0] as keyof TSort] - b[sort[0] as keyof TSort];
     } else {

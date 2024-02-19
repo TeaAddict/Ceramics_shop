@@ -85,8 +85,8 @@ export type ProductSchema = {
   category: string;
   description?: string;
   thumbnail: pictureSchema;
-  // thumbnailId: string;
   pictures: pictureSchema[];
+  createdAt: string;
 };
 
 type ParsedPicture = {

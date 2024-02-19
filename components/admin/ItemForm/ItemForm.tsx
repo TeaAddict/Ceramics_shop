@@ -148,7 +148,7 @@ const ItemForm = ({
       className="max-h-[90vh] flex flex-col gap-5"
     >
       <ScrollArea className="flex flex-col">
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-5 p-1">
           <div className="grid grid-cols-4 items-center gap-4">
             <p>Title</p>
             <Input {...register("title")} id="title" className="col-span-3" />

@@ -9,19 +9,4 @@ export function useItems() {
   });
 
   return res;
-  // if (!res.data) return res;
-
-  // const filtered = res.data.filter(
-  //   (item) => item.category === searchParams.category
-  // );
-
-  // const sorted = filtered.sort((a, b) => {
-  //   if (sort[1] === "asc") {
-  //     return a[sort[0] as keyof TSort] - b[sort[0] as keyof TSort];
-  //   } else {
-  //     return b[sort[0] as keyof TSort] - a[sort[0] as keyof TSort];
-  //   }
-  // });
-
-  // return { ...res, data: sorted };
 }
