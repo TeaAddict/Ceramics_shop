@@ -8,6 +8,7 @@ import { ProductSchema, TItemSchema, itemSchema } from "@/lib/types";
 import { getImagesWithDimensions } from "@/utils/helper";
 import ImageDrop from "./imageFeature/ImageDrop";
 import { getPictures } from "./imageFeature/getPictures";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const ItemForm = ({
   item,
@@ -44,8 +45,8 @@ const ItemForm = ({
       } else {
         return {
           title: "",
-          price: 0,
-          stock: 0,
+          price: 1,
+          stock: 1,
           category: "",
           description: "",
           thumbnailPicture: "",
@@ -125,8 +126,6 @@ const ItemForm = ({
           type: "server",
           message: errors.pictures,
         });
-      } else if (errors.customError) {
-        setCustomError(errors.customError);
       } else {
         alert("Something went wrong!");
       }
@@ -134,7 +133,6 @@ const ItemForm = ({
 
     if (responseData.success) {
       setOpen(false);
-      setCustomError("");
     }
   }
 
@@ -145,70 +143,78 @@ const ItemForm = ({
   }, [isSubmitSuccessful, reset]);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="grid gap-6 pt-4">
-      <div className="grid grid-cols-4 items-center gap-4">
-        <p>Title</p>
-        <Input {...register("title")} id="title" className="col-span-3" />
-        {errors.title && (
-          <p className="text-destructive col-span-3">{`${errors.title.message}`}</p>
-        )}
-      </div>
-      <div className="grid grid-cols-4 items-center gap-4">
-        <p>Price</p>
-        <Input {...register("price")} id="price" className="col-span-3" />
-        {errors.price && (
-          <p className="text-destructive col-span-3">{`${errors.price.message}`}</p>
-        )}
-      </div>
-      <div className="grid grid-cols-4 items-center gap-4">
-        <p>Stock</p>
-        <Input
-          {...register("stock")}
-          type="number"
-          id="stock"
-          className="col-span-3"
-        />
-        {errors.stock && (
-          <p className="text-destructive col-span-3">{`${errors.stock.message}`}</p>
-        )}
-      </div>
-      <div className="grid grid-cols-4 items-center gap-4">
-        <p>Category</p>
-        <Input {...register("category")} id="category" className="col-span-3" />
-        {errors.category && (
-          <p className="text-destructive col-span-3">{`${errors.category.message}`}</p>
-        )}
-      </div>
-      <div className="grid w-full gap-1.5">
-        <p>Description</p>
-        <Textarea {...register("description")} id="description" />
-        {errors.description && (
-          <p className="text-destructive col-span-3">{`${errors.description.message}`}</p>
-        )}
-      </div>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="max-h-[90vh] flex flex-col gap-5"
+    >
+      <ScrollArea className="flex flex-col">
+        <div className="flex flex-col gap-5">
+          <div className="grid grid-cols-4 items-center gap-4">
+            <p>Title</p>
+            <Input {...register("title")} id="title" className="col-span-3" />
+            {errors.title && (
+              <p className="text-destructive col-span-3">{`${errors.title.message}`}</p>
+            )}
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <p>Price</p>
+            <Input {...register("price")} id="price" className="col-span-3" />
+            {errors.price && (
+              <p className="text-destructive col-span-3">{`${errors.price.message}`}</p>
+            )}
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <p>Stock</p>
+            <Input
+              {...register("stock")}
+              type="number"
+              id="stock"
+              className="col-span-3"
+            />
+            {errors.stock && (
+              <p className="text-destructive col-span-3">{`${errors.stock.message}`}</p>
+            )}
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <p>Category</p>
+            <Input
+              {...register("category")}
+              id="category"
+              className="col-span-3"
+            />
+            {errors.category && (
+              <p className="text-destructive col-span-3">{`${errors.category.message}`}</p>
+            )}
+          </div>
+          <div className="grid w-full gap-1.5">
+            <p>Description</p>
+            <Textarea {...register("description")} id="description" />
+            {errors.description && (
+              <p className="text-destructive col-span-3">{`${errors.description.message}`}</p>
+            )}
+          </div>
 
-      {isEdit && initPictures && (
-        <ImageDrop
-          initPictures={initPictures}
-          errors={errors}
-          register={register}
-          setValue={setValue}
-          watchValues={watchValues}
-        />
-      )}
+          {isEdit && initPictures && (
+            <ImageDrop
+              initPictures={initPictures}
+              errors={errors}
+              register={register}
+              setValue={setValue}
+              watchValues={watchValues}
+            />
+          )}
 
-      {!isEdit && (
-        <ImageDrop
-          initPictures={initPictures}
-          errors={errors}
-          register={register}
-          setValue={setValue}
-          watchValues={watchValues}
-        />
-      )}
-      {customError && (
-        <p className="text-destructive col-span-3">{customError}</p>
-      )}
+          {!isEdit && (
+            <ImageDrop
+              initPictures={initPictures}
+              errors={errors}
+              register={register}
+              setValue={setValue}
+              watchValues={watchValues}
+            />
+          )}
+        </div>
+      </ScrollArea>
       <div className="flex justify-around">
         <Button
           disabled={isSubmitting}

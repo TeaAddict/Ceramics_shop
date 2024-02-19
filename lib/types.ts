@@ -86,5 +86,15 @@ export type ParsedItem = {
   pictures: ParsedPicture[];
 };
 
+// export type ItemForm = {
+//   title: string;
+//   price?: number;
+//   stock?: number;
+//   category: string;
+//   thumbnailPicture: string;
+//   description?: string | undefined;
+//   pictures?: any;
+// };
+
 export type TItemSchema = z.infer<typeof itemSchema>;
 export type TProductSchemaServer = z.infer<typeof productSchemaServer>;

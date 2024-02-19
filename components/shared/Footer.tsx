@@ -3,13 +3,13 @@ import React from "react";
 const Footer = () => {
   return (
     <footer className="bg-accent text-accent-foreground p-8">
-      <div className="container mx-auto flex flex-wrap">
+      <div className="container mx-auto flex flex-wrap gap-5 md:gap-0">
         {/* Contact Information */}
         <div className="w-full md:w-1/4">
           <h3 className="text-lg font-bold mb-4">Contact Us</h3>
           <p>Skomantes Keramika</p>
           <p>123 Ceramics Street</p>
-          <p>Email: skomanteskeramika@gmail.com</p>
+          <p>Email: skeramika@gmail.com</p>
           <p>Phone: +123 456 7890</p>
         </div>
 

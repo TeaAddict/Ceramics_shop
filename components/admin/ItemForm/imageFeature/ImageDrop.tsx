@@ -61,7 +61,7 @@ const ImageDrop = (props: Props) => {
       {errors.pictures && (
         <p className="text-destructive col-span-4">{`${errors.pictures.message}`}</p>
       )}
-      {imgBlobUrl && images && (
+      {imgBlobUrl.length && images ? (
         <div className="space-y-2 col-span-4">
           <p>Thumbnail with pictures</p>
           <SelectedImages
@@ -74,7 +74,7 @@ const ImageDrop = (props: Props) => {
             <p className="text-destructive col-span-4">{`${errors.thumbnailPicture.message}`}</p>
           )}
         </div>
-      )}
+      ) : null}
     </div>
   );
 };

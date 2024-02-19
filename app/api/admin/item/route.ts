@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
       console.log(issue);
       backendErrors = { ...backendErrors, [issue.path[0]]: issue.message };
     });
-    return NextResponse.json({ success: false }); // TODO return errors not just false
+    return NextResponse.json({ errors: backendErrors });
   }
 
   // parse picture data for DB
@@ -80,15 +80,15 @@ export async function POST(request: NextRequest) {
       data: { thumbnailId: thumbnailInDb!.id },
     });
   } catch (e) {
-    let customError: { customError: string } = { customError: "" };
+    let customError = "";
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
-      if (e.code === "P2002") {
-        customError = {
-          customError:
-            "Picture name is already in use, rename or change picture",
-        };
-      }
-      return NextResponse.json({ errors: customError });
+      if (e.code === "P2002")
+        customError =
+          "Picture name is already in use, rename or change picture";
+
+      return NextResponse.json({
+        errors: { ...backendErrors, pictures: customError },
+      });
     }
   }
 
