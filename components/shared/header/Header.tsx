@@ -1,16 +1,15 @@
 import Image from "next/image";
 import React from "react";
-import { Button } from "@/components/ui/button";
 import CartBadge from "./CartBadge";
 import MobileMenu from "./MobileMenu";
 import NavButtons from "./NavButtons";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
+import LoginButton from "./LoginButton";
+import LogoutButton from "./LogoutButton";
 
 const Header = async () => {
   const session = await getServerSession(authOptions);
-
-  console.log(session);
 
   return (
     <section className="sticky top-0 z-10 px-6 lg:px-20 3xl:px-24 flex items-center justify-between bg-white/90">
@@ -28,9 +27,16 @@ const Header = async () => {
         <div className="hidden sm:block">
           <CartBadge />
         </div>
-        <div className="hidden md:block">
-          <Button>Login</Button>
-        </div>
+        {!session ? (
+          <div className="hidden md:block">
+            <LoginButton />
+          </div>
+        ) : (
+          <div className="hidden md:flex md:gap-3 md:items-center">
+            <p>{session.user?.name}</p>
+            <LogoutButton />
+          </div>
+        )}
         <div className="md:hidden">
           <MobileMenu />
         </div>
