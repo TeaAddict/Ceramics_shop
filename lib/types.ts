@@ -8,6 +8,25 @@ const ACCEPTED_IMAGE_TYPES = [
   "image/webp",
 ];
 
+const cartSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  picture: z.string(),
+  quantity: z.number(),
+  stock: z.number(),
+  unitPrice: z.number(),
+  totalPrice: z.number(),
+});
+
+export const orderSchema = z.object({
+  firstName: z.string().min(2, "First name is required"),
+  lastName: z.string().min(2, "Last name is required"),
+  email: z.string().email().min(4, "Email is required"),
+  phone: z.string().min(6, "Phone is required"),
+  orderTotal: z.string(),
+  cart: z.array(cartSchema),
+});
+
 export const itemSchema = z.object({
   title: z.string().min(1, "Title is required").max(255),
   price: z.coerce.number().min(1, "Price is required"),
@@ -85,6 +104,16 @@ export type ParsedItem = {
   // pictures: [{ dimensions: { width: number; height: number }; picture: File }];
   pictures: ParsedPicture[];
 };
+
+export type Cart = {
+  id: string;
+  quantity: number;
+  stock: number;
+  title: string;
+  picture: string;
+  unitPrice: number;
+  totalPrice: number;
+}[];
 
 // export type ItemForm = {
 //   title: string;
