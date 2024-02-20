@@ -33,3 +33,16 @@ model Picture {
   item        Item   @relation("itemPictures", fields: [itemId], references: [id])
   itemThumbnailId Item? @relation("thumbnail")
 }
+
+model User {
+  id  String @id @default(uuid())
+  name  String
+  email String  @unique
+  image String?
+  role  Role  @default(USER)
+}
+
+enum Role {
+  USER
+  ADMIN
+}

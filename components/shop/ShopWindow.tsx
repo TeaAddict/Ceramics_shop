@@ -42,7 +42,7 @@ const ShopWindow = ({
       | "price-asc"
       | "price-desc"
       | "date-desc"
-      | "date-asc") ?? "price-asc";
+      | "date-asc") ?? "date-desc";
 
   const sort = sortBy.split("-");
 

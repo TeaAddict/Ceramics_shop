@@ -1,8 +1,6 @@
 import MobileFooter from "@/components/shop/MobileFooter";
 import ShopWindow from "@/components/shop/ShopWindow";
-import { useItems } from "@/hooks/useItems";
 import { getCategories } from "@/app/api/_functions/getCategories";
-import { sortOptions } from "@/constants";
 
 const ShopPage = async ({
   color = "default",
