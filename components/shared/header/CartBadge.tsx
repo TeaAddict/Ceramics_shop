@@ -21,7 +21,7 @@ const CartBadge = ({ size = "default" }: { size?: "default" | "small" }) => {
   if (size === "small")
     return (
       <Link className="flex relative p-3" href="/cart">
-        <IoCartOutline size={30} className="cursor-pointer" />
+        <IoCartOutline size={30} className="cursor-pointer text-white" />
         {cart.length > 0 && (
           <span className="absolute flex justify-center items-center w-[30px] h-[30px] bg-primary rounded-full bottom-6 left-6 cursor-pointer">
             <p>{cart.length}</p>

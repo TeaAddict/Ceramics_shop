@@ -9,7 +9,6 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useItem } from "@/hooks/useItem";
 import BackButton from "@/components/shared/BackButton";
-import { capitalizeFirstLetter } from "@/utils/helper";
 
 const ItemPage = ({ params }: { params: { id: string } }) => {
   const cart = useAppSelector((state) => state.cartReducer.cartItems);
@@ -51,7 +50,9 @@ const ItemPage = ({ params }: { params: { id: string } }) => {
       <BackButton />
 
       <div className="flex flex-col md:flex-row gap-5 md:gap-40 justify-center">
-        <h3 className="font-semibold text-3xl md:hidden">{item.title}</h3>
+        <h3 className="font-semibold text-3xl md:hidden capitalize">
+          {item.title}
+        </h3>
         <div>
           <PhotoSwipeCarousel
             galleryID="testing"
@@ -67,7 +68,7 @@ const ItemPage = ({ params }: { params: { id: string } }) => {
           <p className="hidden md:block">===IDK SOME FANCY IMAGE SLIDE===</p>
         </div>
         <div className="flex flex-col gap-10">
-          <h3 className="font-semibold text-3xl hidden md:block">
+          <h3 className="font-semibold text-3xl hidden md:block capitalize">
             {item.title}
           </h3>
 
@@ -88,9 +89,7 @@ const ItemPage = ({ params }: { params: { id: string } }) => {
             <Button onClick={handleRemoveFromCart}>Remove from cart</Button>
           )}
           {item.description && (
-            <p className="md:max-w-72">
-              {capitalizeFirstLetter(item.description)}
-            </p>
+            <p className="md:max-w-72 capitalize">{item.description}</p>
           )}
         </div>
       </div>

@@ -98,7 +98,7 @@ const ShopWindow = ({
             </div>
           )}
         </div>
-        <ShopItems data={sorted} color={color} />
+        <ShopItems data={sorted} color={color} isAdmin={isAdmin} />
       </div>
     </div>
   );

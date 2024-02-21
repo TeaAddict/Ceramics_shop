@@ -32,6 +32,7 @@ const CheckOutForm = ({
       lastName: "",
       email: session?.user?.email ?? "",
       phone: "",
+      address: "",
       cart: cart,
       orderTotal: orderTotal,
     },
@@ -89,6 +90,15 @@ const CheckOutForm = ({
           {errors.phone && (
             <p className="text-destructive col-span-4">
               {errors.phone.message}
+            </p>
+          )}
+        </div>
+        <div className="grid grid-cols-4 items-center gap-4">
+          <p>Address</p>
+          <Input {...register("address")} id="address" className="col-span-3" />
+          {errors.address && (
+            <p className="text-destructive col-span-4">
+              {errors.address.message}
             </p>
           )}
         </div>

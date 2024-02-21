@@ -16,11 +16,11 @@ export const NAV_BAR_LINKS = [
     route: "/shop",
     icon: BiShoppingBag,
   },
-  {
-    label: "Admin",
-    route: "/admin",
-    icon: FaRegUser,
-  },
+  // {
+  //   label: "Admin",
+  //   route: "/admin",
+  //   icon: FaRegUser,
+  // },
 ];
 
 export const ADMIN_MENU = [

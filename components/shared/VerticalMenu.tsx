@@ -1,6 +1,5 @@
 "use client";
 
-import { capitalizeFirstLetter } from "@/utils/helper";
 import { useState } from "react";
 
 const VerticalMenu = ({
@@ -42,9 +41,7 @@ const VerticalMenu = ({
                   }`
             }
           >
-            <span className="text-sm font-medium">
-              {capitalizeFirstLetter(item.label)}
-            </span>
+            <span className="text-sm font-medium capitalize">{item.label}</span>
             {item.value > 0 && (
               <span
                 className={`shrink-0 rounded-full bg-gray-100 px-3 py-0.5 text-xs text-gray-600 group-hover:bg-gray-200 group-hover:text-gray-700 ${

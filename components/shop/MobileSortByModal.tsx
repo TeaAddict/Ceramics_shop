@@ -28,7 +28,7 @@ export function MobileSortByModal({ sortBy }: { sortBy: string }) {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <button onClick={() => setOpen(true)}>
-          <FaSortAlphaUpAlt className="text-foreground" size={25} />
+          <FaSortAlphaUpAlt className="text-background" size={25} />
         </button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">

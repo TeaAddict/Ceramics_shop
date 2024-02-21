@@ -4,7 +4,7 @@ import Dashboard from "@/components/admin/Dashboard";
 import Account from "@/components/shared/Account";
 import Shopboard from "@/components/admin/Shopboard";
 import { getServerSession } from "next-auth";
-import { adminCheck } from "@/utils/server/adminCheck";
+import { isAdminRole } from "@/utils/server/isAdminRole";
 
 const AdminPage = async ({
   searchParams,
@@ -14,7 +14,7 @@ const AdminPage = async ({
   const { tab } = searchParams;
   const session = await getServerSession();
   let isAdmin = false;
-  if (session?.user?.name) isAdmin = await adminCheck(session?.user?.name);
+  if (session?.user?.name) isAdmin = await isAdminRole(session?.user?.name);
 
   if (!isAdmin) return <p className="padding-container">Admin required</p>;
   if (isAdmin)

@@ -1,6 +1,6 @@
 import React from "react";
 import { CartItem } from "./MyCartTable";
-import { capitalizeFirstLetter, formatToEuroCurrency } from "@/utils/helper";
+import { formatToEuroCurrency } from "@/utils/helper";
 import Image from "next/image";
 import QuantityPicker from "../shared/QuantityPicker";
 import { Button } from "../ui/button";
@@ -35,9 +35,7 @@ const PcCartTable = ({
             className="grid grid-cols-[1fr_1fr_1fr_1fr_1fr_0.2fr] items-center h-full border-t-2"
             key={index}
           >
-            <td className="h-full flex items-center">
-              {capitalizeFirstLetter(row.title)}
-            </td>
+            <td className="h-full flex items-center capitalize">{row.title}</td>
             <td className="aspect-square max-w-32 my-2 relative">
               <Image
                 alt=""

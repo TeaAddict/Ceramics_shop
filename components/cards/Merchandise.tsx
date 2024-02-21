@@ -1,8 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import Link from "next/link";
-import { capitalizeFirstLetter, formatToEuroCurrency } from "@/utils/helper";
-import { usePathname } from "next/navigation";
+import { formatToEuroCurrency } from "@/utils/helper";
 import { EditItemModal } from "../admin/EditItemModal";
 import { ProductSchema } from "@/lib/types";
 
@@ -18,19 +17,18 @@ interface Props {
   title: string;
   description?: string;
   price: number;
+  isAdmin: boolean;
 }
 
-const MerchandiseCard = ({
+const Merchandise = ({
   item,
   href,
   thumbnail,
   title,
   description,
   price,
+  isAdmin,
 }: Props) => {
-  const pathname = usePathname();
-  const isAdmin = pathname.includes("admin");
-
   if (isAdmin) {
     return (
       <div className="border-2 bg-white rounded-md flex flex-col space-y-4">
@@ -47,7 +45,7 @@ const MerchandiseCard = ({
         </div>
 
         <div className="flex flex-col !mt-0 gap-3 px-4 py-3 justify-between overflow-hidden">
-          <h3 className="font-bold text-xl">{capitalizeFirstLetter(title)}</h3>
+          <h3 className="font-bold text-xl capitalize">{title}</h3>
 
           <div className="flex justify-between items-center">
             <div className="flex gap-1">
@@ -84,8 +82,7 @@ const MerchandiseCard = ({
         </div>
 
         <div className="flex flex-col !mt-0 gap-3 px-4 py-3 justify-between overflow-hidden">
-          <h3 className="font-bold text-xl">{capitalizeFirstLetter(title)}</h3>
-
+          <h3 className="font-bold text-xl capitalize">{title}</h3>
           <div className="flex justify-between items-center">
             <div className="flex gap-1">
               <p>{formatToEuroCurrency(price)}</p>
@@ -97,4 +94,4 @@ const MerchandiseCard = ({
   }
 };
 
-export default MerchandiseCard;
+export default Merchandise;

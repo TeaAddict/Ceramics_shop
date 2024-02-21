@@ -23,6 +23,7 @@ export const orderSchema = z.object({
   lastName: z.string().min(2, "Last name is required"),
   email: z.string().email().min(4, "Email is required"),
   phone: z.string().min(6, "Phone is required"),
+  address: z.string().min(4, "Address is required"),
   orderTotal: z.string(),
   cart: z.array(cartSchema),
 });

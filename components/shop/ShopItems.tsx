@@ -1,16 +1,17 @@
 import { PAGE_SIZE } from "@/constants";
 import PaginationCn from "../shared/PaginationCn";
 import Merchandise from "../cards/Merchandise";
-import { usePathname, useSearchParams } from "next/navigation";
-import MerchandiseCard from "../cards/Merchandise";
+import { useSearchParams } from "next/navigation";
 import { ProductSchema } from "@/lib/types";
 
 const ShopItems = ({
   data,
   color = "default",
+  isAdmin,
 }: {
   data: ProductSchema[];
   color?: "default" | "inverted";
+  isAdmin: boolean;
 }) => {
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get("page")) || 1;
@@ -21,8 +22,7 @@ const ShopItems = ({
   const currentPageEndItem = (currentPage - 1) * PAGE_SIZE + PAGE_SIZE;
 
   const currentItems = data.slice(currentPageStartItem, currentPageEndItem);
-  const pathname = usePathname();
-  const isAdmin = pathname.includes("admin");
+
   return (
     <div
       className={`w-full sm:space-y-10 rounded-md pb-3 sm:p-5 ${
@@ -39,13 +39,14 @@ const ShopItems = ({
         {currentItems.map((item) => {
           return (
             <li className="m-3" key={item.title}>
-              <MerchandiseCard
+              <Merchandise
                 item={item}
                 href={`/shop/${item.id}`}
                 description={item.description}
                 thumbnail={item.thumbnail}
                 price={item.price}
                 title={item.title}
+                isAdmin={isAdmin}
               />
             </li>
           );

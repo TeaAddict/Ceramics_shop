@@ -1,14 +1,6 @@
-import Image from "next/image";
 import React from "react";
-import { Button } from "../ui/button";
 import { useDispatch } from "react-redux";
-import {
-  decreaseQuantity,
-  increaseQuantity,
-  removeItem,
-} from "@/redux/features/cartSlice";
-import QuantityPicker from "../shared/QuantityPicker";
-import { capitalizeFirstLetter, formatToEuroCurrency } from "@/utils/helper";
+import { decreaseQuantity, increaseQuantity } from "@/redux/features/cartSlice";
 import PcCartTable from "./PcCartTable";
 import MobileCartTable from "./MobileCartTable";
 

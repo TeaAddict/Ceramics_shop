@@ -1,7 +1,7 @@
-import React, { MouseEventHandler } from "react";
+import React from "react";
 import QuantityPicker from "../shared/QuantityPicker";
 import Image from "next/image";
-import { capitalizeFirstLetter, formatToEuroCurrency } from "@/utils/helper";
+import { formatToEuroCurrency } from "@/utils/helper";
 import { Button } from "../ui/button";
 import { removeItem } from "@/redux/features/cartSlice";
 import { useDispatch } from "react-redux";
@@ -46,7 +46,7 @@ const MobileCartRow = ({
           />
         </div>
         <div>
-          <p>{capitalizeFirstLetter(title)}</p>
+          <p>{title}</p>
           <p>{formatToEuroCurrency(price)}</p>
         </div>
       </div>

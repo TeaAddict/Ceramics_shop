@@ -14,7 +14,7 @@ const MobileNavbar = ({
   return (
     <nav>
       <div
-        className={`bg-primary fixed z-[9] right-0 top-0 h-full w-[50%] transition-all duration-300 flex flex-col justify-center items-center ${
+        className={`bg-primary fixed z-[9] right-0 top-0 h-full w-[60%] transition-all duration-300 flex flex-col justify-center items-center ${
           isMobileMenuActive ? "" : "translate-x-full"
         }`}
       >
