@@ -9,9 +9,7 @@ import { deleteFile, parseFormData, writeFiles } from "../myFunctions";
 
 export async function POST(request: NextRequest) {
   const data = await request.formData();
-  console.log(data);
   const pic = data.getAll("picture0");
-  console.log(pic);
 
   return NextResponse.json({ success: true });
 }
@@ -79,5 +77,18 @@ export async function PUT(request: NextRequest) {
     .map((el) => el.picture);
   if (filesToSave !== undefined) writeFiles(filesToSave, "/public/uploads");
 
+  return NextResponse.json({ success: true });
+}
+
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  console.log(params.id);
+  console.log(params.id);
+  console.log(params.id);
+  const res = await prisma.item.delete({ where: { id: params.id } });
+  // const res = await prisma.item.findFirst({ where: { id: params.id } });
+  console.log(res);
   return NextResponse.json({ success: true });
 }

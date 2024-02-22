@@ -8,6 +8,8 @@ import { usePathname, useRouter } from "next/navigation";
 import { NewItemModal } from "../admin/NewItemModal";
 import { useItems } from "@/hooks/useItems";
 import { sortOptions } from "@/constants";
+import OutOfStockPage from "./OutOfStockPage";
+import LoadSpinner from "../shared/loadSpinner/LoadSpinner";
 
 type TSort = {
   price: number;
@@ -24,15 +26,21 @@ const ShopWindow = ({
 }) => {
   const router = useRouter();
   const pathname = usePathname();
+  const isAdminPage = pathname.includes("/admin");
+  const adminPageAuth = isAdmin && isAdminPage;
 
-  const { data } = useItems();
-  if (!data || (data?.length === 0 && !isAdmin)) return <p>Out of stock</p>;
-  else if (!data || (data?.length === 0 && isAdmin))
+  const { data, isLoading } = useItems();
+  if (isLoading)
     return (
-      <div className="justify-center flex">
-        <NewItemModal />
+      <div className="flex justify-center">
+        <LoadSpinner />
       </div>
     );
+
+  if (!data || (data?.length === 0 && !adminPageAuth && !isLoading))
+    return <p className="flex justify-center text-2xl">Out of stock</p>;
+  else if (!data || (data?.length === 0 && adminPageAuth))
+    return <OutOfStockPage />;
 
   const categoriesCounts = countProperties(data, "category");
 
@@ -92,13 +100,13 @@ const ShopWindow = ({
             onClick={handleChangeParam}
             color={color}
           />
-          {isAdmin && (
+          {adminPageAuth && (
             <div className="justify-center flex">
               <NewItemModal />
             </div>
           )}
         </div>
-        <ShopItems data={sorted} color={color} isAdmin={isAdmin} />
+        <ShopItems data={sorted} color={color} isAdmin={adminPageAuth} />
       </div>
     </div>
   );

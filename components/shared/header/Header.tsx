@@ -13,7 +13,6 @@ import ProfileButton from "@/components/profile/ProfileButton";
 const Header = async () => {
   const session = await getServerSession(authOptions);
 
-  console.log(session);
   return (
     <section className="sticky top-0 z-10 px-6 py-3 lg:px-20 3xl:px-24 flex items-center justify-between bg-white/90">
       <Link href={"/"}>

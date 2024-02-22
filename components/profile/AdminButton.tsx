@@ -4,9 +4,11 @@ import Link from "next/link";
 
 const AdminButton = () => {
   return (
-    <Link href={"/admin"}>
-      <Button>Admin</Button>
-    </Link>
+    <div>
+      <Link href={"/admin"}>
+        <Button>Admin</Button>
+      </Link>
+    </div>
   );
 };
 

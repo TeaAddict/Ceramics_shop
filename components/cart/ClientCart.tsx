@@ -18,8 +18,10 @@ const ClientCart = ({ session }: { session: Session | null }) => {
 
   if (cart.length === 0)
     return (
-      <section className="padding-container flex flex-col justify-center text-2xl items-center gap-10">
-        <p>Your cart is currently empty. Begin shopping now!</p>
+      <section className="padding-container flex flex-col justify-center items-center gap-10">
+        <p className="text-2xl">
+          Your cart is currently empty. Begin shopping now!
+        </p>
         <div>
           <Link href="/shop">
             <Button>Start shopping!</Button>

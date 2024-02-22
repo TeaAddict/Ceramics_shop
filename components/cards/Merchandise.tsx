@@ -4,6 +4,7 @@ import Link from "next/link";
 import { formatToEuroCurrency } from "@/utils/helper";
 import { EditItemModal } from "../admin/EditItemModal";
 import { ProductSchema } from "@/lib/types";
+import DeleteItemButton from "../admin/DeleteItemButton";
 
 interface Props {
   item: ProductSchema;
@@ -47,15 +48,15 @@ const Merchandise = ({
         <div className="flex flex-col !mt-0 gap-3 px-4 py-3 justify-between overflow-hidden">
           <h3 className="font-bold text-xl capitalize">{title}</h3>
 
-          <div className="flex justify-between items-center">
+          <div className="flex flex-col items-center gap-3">
             <div className="flex gap-1">
               <p>{formatToEuroCurrency(price)}</p>
             </div>
-            {isAdmin && (
-              <div className="justify-center flex">
-                <EditItemModal item={item} />
-              </div>
-            )}
+
+            <div className="flex w-full justify-around gap-3">
+              <DeleteItemButton id={item.id} />
+              <EditItemModal item={item} />
+            </div>
           </div>
         </div>
       </div>

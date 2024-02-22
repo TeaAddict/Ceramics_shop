@@ -3,7 +3,7 @@ import { BiHomeAlt2 } from "react-icons/bi";
 import { MdLockOutline } from "react-icons/md";
 import { FaRegUser } from "react-icons/fa";
 
-export const PAGE_SIZE = 10;
+export const PAGE_SIZE = 8;
 
 export const NAV_BAR_LINKS = [
   {

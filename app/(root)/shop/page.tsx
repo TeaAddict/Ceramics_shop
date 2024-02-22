@@ -2,6 +2,7 @@ import MobileFooter from "@/components/shop/MobileFooter";
 import ShopWindow from "@/components/shop/ShopWindow";
 import { getCategories } from "@/app/api/_functions/getCategories";
 import { isAdminRole } from "@/utils/server/isAdminRole";
+import LoadSpinner from "@/components/shared/loadSpinner/LoadSpinner";
 
 const ShopPage = async ({
   color = "default",
