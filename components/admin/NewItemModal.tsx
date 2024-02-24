@@ -8,7 +8,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useState } from "react";
-import AddItemForm from "./ItemForm/AddItemForm";
 import ItemForm from "./ItemForm/ItemForm";
 
 export function NewItemModal() {

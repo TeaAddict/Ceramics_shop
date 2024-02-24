@@ -1,7 +1,8 @@
 import { writeFile } from "fs/promises";
 import path, { join } from "path";
 import fs from "fs";
-import { ParsedItem } from "@/lib/types";
+import { ParsedItem, PictureData } from "@/lib/types";
+import prisma from "@/lib/prisma";
 
 export function parseFormData(data: FormData) {
   // Parse formData to usable data
@@ -76,4 +77,29 @@ export function readDir() {
   } catch (error) {
     console.error(error);
   }
+}
+
+export async function updatePictures(
+  id: string,
+  pictureData: PictureData,
+  item: ParsedItem
+) {
+  // check which images need uploading which deleting
+  const oldPictures = await prisma.picture.findMany({ where: { itemId: id } });
+  const oldPictureNames = oldPictures.map((pic) => pic.name);
+  const newPictureNames = pictureData.map((pic) => pic.name);
+  const picturesNeedDeleting = oldPictureNames.filter(
+    (str) => !newPictureNames.includes(str)
+  );
+  const picturesNeedUploading = newPictureNames.filter(
+    (str) => !oldPictureNames.includes(str)
+  );
+
+  picturesNeedDeleting.forEach((picture) => deleteFile(picture));
+  const filesToSave = item.pictures
+    .filter((picture) => {
+      if (picturesNeedUploading.includes(picture.picture.name)) return picture;
+    })
+    .map((el) => el.picture);
+  if (filesToSave !== undefined) writeFiles(filesToSave, "/public/uploads");
 }

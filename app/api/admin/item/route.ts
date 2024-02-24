@@ -80,14 +80,13 @@ export async function POST(request: NextRequest) {
       data: { thumbnailId: thumbnailInDb!.id },
     });
   } catch (e) {
-    let customError = "";
+    let pictures = "";
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       if (e.code === "P2002")
-        customError =
-          "Picture name is already in use, rename or change picture";
+        pictures = "Picture name is already in use, rename or change picture";
 
       return NextResponse.json({
-        errors: { ...backendErrors, pictures: customError },
+        errors: { ...backendErrors, pictures: pictures },
       });
     }
   }

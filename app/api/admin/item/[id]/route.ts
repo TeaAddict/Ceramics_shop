@@ -1,11 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { ParsedItem } from "@/lib/types";
 import { parsePictureData } from "@/utils/myFunctions";
-import { writeFile } from "fs/promises";
-import { join } from "path";
 import { Prisma } from "@prisma/client";
-import { deleteFile, parseFormData, writeFiles } from "../myFunctions";
+import { parseFormData, updatePictures } from "../myFunctions";
 
 export async function POST(request: NextRequest) {
   const data = await request.formData();
@@ -14,24 +11,16 @@ export async function POST(request: NextRequest) {
   return NextResponse.json({ success: true });
 }
 
-export async function PUT(request: NextRequest) {
-  const id = request.url.split("item/")[1];
+export async function PUT(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const id = params.id;
   const data: FormData = await request.formData();
 
   // formData is messy so we parse it into usable object
   const parsed = parseFormData(data);
   const pictureData = parsePictureData(parsed);
-
-  // check which images need uploading which deleting
-  const oldPictures = await prisma.picture.findMany({ where: { itemId: id } });
-  const oldPictureNames = oldPictures.map((pic) => pic.name);
-  const newPictureNames = pictureData.map((pic) => pic.name);
-  const picturesNeedDeleting = oldPictureNames.filter(
-    (str) => !newPictureNames.includes(str)
-  );
-  const picturesNeedUploading = newPictureNames.filter(
-    (str) => !oldPictureNames.includes(str)
-  );
 
   // update data in db
   try {
@@ -43,39 +32,33 @@ export async function PUT(request: NextRequest) {
         stock: parsed.stock,
         category: parsed.category,
         description: parsed.description,
-        pictures: { deleteMany: {}, createMany: { data: pictureData } },
+
+        pictures: {
+          deleteMany: {},
+          createMany: { data: pictureData },
+        },
       },
     });
 
-    const thumbnailInDb = await prisma.picture.findFirst({
-      where: { name: parsed.thumbnailPicture },
-    });
     await prisma.item.update({
+      data: { thumbnail: { connect: { name: parsed.thumbnailPicture } } },
       where: { id: item.id },
-      data: { thumbnailId: thumbnailInDb!.id },
     });
   } catch (e: any) {
-    let customError: { customError: string } = { customError: "" };
+    let pictures: { pictures: string } = { pictures: "" };
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
+      console.log(e);
       if (e.code === "P2002") {
-        customError = {
-          customError:
-            "Picture name is already in use, rename or change picture",
+        pictures = {
+          pictures: "Picture name is already in use, rename or change picture",
         };
       }
-      return NextResponse.json({ errors: customError });
+      return NextResponse.json({ errors: pictures });
     }
   }
 
-  // Delete old images and save new ones in servers local storage
-  // delete then upload images
-  picturesNeedDeleting.forEach((picture) => deleteFile(picture));
-  const filesToSave = parsed.pictures
-    .filter((picture) => {
-      if (picturesNeedUploading.includes(picture.picture.name)) return picture;
-    })
-    .map((el) => el.picture);
-  if (filesToSave !== undefined) writeFiles(filesToSave, "/public/uploads");
+  // delete old pictures and update new
+  updatePictures(id, pictureData, parsed);
 
   return NextResponse.json({ success: true });
 }
@@ -84,11 +67,7 @@ export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  console.log(params.id);
-  console.log(params.id);
-  console.log(params.id);
-  const res = await prisma.item.delete({ where: { id: params.id } });
-  // const res = await prisma.item.findFirst({ where: { id: params.id } });
-  console.log(res);
+  await prisma.picture.deleteMany({ where: { itemId: params.id } });
+  await prisma.item.delete({ where: { id: params.id } });
   return NextResponse.json({ success: true });
 }

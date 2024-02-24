@@ -2,13 +2,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "../../ui/textarea";
 import { useForm } from "react-hook-form";
-import React, { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ProductSchema, TItemSchema, itemSchema } from "@/lib/types";
 import { getImagesWithDimensions } from "@/utils/helper";
 import ImageDrop from "./imageFeature/ImageDrop";
 import { getPictures } from "./imageFeature/getPictures";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { addItem, updateItem } from "@/utils/itemFunctions";
+import { setFormError } from "./setFormError";
 
 const ItemForm = ({
   item,
@@ -17,8 +19,8 @@ const ItemForm = ({
   item?: ProductSchema;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
+  const queryClient = useQueryClient();
   const isEdit = item ? true : false;
-  const [customError, setCustomError] = useState("");
   const {
     register,
     handleSubmit,
@@ -55,13 +57,33 @@ const ItemForm = ({
       }
     },
   });
+  const mutationAddItem = useMutation({
+    mutationFn: (data: FormData) => addItem(data),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["items"] });
+      if (data.errors) setFormError(setError, data.errors);
+      if (data.success) {
+        setOpen(false);
+        reset();
+      }
+    },
+  });
+  const mutationUpdateItem = useMutation({
+    mutationFn: (data: { data: FormData; id: string }) => updateItem(data),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["items"] });
+      if (data.errors) setFormError(setError, data.errors);
+      if (data.success) {
+        setOpen(false);
+        reset();
+      }
+    },
+  });
   const watchValues = watch(["thumbnailPicture", "pictures"]);
   const initPictures = getValues("pictures");
 
   async function onSubmit(formData: TItemSchema) {
-    console.log(formData);
     const pictureArray = await getImagesWithDimensions(formData.pictures);
-
     let data = new FormData();
     data.append("title", formData.title);
     data.append("price", formData.price.toString());
@@ -74,73 +96,12 @@ const ItemForm = ({
       data.append(`picture${index}`, JSON.stringify(picture.dimensions));
     });
 
-    let response;
-    if (isEdit) {
-      response = await fetch(`/api/admin/item/${item?.id}`, {
-        method: "PUT",
-        body: data,
-      });
+    if (isEdit && item) {
+      mutationUpdateItem.mutate({ data: data, id: item.id });
     } else {
-      response = await fetch(`/api/admin/item`, {
-        method: "POST",
-        body: data,
-      });
-    }
-    const responseData = await response.json();
-    if (!response.ok) {
-      // response status is not 2xx
-      // TODO change into nice toast
-      alert("Submitting form failed!");
-      return;
-    }
-
-    if (responseData.errors) {
-      const errors = responseData.errors;
-      if (errors.title) {
-        setError("title", {
-          type: "server",
-          message: errors.title,
-        });
-      } else if (errors.price) {
-        setError("price", {
-          type: "server",
-          message: errors.price,
-        });
-      } else if (errors.stock) {
-        setError("stock", {
-          type: "server",
-          message: errors.stock,
-        });
-      } else if (errors.category) {
-        setError("category", {
-          type: "server",
-          message: errors.category,
-        });
-      } else if (errors.description) {
-        setError("description", {
-          type: "server",
-          message: errors.description,
-        });
-      } else if (errors.pictures) {
-        setError("pictures", {
-          type: "server",
-          message: errors.pictures,
-        });
-      } else {
-        alert("Something went wrong!");
-      }
-    }
-
-    if (responseData.success) {
-      setOpen(false);
+      mutationAddItem.mutate(data);
     }
   }
-
-  useEffect(() => {
-    if (isSubmitSuccessful) {
-      reset();
-    }
-  }, [isSubmitSuccessful, reset]);
 
   return (
     <form

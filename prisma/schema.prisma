@@ -20,7 +20,7 @@ model Item {
   description String?
   pictures    Picture[] @relation("itemPictures")
   thumbnailId String?  @unique
-  thumbnail   Picture?  @relation("thumbnail", fields: [thumbnailId], references: [id], onDelete: Cascade)
+  thumbnail   Picture?  @relation("thumbnail", fields: [thumbnailId], references: [id])
   createdAt DateTime @default(now())
   favouritedByUsers  Favourites[]
 }
@@ -30,17 +30,17 @@ model Picture {
   name        String @unique
   width       Int
   height      Int
-  itemId      String
-  item        Item   @relation("itemPictures", fields: [itemId], references: [id], onDelete: Cascade)
+  itemId      String?
+  item        Item?  @relation("itemPictures", fields: [itemId], references: [id])
   itemThumbnailId Item? @relation("thumbnail")
 }
 
 model Favourites{
   id String @id @default(uuid())
-  itemId String
-  item  Item  @relation(fields: [itemId], references: [id])
-  userId String
-  user User @relation(fields: [userId], references: [id])
+  itemId String?
+  item  Item?  @relation(fields: [itemId], references: [id])
+  userId String?
+  user User? @relation(fields: [userId], references: [id])
 }
 
 model User {

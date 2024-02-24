@@ -95,6 +95,12 @@ type ParsedPicture = {
   picture: File;
 };
 
+export type PictureData = {
+  name: string;
+  width: number;
+  height: number;
+}[];
+
 export type ParsedItem = {
   title: string;
   price: number;
