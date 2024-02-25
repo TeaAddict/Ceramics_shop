@@ -10,6 +10,7 @@ import { useItems } from "@/hooks/useItems";
 import { sortOptions } from "@/constants";
 import OutOfStockPage from "./OutOfStockPage";
 import LoadSpinner from "../shared/loadSpinner/LoadSpinner";
+import { useEffect } from "react";
 
 type TSort = {
   price: number;
@@ -20,7 +21,7 @@ const ShopWindow = ({
   color = "default",
   isAdmin = false,
 }: {
-  searchParams: { category: string; sortBy: string };
+  searchParams: { tab: string; category: string; sortBy: string; page: string };
   color?: "default" | "inverted";
   isAdmin?: boolean;
 }) => {
@@ -28,34 +29,21 @@ const ShopWindow = ({
   const pathname = usePathname();
   const isAdminPage = pathname.includes("/admin");
   const adminPageAuth = isAdmin && isAdminPage;
-
   const { data, isLoading } = useItems();
-  if (isLoading)
-    return (
-      <div className="flex justify-center">
-        <LoadSpinner />
-      </div>
-    );
+  const items = data ?? [];
 
-  if (!data || (data?.length === 0 && !adminPageAuth && !isLoading))
-    return <p className="flex justify-center text-2xl">Out of stock</p>;
-  else if (!data || (data?.length === 0 && adminPageAuth))
-    return <OutOfStockPage />;
-
-  const categoriesCounts = countProperties(data, "category");
-
+  const categoriesCounts = countProperties(items, "category");
   const category = searchParams["category"] ?? categoriesCounts[0].label;
+
+  const filtered = items.filter((item) => item.category === category);
+
   const sortBy =
     (searchParams["sortBy"] as
       | "price-asc"
       | "price-desc"
       | "date-desc"
       | "date-asc") ?? "date-desc";
-
   const sort = sortBy.split("-");
-
-  const filtered = data.filter((item) => item.category === category);
-
   const sorted = filtered.sort((a, b) => {
     if (sort[0] === "date") {
       const dateA = new Date(a.createdAt).getTime();
@@ -80,6 +68,26 @@ const ShopWindow = ({
     params.set("page", "1");
     router.replace(`${pathname}?${params.toString()}`);
   }
+
+  useEffect(() => {
+    if (!filtered.length) {
+      const params = new URLSearchParams(searchParams);
+      params.set("category", categoriesCounts?.[0]?.label);
+      router.replace(`${pathname}?${params.toString()}`);
+    }
+  }, [categoriesCounts, filtered.length, pathname, router, searchParams]);
+
+  if (isLoading)
+    return (
+      <div className="flex justify-center">
+        <LoadSpinner />
+      </div>
+    );
+
+  if (!items || (items?.length === 0 && !adminPageAuth && !isLoading))
+    return <p className="flex justify-center text-2xl">Out of stock</p>;
+  else if (!items || (items?.length === 0 && adminPageAuth))
+    return <OutOfStockPage />;
 
   return (
     <div>

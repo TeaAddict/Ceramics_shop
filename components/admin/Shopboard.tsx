@@ -6,7 +6,7 @@ import AdminMobileFooter from "./AdminMobileFooter";
 const Shopboard = ({
   searchParams,
 }: {
-  searchParams: { category: string; sortBy: string };
+  searchParams: { tab: string; category: string; sortBy: string; page: string };
 }) => {
   return (
     <div className="padding-container">

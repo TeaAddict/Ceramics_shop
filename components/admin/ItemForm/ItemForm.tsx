@@ -24,7 +24,7 @@ const ItemForm = ({
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting, isSubmitSuccessful },
+    formState: { errors, isSubmitting },
     reset,
     setError,
     setValue,
@@ -52,7 +52,7 @@ const ItemForm = ({
           category: "",
           description: "",
           thumbnailPicture: "",
-          pictures: null,
+          pictures: undefined,
         };
       }
     },
@@ -60,22 +60,22 @@ const ItemForm = ({
   const mutationAddItem = useMutation({
     mutationFn: (data: FormData) => addItem(data),
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["items"] });
       if (data.errors) setFormError(setError, data.errors);
       if (data.success) {
         setOpen(false);
         reset();
+        queryClient.invalidateQueries({ queryKey: ["items"] });
       }
     },
   });
   const mutationUpdateItem = useMutation({
     mutationFn: (data: { data: FormData; id: string }) => updateItem(data),
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["items"] });
       if (data.errors) setFormError(setError, data.errors);
       if (data.success) {
         setOpen(false);
         reset();
+        queryClient.invalidateQueries({ queryKey: ["items"] });
       }
     },
   });

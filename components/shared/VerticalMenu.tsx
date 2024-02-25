@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const VerticalMenu = ({
   menuList,
@@ -8,7 +8,6 @@ const VerticalMenu = ({
   onClick,
   color = "default",
 }: {
-  // menuList: { [key: string]: number };
   menuList: { label: string; value: number }[];
   activeValue: string;
   onClick: Function;
@@ -20,6 +19,10 @@ const VerticalMenu = ({
     setActive(key);
     onClick(key);
   }
+
+  useEffect(() => {
+    setActive(activeValue);
+  }, [activeValue]);
 
   return (
     <ul className="space-y-1">

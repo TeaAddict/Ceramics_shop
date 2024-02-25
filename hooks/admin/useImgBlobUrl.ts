@@ -5,6 +5,7 @@ export function useImgBlobUrl(images: FileList | File[] | undefined | null) {
 
   useEffect(() => {
     if (!images) {
+      setImgBlobUrl([]);
       return;
     }
     const urls: string[] = Array.from(images).map((image) => {
@@ -12,6 +13,7 @@ export function useImgBlobUrl(images: FileList | File[] | undefined | null) {
     });
     setImgBlobUrl(urls);
     return () => {
+      // urls.forEach((url) => URL.revokeObjectURL(url));
       urls.forEach((url) => URL.revokeObjectURL(url));
     };
   }, [images]);
