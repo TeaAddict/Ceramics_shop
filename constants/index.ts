@@ -1,7 +1,8 @@
 import { BiShoppingBag } from "react-icons/bi";
 import { BiHomeAlt2 } from "react-icons/bi";
-import { MdLockOutline } from "react-icons/md";
 import { FaRegUser } from "react-icons/fa";
+import { GrGroup } from "react-icons/gr";
+import { LuPhone } from "react-icons/lu";
 
 export const PAGE_SIZE = 8;
 
@@ -16,11 +17,16 @@ export const NAV_BAR_LINKS = [
     route: "/shop",
     icon: BiShoppingBag,
   },
-  // {
-  //   label: "Admin",
-  //   route: "/admin",
-  //   icon: FaRegUser,
-  // },
+  {
+    label: "About",
+    route: "/about",
+    icon: GrGroup,
+  },
+  {
+    label: "Contacts",
+    route: "/contacts",
+    icon: LuPhone,
+  },
 ];
 
 export const ADMIN_MENU = [

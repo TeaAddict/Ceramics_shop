@@ -23,7 +23,7 @@ const NavButtons = () => {
               pointerEvents:
                 !isActive || pathname.includes("/shop/") ? "auto" : "none",
             }}
-            className={`text-black flex ${
+            className={`text-black gap-1 flex ${
               !isActive
                 ? "hover:border-b-[1px] border-black"
                 : "border-b-2 border-black"
