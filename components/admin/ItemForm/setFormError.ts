@@ -5,7 +5,6 @@ export function setFormError(
   setError: UseFormSetError<TItemSchema>,
   errors: any
 ) {
-  console.log(errors);
   if (errors.title) {
     setError("title", {
       type: "server",
