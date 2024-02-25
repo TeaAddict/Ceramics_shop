@@ -15,7 +15,7 @@ const ProfileButton = ({
   return (
     <Link
       href={route}
-      className="flex items-center gap-2 hover:outline-none hover:outline-black hover:outline-offset-[0px]  rounded-full pl-2"
+      className="flex items-center gap-2 hover:outline-none hover:outline-black hover:outline-1 hover:outline-offset-[0px]  rounded-full pl-2"
     >
       <p className="font-semibold">{name}</p>
       <div className="relative w-14 aspect-square">

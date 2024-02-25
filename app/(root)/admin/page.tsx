@@ -9,7 +9,7 @@ import { isAdminRole } from "@/utils/server/isAdminRole";
 const AdminPage = async ({
   searchParams,
 }: {
-  searchParams: { tab: string; category: string; sortBy: string };
+  searchParams: { tab: string; category: string; sortBy: string; page: string };
 }) => {
   const { tab } = searchParams;
   const session = await getServerSession();
@@ -28,8 +28,8 @@ const AdminPage = async ({
 
             <div className=" w-full rounded-md bg-accent">
               {tab === "dashboard" && <Dashboard />}
-              {tab === "account" && <Account />}
               {tab === "shopboard" && <Shopboard searchParams={searchParams} />}
+              {tab === "account" && <Account />}
             </div>
           </div>
         </section>

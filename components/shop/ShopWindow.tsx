@@ -33,7 +33,7 @@ const ShopWindow = ({
   const items = data ?? [];
 
   const categoriesCounts = countProperties(items, "category");
-  const category = searchParams["category"] ?? categoriesCounts[0].label;
+  const category = searchParams["category"] ?? categoriesCounts[0]?.label;
 
   const filtered = items.filter((item) => item.category === category);
 

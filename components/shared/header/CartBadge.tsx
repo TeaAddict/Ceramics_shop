@@ -9,7 +9,7 @@ const CartBadge = ({ size = "default" }: { size?: "default" | "small" }) => {
   if (size === "default")
     return (
       <Link
-        className="flex relative p-3 hover:outline-none hover:outline-black hover:outline-offset-[-5px]  rounded-full"
+        className="flex relative p-3 hover:outline-none hover:outline-black hover:outline-1 hover:outline-offset-[-5px]  rounded-full"
         href="/cart"
       >
         <IoCartOutline size={40} className="cursor-pointer" />

@@ -42,10 +42,6 @@ export const cartSlice = createSlice({
       state.cartItems = state.cartItems.filter(
         (item) => item.id !== action.payload
       );
-      state.orderTotal = state.cartItems.reduce(
-        (acc, curr) => acc + curr.totalPrice,
-        0
-      );
     },
     increaseQuantity: (state, action: PayloadAction<string>) => {
       const item = state.cartItems.find((item) => item.id === action.payload);
