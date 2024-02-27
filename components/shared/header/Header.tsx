@@ -15,7 +15,7 @@ const Header = async () => {
 
   return (
     <section className="sticky top-0 z-10 px-6 py-3 lg:px-20 3xl:px-24 flex items-center justify-between bg-white/90">
-      <Link href={"/"}>
+      <Link href={"/"} className="lg:pr-3 xl:pr-0">
         <Image
           src={"/assets/sk_logo.png"}
           alt="logo"
@@ -27,8 +27,9 @@ const Header = async () => {
       <div className="hidden md:flex">
         <NavButtons />
       </div>
-      <div className="sm:flex items-center gap-5">
-        <div className="hidden sm:block">
+      <div className="flex items-center gap-5">
+        {/* <div className="hidden sm:block"> */}
+        <div className="">
           <CartBadge />
         </div>
         {!session ? (
@@ -48,7 +49,7 @@ const Header = async () => {
           </div>
         )}
         <div className="md:hidden">
-          <MobileMenu />
+          <MobileMenu session={session} />
         </div>
       </div>
     </section>

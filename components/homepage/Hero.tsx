@@ -25,8 +25,7 @@ const Hero = () => {
             <h1 className="text-3xl font-extrabold sm:text-5xl">
               Discover the Elegance of
               <strong className="block font-extrabold text-orange-400">
-                {" "}
-                Handmade Ceramics.{" "}
+                Handmade Ceramics.
               </strong>
             </h1>
 

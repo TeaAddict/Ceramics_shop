@@ -3,8 +3,9 @@
 import React, { useState } from "react";
 import Hamburger from "./Hamburger";
 import MobileNavbar from "./MobileNavbar";
+import { Session } from "next-auth";
 
-const MobileMenu = () => {
+const MobileMenu = ({ session }: { session: Session | null }) => {
   const [isMobileMenuActive, setIsMobileMenuActive] = useState(false);
 
   return (
@@ -16,6 +17,7 @@ const MobileMenu = () => {
       <MobileNavbar
         isMobileMenuActive={isMobileMenuActive}
         setIsMobileMenuActive={setIsMobileMenuActive}
+        session={session}
       />
     </div>
   );

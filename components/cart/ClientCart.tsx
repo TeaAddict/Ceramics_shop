@@ -19,7 +19,7 @@ const ClientCart = ({ session }: { session: Session | null }) => {
   if (cart.length === 0)
     return (
       <section className="padding-container flex flex-1 flex-col justify-center items-center gap-10">
-        <p className="text-2xl">
+        <p className="text-2xl font-semibold">
           Your cart is currently empty. Begin shopping now!
         </p>
         <div>

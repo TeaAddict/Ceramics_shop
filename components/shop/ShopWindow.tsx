@@ -9,8 +9,8 @@ import { NewItemModal } from "../admin/NewItemModal";
 import { useItems } from "@/hooks/useItems";
 import { sortOptions } from "@/constants";
 import OutOfStockPage from "./OutOfStockPage";
-import LoadSpinner from "../shared/loadSpinner/LoadSpinner";
 import { useEffect } from "react";
+import LoadPage from "../shared/loadSpinner/LoadPage";
 
 type TSort = {
   price: number;
@@ -77,12 +77,7 @@ const ShopWindow = ({
     }
   }, [categoriesCounts, filtered.length, pathname, router, searchParams]);
 
-  if (isLoading)
-    return (
-      <div className="flex justify-center">
-        <LoadSpinner />
-      </div>
-    );
+  if (isLoading) return <LoadPage />;
 
   if (!items || (items?.length === 0 && !adminPageAuth && !isLoading))
     return <p className="flex justify-center text-2xl">Out of stock</p>;
@@ -98,6 +93,11 @@ const ShopWindow = ({
           color={color}
         />
       </div>
+      {adminPageAuth && (
+        <div className="flex justify-center pb-5 sm:hidden">
+          <NewItemModal />
+        </div>
+      )}
 
       <div className="flex flex-col sm:flex-row">
         <div className="space-y-10 w-52 hidden sm:block">

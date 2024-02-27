@@ -10,9 +10,9 @@ const AboutPage = () => {
       <div className="relative w-[50vw] hidden md:block">
         <Image
           alt="about-img"
-          src={"/assets/about1.jpeg"}
+          src={"/assets/about3.jpg"}
           fill
-          className="object-cover"
+          className="object-cover object-left"
         />
       </div>
     </div>

@@ -6,7 +6,7 @@ import React from "react";
 const LogoutButton = () => {
   return (
     <div>
-      <Button onClick={() => signOut()}>Logout</Button>
+      <Button onClick={() => signOut({ callbackUrl: "/" })}>Logout</Button>
     </div>
   );
 };

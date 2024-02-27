@@ -30,7 +30,7 @@ const NavButtons = () => {
             }`}
           >
             {React.createElement(link.icon)}
-            {link.label}
+            <div className="hidden lg:block">{link.label}</div>
           </Link>
         );
       })}

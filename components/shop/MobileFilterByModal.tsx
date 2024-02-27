@@ -1,3 +1,4 @@
+"use client";
 import {
   Dialog,
   DialogContent,
@@ -33,7 +34,7 @@ export function MobileFilterByModal({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <button onClick={() => setOpen(true)}>
-          <FaFilter className="text-background" size={18} />
+          <FaFilter className="text-primary" size={18} />
         </button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
