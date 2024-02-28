@@ -108,7 +108,6 @@ export type ParsedItem = {
   category: string;
   description: string;
   thumbnailPicture: string;
-  // pictures: [{ dimensions: { width: number; height: number }; picture: File }];
   pictures: ParsedPicture[];
 };
 
@@ -121,16 +120,6 @@ export type Cart = {
   unitPrice: number;
   totalPrice: number;
 }[];
-
-// export type ItemForm = {
-//   title: string;
-//   price?: number;
-//   stock?: number;
-//   category: string;
-//   thumbnailPicture: string;
-//   description?: string | undefined;
-//   pictures?: any;
-// };
 
 export type TItemSchema = z.infer<typeof itemSchema>;
 export type TProductSchemaServer = z.infer<typeof productSchemaServer>;

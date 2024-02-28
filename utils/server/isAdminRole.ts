@@ -1,3 +1,4 @@
+import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import prisma from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 
@@ -6,7 +7,7 @@ export async function isAdminRole(name?: string) {
   if (name) {
     userName = name;
   } else {
-    const session = await getServerSession();
+    const session = await getServerSession(authOptions);
     userName = session?.user?.name;
   }
 

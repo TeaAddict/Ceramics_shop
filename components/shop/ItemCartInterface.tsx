@@ -1,16 +1,17 @@
+"use client";
 import React, { useState } from "react";
 import QuantityPicker from "../shared/QuantityPicker";
 import { Button } from "../ui/button";
 import { useDispatch } from "react-redux";
 import { AppDispatch, useAppSelector } from "@/redux/store";
 import { addItem, removeItem } from "@/redux/features/cartSlice";
-import { ProductSchema } from "@/lib/types";
+import { ItemWithPicThumbFav } from "@/utils/prismaTypes";
 
 const ItemCartInterface = ({
   item,
   params,
 }: {
-  item: ProductSchema | null;
+  item: ItemWithPicThumbFav;
   params: { id: string };
 }) => {
   const [quantity, setQuantity] = useState(1);
@@ -28,7 +29,7 @@ const ItemCartInterface = ({
           stock: item.stock,
           unitPrice: item.price,
           totalPrice: quantity * item.price,
-          picture: item.thumbnail.name,
+          picture: item.thumbnail!.name,
           title: item.title,
         })
       );

@@ -1,14 +1,32 @@
+"use client";
+import { addFavourite, removeFavourite } from "@/app/_actions/favourite";
+import { Session } from "next-auth";
 import React, { useState } from "react";
 import { FaRegStar } from "react-icons/fa";
 import { FaStar } from "react-icons/fa";
 
-const Star = () => {
-  const [isActive, setIsActive] = useState(false);
+const Star = ({
+  itemId,
+  isFavourite,
+}: {
+  itemId: string;
+  isFavourite: boolean;
+}) => {
+  const [isActive, setIsActive] = useState(isFavourite);
 
+  async function handleClick() {
+    if (!isActive) {
+      await addFavourite(itemId);
+    } else {
+      await removeFavourite(itemId);
+    }
+
+    setIsActive((isActive) => !isActive);
+  }
   return (
     <div
       className="relative text-4xl inline-block cursor-pointer"
-      onClick={() => setIsActive((isActive) => !isActive)}
+      onClick={handleClick}
     >
       <div className="absolute text-gray-200 ">
         <FaRegStar />

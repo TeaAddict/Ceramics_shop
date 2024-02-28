@@ -1,24 +1,23 @@
-"use client";
+"use server";
 
 import PhotoSwipeCarousel from "@/components/shop/PhotoSwipeCarousel";
-import { useItem } from "@/hooks/useItem";
 import BackButton from "@/components/shared/BackButton";
 import { Session } from "next-auth";
-import FavStar from "../shared/star/Star";
+import FavStar from "../shared/star/FavStar";
 import ItemCartInterface from "./ItemCartInterface";
 import CustomReturnMessage from "../shared/CustomReturnMessage";
-import LoadPage from "../shared/loadSpinner/LoadPage";
+import { getItem } from "@/utils/server/getItem";
 
-const ItemWindow = ({
+const ItemWindow = async ({
   params,
   session,
 }: {
   params: { id: string };
   session: Session | null;
 }) => {
-  const { data: item, isLoading } = useItem(params.id);
+  const item = await getItem(params.id);
+  type TItem = typeof item;
 
-  if (isLoading) return <LoadPage />;
   if (!item || Object.keys(item).length === 0)
     return <CustomReturnMessage>Product does not exist</CustomReturnMessage>;
 
@@ -29,7 +28,7 @@ const ItemWindow = ({
       <div className="flex flex-col md:flex-row md:justify-center gap-5 md:gap-52">
         <div className="flex gap-3 md:hidden">
           <h3 className="font-semibold text-3xl capitalize">{item.title}</h3>
-          {session && <FavStar />}
+          {session && <FavStar itemId={item.id} />}
         </div>
         <div className="flex flex-col justify-center md:justify-start items-center md:items-start">
           <PhotoSwipeCarousel
@@ -48,7 +47,7 @@ const ItemWindow = ({
         <div className="flex flex-col gap-10">
           <div className="hidden md:flex gap-3">
             <h3 className="font-semibold text-3xl capitalize">{item.title}</h3>
-            {session && <FavStar />}
+            {session && <FavStar itemId={item.id} />}
           </div>
 
           <ItemCartInterface item={item} params={params} />

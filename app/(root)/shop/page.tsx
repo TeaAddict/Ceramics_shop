@@ -2,7 +2,6 @@ import MobileFooter from "@/components/shop/MobileFooter";
 import ShopWindow from "@/components/shop/ShopWindow";
 import { getCategories } from "@/app/api/_functions/getCategories";
 import { isAdminRole } from "@/utils/server/isAdminRole";
-import { getServerSession } from "next-auth";
 
 const ShopPage = async ({
   color = "default",

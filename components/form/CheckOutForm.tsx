@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Input } from "../ui/input";
-import { Session, getServerSession } from "next-auth";
+import { Session } from "next-auth";
 import { Cart, orderSchema } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 
