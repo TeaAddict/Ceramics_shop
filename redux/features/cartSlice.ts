@@ -39,9 +39,13 @@ export const cartSlice = createSlice({
       state.orderTotal += action.payload.totalPrice;
     },
     removeItem: (state, action: PayloadAction<string>) => {
-      state.cartItems = state.cartItems.filter(
-        (item) => item.id !== action.payload
-      );
+      state.cartItems = state.cartItems.filter((item) => {
+        if (item.id !== action.payload) {
+          return item;
+        } else {
+          state.orderTotal -= item.totalPrice;
+        }
+      });
     },
     increaseQuantity: (state, action: PayloadAction<string>) => {
       const item = state.cartItems.find((item) => item.id === action.payload);

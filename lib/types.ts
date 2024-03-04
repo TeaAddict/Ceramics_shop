@@ -123,3 +123,4 @@ export type Cart = {
 
 export type TItemSchema = z.infer<typeof itemSchema>;
 export type TProductSchemaServer = z.infer<typeof productSchemaServer>;
+export type TOrderSchema = z.infer<typeof orderSchema>;

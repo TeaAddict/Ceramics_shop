@@ -1,5 +1,5 @@
 "use client";
-import { addFavourite, removeFavourite } from "@/app/_actions/favourite";
+import { addFavourite, removeFavourite } from "@/utils/server/favourite";
 import { Session } from "next-auth";
 import React, { useState } from "react";
 import { FaRegStar } from "react-icons/fa";

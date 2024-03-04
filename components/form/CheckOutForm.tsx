@@ -2,8 +2,10 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { Input } from "../ui/input";
 import { Session } from "next-auth";
-import { Cart, orderSchema } from "@/lib/types";
+import { Cart, TOrderSchema, orderSchema } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { stripeAction } from "@/utils/server/stripeAction";
+import { useRouter } from "next/navigation";
 
 type FormValues = {
   firstName: string;
@@ -21,6 +23,7 @@ const CheckOutForm = ({
   cart: Cart;
   orderTotal: string;
 }) => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -29,17 +32,19 @@ const CheckOutForm = ({
     resolver: zodResolver(orderSchema),
     defaultValues: {
       firstName: session?.user?.name ?? "",
-      lastName: "",
+      lastName: "qweqwe",
       email: session?.user?.email ?? "",
-      phone: "",
-      address: "",
+      phone: "4213123123123",
+      address: "qweqweqwe",
       cart: cart,
       orderTotal: orderTotal,
     },
   });
 
-  function onSubmit(data: FormValues) {
-    console.log(data);
+  async function onSubmit(data: TOrderSchema) {
+    console.log("submitted form");
+    const paymentLink = await stripeAction(data);
+    router.replace(paymentLink);
   }
 
   return (

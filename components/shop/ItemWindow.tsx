@@ -4,9 +4,11 @@ import PhotoSwipeCarousel from "@/components/shop/PhotoSwipeCarousel";
 import BackButton from "@/components/shared/BackButton";
 import { Session } from "next-auth";
 import FavStar from "../shared/star/FavStar";
-import ItemCartInterface from "./ItemCartInterface";
+import ItemCartInterface from "../cart/ItemCartInterface";
 import CustomReturnMessage from "../shared/CustomReturnMessage";
 import { getItem } from "@/utils/server/getItem";
+import { formatToEuroCurrency } from "@/utils/helper";
+import AddToCartButton from "../cart/AddToCartButton";
 
 const ItemWindow = async ({
   params,
@@ -44,7 +46,7 @@ const ItemWindow = async ({
           />
           <p className="hidden md:block">===IDK SOME FANCY IMAGE SLIDE===</p>
         </div>
-        <div className="flex flex-col gap-10">
+        <div className="flex flex-col gap-10 min-w-44">
           <div className="hidden md:flex gap-3">
             <h3 className="font-semibold text-3xl capitalize">{item.title}</h3>
             {session && <FavStar itemId={item.id} />}
