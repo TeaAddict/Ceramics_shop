@@ -1,16 +1,12 @@
 "use server";
 
 import { TOrderSchema } from "@/lib/types";
-import { convertDbItemToMap } from "../functions/convertDbItemToMap";
-import { convertToCartItem } from "../functions/convertToCartItem";
-import { getItems } from "./getItems";
+import { convertDbItemToMap } from "../../functions/convertDbItemToMap";
+import { convertToCartItem } from "../../functions/convertToCartItem";
+import { getItems } from "../getItems";
+import { metadata } from "@/app/(root)/layout";
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-
-const storeItems2 = new Map([
-  [1, { priceInCents: 1000, name: "Vase1" }],
-  [2, { priceInCents: 2000, name: "Vase2" }],
-]);
 
 type CartItem = { id: string; quantity: number };
 type CartItems = CartItem[];
@@ -24,7 +20,6 @@ export async function stripeAction(order: TOrderSchema): Promise<string> {
     console.log(storeItems, "store items");
     console.log(cartItems, "cart items");
 
-    // const items: CartItems = JSON.parse(cartItems);
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "payment",
@@ -36,6 +31,9 @@ export async function stripeAction(order: TOrderSchema): Promise<string> {
               currency: "eur",
               product_data: {
                 name: storeItem.name,
+                metadata: {
+                  itemId: item.id,
+                },
               },
               unit_amount: storeItem.priceInCents,
             },
@@ -44,6 +42,7 @@ export async function stripeAction(order: TOrderSchema): Promise<string> {
       }),
       success_url: `${process.env.SERVER_URL}/payment/success`,
       cancel_url: `${process.env.SERVER_URL}/payment/cancel`,
+      customer_email: order.email,
     });
     // console.log(session);
     return session.url;

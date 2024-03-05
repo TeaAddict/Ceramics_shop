@@ -8,7 +8,6 @@ generator client {
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
-
 }
 
 model Item {
@@ -23,6 +22,7 @@ model Item {
   thumbnail   Picture?  @relation("thumbnail", fields: [thumbnailId], references: [id])
   createdAt DateTime @default(now())
   favouritedByUsers  Favourites[]
+  soldItems SoldItem[]
 }
 
 model Picture {
@@ -57,3 +57,54 @@ enum Role {
   ADMIN
 }
 
+model SoldItem{
+  id String @id @default(uuid())
+  name String
+  quantity Int?
+  amountSubtotal Float
+  amountTotal Float
+  amountDiscount Float
+  amountTax Float
+  unitAmount Float
+  createdAt DateTime @default(now())
+  transactionId String
+  transaction Transaction @relation(fields: [transactionId], references: [id])
+  itemId String
+  item Item @relation(fields: [itemId], references: [id])
+}
+
+model Transaction{
+  id String @id @default(uuid())
+  paymentStatus String
+  status String?
+  currency String?
+  amountSubtotal Float?
+  amountTotal Float?
+  createdAt DateTime @default(now())
+  soldItems SoldItem[]
+  customerId String
+  customerDetails Customer @relation(fields: [customerId], references: [id])
+}
+
+model Address{
+  id String @id @default(uuid())
+  city String?
+  country String?
+  line1 String?
+  line2 String?
+  postal_code String?
+  state String?
+  customer Customer?
+}
+
+model Customer {
+  id String @id @default(uuid())
+  name String
+  email String @unique
+  phone String?
+  taxExempt String?
+  createdAt DateTime @default(now())
+  transactions Transaction[]
+  addressId String @unique
+  address Address @relation(fields: [addressId],references: [id])
+}

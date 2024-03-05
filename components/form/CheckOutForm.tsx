@@ -4,7 +4,7 @@ import { Input } from "../ui/input";
 import { Session } from "next-auth";
 import { Cart, TOrderSchema, orderSchema } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { stripeAction } from "@/utils/server/stripeAction";
+import { stripeAction } from "@/utils/server/stripe/stripeAction";
 import { useRouter } from "next/navigation";
 
 type FormValues = {
