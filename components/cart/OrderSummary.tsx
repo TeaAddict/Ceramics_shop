@@ -1,25 +1,19 @@
-import React, { useState } from "react";
 import { Button } from "../ui/button";
 import { useDispatch } from "react-redux";
 import { clearCart } from "@/redux/features/cartSlice";
+import { stripeAction } from "@/utils/server/stripe/stripeAction";
+import { useAppSelector } from "@/redux/store";
+import { useRouter } from "next/navigation";
 
-const OrderSummary = ({
-  orderTotal,
-  progress,
-  setProgress,
-}: {
-  orderTotal: string;
-  progress: number;
-  setProgress: React.Dispatch<React.SetStateAction<number>>;
-}) => {
+const OrderSummary = ({ orderTotal }: { orderTotal: string }) => {
+  const router = useRouter();
+  const cart = useAppSelector((state) => state.cartReducer.cartItems);
   const dispatch = useDispatch();
 
-  function handleNext() {
-    if (progress < 2) setProgress(progress + 1);
-  }
-
-  function handleBack() {
-    if (progress > 1) setProgress(progress - 1);
+  async function onSubmit() {
+    console.log("submitted form");
+    const paymentLink = await stripeAction(cart);
+    router.replace(paymentLink);
   }
 
   return (
@@ -39,22 +33,9 @@ const OrderSummary = ({
           >
             Clear cart
           </Button>
-
-          {progress > 1 && (
-            <Button size={"lg"} onClick={handleBack}>
-              Back
-            </Button>
-          )}
-          {progress < 2 && (
-            <Button size={"lg"} onClick={handleNext}>
-              Next
-            </Button>
-          )}
-          {progress === 2 && (
-            <Button form="check-out-form" size={"lg"}>
-              Submit
-            </Button>
-          )}
+          <Button onClick={onSubmit} size={"lg"}>
+            Submit
+          </Button>
         </div>
       </div>
     </div>

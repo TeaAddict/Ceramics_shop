@@ -1,16 +1,17 @@
 "use client";
 
-import { SelectCn } from "@/components/cart/SelectCn";
+import { SelectCn } from "@/components/shared/SelectCn";
 import VerticalMenu from "@/components/shared/VerticalMenu";
 import ShopItems from "@/components/shop/ShopItems";
 import { countProperties } from "@/utils/countProperties";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { NewItemModal } from "../admin/NewItemModal";
 import { useItems } from "@/hooks/useItems";
 import { sortOptions } from "@/constants";
 import OutOfStockPage from "./OutOfStockPage";
 import { useEffect } from "react";
 import LoadPage from "../shared/loadSpinner/LoadPage";
+import { sortItems } from "@/utils/item/sortItems";
 
 type TSort = {
   price: number;
@@ -25,6 +26,7 @@ const ShopWindow = ({
   color?: "default" | "inverted";
   isAdmin?: boolean;
 }) => {
+  const forUrlSearchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
   const isAdminPage = pathname.includes("/admin");
@@ -37,36 +39,13 @@ const ShopWindow = ({
 
   const filtered = items.filter((item) => item.category === category);
 
-  const sortBy =
-    (searchParams["sortBy"] as
-      | "price-asc"
-      | "price-desc"
-      | "date-desc"
-      | "date-asc") ?? "date-desc";
-  const sort = sortBy.split("-");
-  const sorted = filtered.sort((a, b) => {
-    if (sort[0] === "date") {
-      const dateA = new Date(a.createdAt).getTime();
-      const dateB = new Date(b.createdAt).getTime();
+  const sortBy = searchParams["sortBy"] ?? "date-desc";
+  const sorted = sortItems(filtered, sortBy);
 
-      if (sort[1] === "asc") {
-        return dateA - dateB;
-      } else {
-        return dateB - dateA;
-      }
-    }
-    if (sort[1] === "asc") {
-      return a[sort[0] as keyof TSort] - b[sort[0] as keyof TSort];
-    } else {
-      return b[sort[0] as keyof TSort] - a[sort[0] as keyof TSort];
-    }
-  });
-
-  function handleChangeParam(key: string) {
-    const params = new URLSearchParams(searchParams);
-    params.set("category", key);
-    params.set("page", "1");
-    router.replace(`${pathname}?${params.toString()}`);
+  function handleChange(value: string) {
+    const res = new URLSearchParams(forUrlSearchParams);
+    res.set("sortBy", value);
+    router.push(`${pathname}?${res.toString()}`);
   }
 
   useEffect(() => {
@@ -88,6 +67,8 @@ const ShopWindow = ({
     <div>
       <div className="sm:flex justify-end mb-5 hidden">
         <SelectCn
+          onChange={handleChange}
+          selectLabel="sortBy"
           selectOptions={sortOptions}
           initialSelection={sortBy}
           color={color}
@@ -103,10 +84,10 @@ const ShopWindow = ({
         <div className="space-y-10 w-52 hidden sm:block">
           <h3 className="font-semibold">Categories</h3>
           <VerticalMenu
+            pageParam={true}
             menuList={categoriesCounts}
-            activeValue={category}
-            onClick={handleChangeParam}
             color={color}
+            paramName="category"
           />
           {adminPageAuth && (
             <div className="justify-center flex">

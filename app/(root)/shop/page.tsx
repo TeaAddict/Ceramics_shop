@@ -14,7 +14,7 @@ const ShopPage = async ({
   const isAdmin = await isAdminRole();
 
   return (
-    <section className="padding-container">
+    <section className="padding-container flex-col">
       <h1>Shop</h1>
       <ShopWindow color={color} searchParams={searchParams} isAdmin={isAdmin} />
       <div className="sm:hidden">

@@ -18,6 +18,7 @@ const cartSchema = z.object({
   totalPrice: z.number(),
 });
 
+// TODO: maybe remove? because I am filling form in stripe checkout
 export const orderSchema = z.object({
   firstName: z.string().min(2, "First name is required"),
   lastName: z.string().min(2, "Last name is required"),

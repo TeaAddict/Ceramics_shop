@@ -5,6 +5,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
+// TODO: make it updatable
 const Faq = () => {
   return (
     <article className="flex flex-col justify-center my-20 mx-auto max-w-[50vw] w-full gap-5">

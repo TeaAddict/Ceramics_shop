@@ -1,6 +1,5 @@
 "use client";
 
-import React, { useEffect } from "react";
 import {
   Carousel,
   CarouselContent,
@@ -10,12 +9,15 @@ import {
 } from "@/components/ui/carousel";
 import MerchandiseCard from "@/components/cards/Merchandise";
 import { useItems } from "@/hooks/useItems";
+import { sortItems } from "@/utils/item/sortItems";
 
-const CarouselSection = () => {
+const CarouselSection = ({ sortBy }: { sortBy: string | undefined }) => {
   const { data } = useItems();
+  if (!data || data?.length === 0 || !sortBy) return;
 
-  if (!data || data?.length === 0) return;
-  const items = data.slice(0, 6);
+  const sortedData = sortItems(data, sortBy);
+
+  const items = sortedData.slice(0, 6);
 
   return (
     <article className="my-10 flex justify-center">
@@ -32,6 +34,7 @@ const CarouselSection = () => {
                 <CarouselItem key={index} className="sm:basis-1/2 lg:basis-1/3">
                   <div className="p-1">
                     <MerchandiseCard
+                      isAdmin={false}
                       item={item}
                       href={`/shop/${item.id}`}
                       title={item.title}

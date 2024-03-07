@@ -10,11 +10,9 @@ const Shopboard = async ({
 }) => {
   const categories = await getCategories();
   return (
-    <div className="padding-container">
+    <div className="padding-container flex-col">
       <ShopWindow searchParams={searchParams} color="inverted" isAdmin={true} />
       <div className="sm:hidden">
-        {/* TODO might need to use mobile shop footer if I do not change admin footer */}
-        {/* <AdminMobileFooter /> */}
         <MobileFooter categories={categories} searchParams={searchParams} />
       </div>
     </div>

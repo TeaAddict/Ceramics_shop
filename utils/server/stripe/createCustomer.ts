@@ -3,9 +3,12 @@ import { PaymentData } from "@/utils/types/stripe";
 
 export async function createCustomer(paymentData: PaymentData) {
   try {
+    const firstLastName = paymentData.customerDetails?.name?.split(" ");
+
     await prisma.customer.create({
       data: {
-        name: paymentData.customerDetails?.name!,
+        firstname: firstLastName![0],
+        lastname: firstLastName![1],
         email: paymentData.customerDetails?.email!,
         phone: paymentData.customerDetails?.phone,
         address: {

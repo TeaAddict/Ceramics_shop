@@ -1,28 +1,35 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 
 const VerticalMenu = ({
   menuList,
-  activeValue,
-  onClick,
+  pageParam = false,
+  paramName,
   color = "default",
 }: {
-  menuList: { label: string; value: number }[];
-  activeValue: string;
-  onClick: Function;
+  menuList: { label: string; value?: number }[];
+  pageParam?: boolean;
+  paramName: string;
   color?: "default" | "inverted";
 }) => {
-  const [active, setActive] = useState(activeValue);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const [active, setActive] = useState(menuList[0].label);
+
+  function changeCategoryParam(value: string) {
+    const params = new URLSearchParams(searchParams);
+    params.set(paramName, value);
+    if (pageParam) params.set("page", "1");
+    router.replace(`${pathname}?${params.toString()}`);
+  }
 
   function handleClick(key: string) {
     setActive(key);
-    onClick(key);
+    changeCategoryParam(key);
   }
-
-  useEffect(() => {
-    setActive(activeValue);
-  }, [activeValue]);
 
   return (
     <ul className="space-y-1">
@@ -45,7 +52,7 @@ const VerticalMenu = ({
             }
           >
             <span className="text-sm font-medium capitalize">{item.label}</span>
-            {item.value > 0 && (
+            {item.value && item.value > 0 && (
               <span
                 className={`shrink-0 rounded-full bg-gray-100 px-3 py-0.5 text-xs text-gray-600 group-hover:bg-gray-200 group-hover:text-gray-700 ${
                   active === item.label && "text-foreground bg-gray-200"

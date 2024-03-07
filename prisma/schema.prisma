@@ -10,6 +10,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Contacts{
+  id Int @id @default(autoincrement())
+  phone String
+  email String
+  physicalLocation String  
+}
+
+model GeneralSettings{
+  id Int @id @default(autoincrement())
+  itemsPerPage Int
+  featuredSort String
+}
+
 model Item {
   id          String    @id @default(uuid())
   title       String    @unique
@@ -99,7 +112,9 @@ model Address{
 
 model Customer {
   id String @id @default(uuid())
-  name String
+  // name String
+  firstname String
+  lastname String
   email String @unique
   phone String?
   taxExempt String?

@@ -1,21 +1,20 @@
 "use server";
 
-import { TOrderSchema } from "@/lib/types";
+import { Cart } from "@/lib/types";
 import { convertDbItemToMap } from "../../functions/convertDbItemToMap";
 import { convertToCartItem } from "../../functions/convertToCartItem";
 import { getItems } from "../getItems";
-import { metadata } from "@/app/(root)/layout";
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 type CartItem = { id: string; quantity: number };
 type CartItems = CartItem[];
 
-export async function stripeAction(order: TOrderSchema): Promise<string> {
+export async function stripeAction(cart: Cart): Promise<string> {
   try {
     const itemsInDb = await getItems();
     const storeItems = convertDbItemToMap(itemsInDb);
-    const cartItems: CartItems = convertToCartItem(order.cart);
+    const cartItems: CartItems = convertToCartItem(cart);
 
     console.log(storeItems, "store items");
     console.log(cartItems, "cart items");
@@ -42,9 +41,15 @@ export async function stripeAction(order: TOrderSchema): Promise<string> {
       }),
       success_url: `${process.env.SERVER_URL}/payment/success`,
       cancel_url: `${process.env.SERVER_URL}/payment/cancel`,
-      customer_email: order.email,
+      // customer_email: order.email,
+      phone_number_collection: {
+        enabled: true,
+      },
+      billing_address_collection: "required",
+      shipping_address_collection: {
+        allowed_countries: ["LT"],
+      },
     });
-    // console.log(session);
     return session.url;
   } catch (error: any) {
     console.log(error.message);
