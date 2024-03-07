@@ -1,25 +1,28 @@
-import { PAGE_SIZE } from "@/constants";
 import PaginationCn from "../shared/PaginationCn";
 import Merchandise from "../cards/Merchandise";
 import { useSearchParams } from "next/navigation";
 import { ProductSchema } from "@/lib/types";
+import { GeneralSettings } from "@prisma/client";
 
 const ShopItems = ({
   data,
   color = "default",
   isAdmin,
+  settings,
 }: {
   data: ProductSchema[];
   color?: "default" | "inverted";
   isAdmin: boolean;
+  settings: GeneralSettings;
 }) => {
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get("page")) || 1;
+  const { itemsPerPage } = settings;
 
-  const lastPage = Math.ceil(data.length / PAGE_SIZE);
+  const lastPage = Math.ceil(data.length / itemsPerPage);
 
-  const currentPageStartItem = (currentPage - 1) * PAGE_SIZE;
-  const currentPageEndItem = (currentPage - 1) * PAGE_SIZE + PAGE_SIZE;
+  const currentPageStartItem = (currentPage - 1) * itemsPerPage;
+  const currentPageEndItem = (currentPage - 1) * itemsPerPage + itemsPerPage;
 
   const currentItems = data.slice(currentPageStartItem, currentPageEndItem);
 

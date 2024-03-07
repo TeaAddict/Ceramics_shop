@@ -20,7 +20,6 @@ const GeneralSettings = ({ settings }: { settings: SettingsModel | null }) => {
   });
 
   async function onSubmit(data: SettingsModel) {
-    console.log(data);
     await updateGeneralSettings(data);
   }
 

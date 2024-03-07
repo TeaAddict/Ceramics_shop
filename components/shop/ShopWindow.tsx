@@ -12,19 +12,18 @@ import OutOfStockPage from "./OutOfStockPage";
 import { useEffect } from "react";
 import LoadPage from "../shared/loadSpinner/LoadPage";
 import { sortItems } from "@/utils/item/sortItems";
-
-type TSort = {
-  price: number;
-};
+import { GeneralSettings } from "@prisma/client";
 
 const ShopWindow = ({
   searchParams,
   color = "default",
   isAdmin = false,
+  settings,
 }: {
   searchParams: { tab: string; category: string; sortBy: string; page: string };
   color?: "default" | "inverted";
   isAdmin?: boolean;
+  settings: GeneralSettings;
 }) => {
   const forUrlSearchParams = useSearchParams();
   const router = useRouter();
@@ -95,7 +94,12 @@ const ShopWindow = ({
             </div>
           )}
         </div>
-        <ShopItems data={sorted} color={color} isAdmin={adminPageAuth} />
+        <ShopItems
+          data={sorted}
+          color={color}
+          isAdmin={adminPageAuth}
+          settings={settings}
+        />
       </div>
     </div>
   );
