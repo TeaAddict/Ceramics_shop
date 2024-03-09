@@ -49,6 +49,7 @@ export type Transaction = {
   currency: string | null;
   amountSubtotal: number | null;
   amountTotal: number | null;
+  sessionId: string;
 };
 
 export type PaymentData = {
@@ -58,5 +59,6 @@ export type PaymentData = {
   currency: string | null;
   amountSubtotal: number | null;
   amountTotal: number | null;
+  sessionId: string;
   soldItems: SoldItem[];
 };

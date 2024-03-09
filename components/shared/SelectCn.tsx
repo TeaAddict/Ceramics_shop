@@ -32,7 +32,15 @@ export function SelectCn({
 
   function handleChange(e: string) {
     setCurrentSelection(e);
-    onChange(e);
+    let value;
+    if (e === "true") {
+      value = true;
+    } else if (e === "false") {
+      value = false;
+    } else {
+      value = e;
+    }
+    onChange(value);
   }
 
   return (

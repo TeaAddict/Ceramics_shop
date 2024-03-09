@@ -10,7 +10,7 @@ import { useState } from "react";
 import { FaSortAlphaUpAlt } from "react-icons/fa";
 import LabelButton from "../shared/LabelButton";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { sortOptions } from "@/constants";
+import { SORT_OPTIONS } from "@/constants";
 
 export function MobileSortByModal({ sortBy }: { sortBy: string }) {
   const [open, setOpen] = useState(false);
@@ -37,7 +37,7 @@ export function MobileSortByModal({ sortBy }: { sortBy: string }) {
           <DialogTitle>Sort by</DialogTitle>
         </DialogHeader>
         <div className="flex flex-col gap-3 divide-y-2">
-          {sortOptions.map((option) => {
+          {SORT_OPTIONS.map((option) => {
             return (
               <LabelButton
                 key={option.value}

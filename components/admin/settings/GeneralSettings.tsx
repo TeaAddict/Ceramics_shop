@@ -4,7 +4,7 @@ import { SelectCn } from "@/components/shared/SelectCn";
 import FormInput from "@/components/form/FormInput";
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
-import { sortOptions } from "@/constants";
+import { FEATURE_SOLD, SORT_OPTIONS } from "@/constants";
 import { Button } from "@/components/ui/button";
 import { GeneralSettings as SettingsModel } from "@prisma/client";
 import { updateGeneralSettings } from "@/utils/server/settings/updateGeneralSettings";
@@ -49,9 +49,23 @@ const GeneralSettings = ({ settings }: { settings: SettingsModel | null }) => {
               name="featuredSort"
               render={({ field: { onChange, value } }) => (
                 <SelectCn
-                  selectOptions={sortOptions}
+                  selectOptions={SORT_OPTIONS}
                   onChange={onChange}
                   initialSelection={value}
+                />
+              )}
+            />
+          </div>
+          <div className="flex gap-3">
+            <p>&quot;Featured&quot; sold out</p>
+            <Controller
+              control={control}
+              name="displaySold"
+              render={({ field: { onChange, value } }) => (
+                <SelectCn
+                  selectOptions={FEATURE_SOLD}
+                  onChange={onChange}
+                  initialSelection={String(value)}
                 />
               )}
             />

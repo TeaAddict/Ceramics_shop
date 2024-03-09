@@ -9,7 +9,6 @@ export function countProperties(
     propCount[propKey] = (propCount[propKey] || 0) + 1;
   });
 
-  // Transform the counts into the desired array of objects
   const resultArray = Object.keys(propCount).map((propKey) => ({
     label: propKey,
     value: propCount[propKey],

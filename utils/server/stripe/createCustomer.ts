@@ -12,14 +12,15 @@ export async function createCustomer(paymentData: PaymentData) {
         email: paymentData.customerDetails?.email!,
         phone: paymentData.customerDetails?.phone,
         address: {
-          create: {
-            city: paymentData.customerDetails?.address?.city,
-            country: paymentData.customerDetails?.address?.country,
-            line1: paymentData.customerDetails?.address?.line1,
-            line2: paymentData.customerDetails?.address?.line2,
-            postal_code: paymentData.customerDetails?.address?.postal_code,
-            state: paymentData.customerDetails?.address?.state,
-          },
+          // create: {
+          //   city: paymentData.customerDetails?.address?.city,
+          //   country: paymentData.customerDetails?.address?.country,
+          //   line1: paymentData.customerDetails?.address?.line1,
+          //   line2: paymentData.customerDetails?.address?.line2,
+          //   postal_code: paymentData.customerDetails?.address?.postal_code,
+          //   state: paymentData.customerDetails?.address?.state,
+          // },
+          create: paymentData.customerDetails?.address!,
         },
         transactions: {
           create: {
@@ -28,7 +29,14 @@ export async function createCustomer(paymentData: PaymentData) {
             currency: paymentData.currency,
             amountSubtotal: paymentData.amountSubtotal,
             amountTotal: paymentData.amountTotal,
+            sessionId: paymentData.sessionId,
             soldItems: { createMany: { data: paymentData.soldItems } },
+            order: {
+              create: {
+                status: "SHIPPING",
+                expiresAt: new Date(new Date().getTime() + 30 * 60 * 1000),
+              },
+            },
           },
         },
       },

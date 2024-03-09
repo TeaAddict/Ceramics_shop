@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const VerticalMenu = ({
   menuList,
@@ -19,17 +19,31 @@ const VerticalMenu = ({
   const pathname = usePathname();
   const [active, setActive] = useState(menuList[0].label);
 
-  function changeCategoryParam(value: string) {
-    const params = new URLSearchParams(searchParams);
-    params.set(paramName, value);
-    if (pageParam) params.set("page", "1");
-    router.replace(`${pathname}?${params.toString()}`);
-  }
+  const isStillActive = menuList.find((el) => el.label === active);
 
-  function handleClick(key: string) {
-    setActive(key);
-    changeCategoryParam(key);
-  }
+  const changeCategoryParam = useCallback(
+    (value: string) => {
+      const params = new URLSearchParams(searchParams);
+      params.set(paramName, value);
+      if (pageParam) params.set("page", "1");
+      router.replace(`${pathname}?${params.toString()}`);
+    },
+    [pageParam, paramName, pathname, router, searchParams]
+  );
+
+  const handleClick = useCallback(
+    (key: string) => {
+      setActive(key);
+      changeCategoryParam(key);
+    },
+    [changeCategoryParam]
+  );
+
+  useEffect(() => {
+    if (!isStillActive) {
+      handleClick(menuList[0].label);
+    }
+  }, [isStillActive, menuList, handleClick]);
 
   return (
     <ul className="space-y-1">

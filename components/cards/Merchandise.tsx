@@ -63,34 +63,35 @@ const Merchandise = ({
     );
   } else {
     return (
-      <Link
-        href={href}
-        className="border-2 bg-white rounded-md flex flex-col space-y-4 
-        hover:brightness-90"
+      <div
+        className={`border-2 bg-white rounded-md flex flex-col space-y-4 
+      hover:brightness-90 ${item.stock < 1 && "grayscale"}`}
       >
-        <div className="relative border-b-2 aspect-square">
-          <div className="absolute w-full h-full">
-            <Image
-              src={`/uploads/${thumbnail.name}`}
-              alt={title}
-              fill
-              sizes="30vw"
-              className={`object-cover rounded-t-md ${
-                isAdmin && "hover:brightness-75"
-              }`}
-            />
-          </div>
-        </div>
-
-        <div className="flex flex-col !mt-0 gap-3 px-4 py-3 justify-between overflow-hidden">
-          <h3 className="font-bold text-xl capitalize">{title}</h3>
-          <div className="flex justify-between items-center">
-            <div className="flex gap-1">
-              <p>{formatToEuroCurrency(price)}</p>
+        <Link href={href}>
+          <div className="relative border-b-2 aspect-square">
+            <div className="absolute w-full h-full">
+              <Image
+                src={`/uploads/${thumbnail.name}`}
+                alt={title}
+                fill
+                sizes="30vw"
+                className={`object-cover rounded-t-md ${
+                  isAdmin && "hover:brightness-75"
+                }`}
+              />
             </div>
           </div>
-        </div>
-      </Link>
+
+          <div className="flex flex-col !mt-0 gap-3 px-4 py-3 justify-between overflow-hidden">
+            <h3 className="font-bold text-xl capitalize">{title}</h3>
+            {item.stock > 0 ? (
+              <p>{formatToEuroCurrency(price)}</p>
+            ) : (
+              <p className="uppercase font-bold">sold out</p>
+            )}
+          </div>
+        </Link>
+      </div>
     );
   }
 };

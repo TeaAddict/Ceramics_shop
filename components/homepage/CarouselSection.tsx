@@ -11,13 +11,27 @@ import MerchandiseCard from "@/components/cards/Merchandise";
 import { useItems } from "@/hooks/useItems";
 import { sortItems } from "@/utils/item/sortItems";
 
-const CarouselSection = ({ sortBy }: { sortBy: string | undefined }) => {
+const CarouselSection = ({
+  sortBy,
+  isSoldDisplayed,
+}: {
+  sortBy: string | undefined;
+  isSoldDisplayed: boolean | undefined;
+}) => {
   const { data } = useItems();
   if (!data || data?.length === 0 || !sortBy) return;
 
   const sortedData = sortItems(data, sortBy);
 
-  const items = sortedData.slice(0, 6);
+  const nonSoldItems = sortedData.filter((item) => {
+    if (isSoldDisplayed) {
+      return item;
+    } else if (!isSoldDisplayed && item.stock > 0) {
+      return item;
+    }
+  });
+
+  const items = nonSoldItems.slice(0, 6);
 
   return (
     <article className="my-10 flex justify-center">

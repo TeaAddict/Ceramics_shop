@@ -1,7 +1,7 @@
 import React from "react";
 import { MobileSortByModal } from "./MobileSortByModal";
 import { MobileFilterByModal } from "./MobileFilterByModal";
-import { sortOptions } from "@/constants";
+import { SORT_OPTIONS } from "@/constants";
 
 const MobileFooter = ({
   categories,
@@ -10,7 +10,7 @@ const MobileFooter = ({
   categories: string[];
   searchParams: { category: string; sortBy: string };
 }) => {
-  const sortBy = searchParams["sortBy"] ?? sortOptions[0].value;
+  const sortBy = searchParams["sortBy"] ?? SORT_OPTIONS[0].value;
   const filterBy = searchParams["category"] ?? categories[0];
 
   return (

@@ -7,12 +7,14 @@ import { countProperties } from "@/utils/countProperties";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { NewItemModal } from "../admin/NewItemModal";
 import { useItems } from "@/hooks/useItems";
-import { sortOptions } from "@/constants";
+import { SORT_OPTIONS } from "@/constants";
 import OutOfStockPage from "./OutOfStockPage";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import LoadPage from "../shared/loadSpinner/LoadPage";
 import { sortItems } from "@/utils/item/sortItems";
 import { GeneralSettings } from "@prisma/client";
+import { getUniquePropertyNames } from "@/utils/functions/getUniquePropertyNames";
+import HideSoldOutCheckBox from "./HideSoldOutCheckBox";
 
 const ShopWindow = ({
   searchParams,
@@ -32,14 +34,29 @@ const ShopWindow = ({
   const adminPageAuth = isAdmin && isAdminPage;
   const { data, isLoading } = useItems();
   const items = data ?? [];
+  const [hideSoldOut, setHideSoldOut] = useState(
+    forUrlSearchParams.get("hideSold") === "true" ?? false
+  );
 
-  const categoriesCounts = countProperties(items, "category");
-  const category = searchParams["category"] ?? categoriesCounts[0]?.label;
+  const uniqueCategories: string[] = getUniquePropertyNames(items, "category");
+  const category = forUrlSearchParams.get("category") ?? uniqueCategories[0];
 
-  const filtered = items.filter((item) => item.category === category);
+  const inStockItems = items.filter((item) => {
+    if (hideSoldOut && item.stock > 0) {
+      return item;
+    } else if (!hideSoldOut) {
+      return item;
+    }
+  });
+
+  const categoryItems = inStockItems.filter(
+    (item) => item.category === category
+  );
+
+  const categoriesCounts = countProperties(inStockItems, "category");
 
   const sortBy = searchParams["sortBy"] ?? "date-desc";
-  const sorted = sortItems(filtered, sortBy);
+  const sorted = sortItems(categoryItems, sortBy);
 
   function handleChange(value: string) {
     const res = new URLSearchParams(forUrlSearchParams);
@@ -48,27 +65,28 @@ const ShopWindow = ({
   }
 
   useEffect(() => {
-    if (!filtered.length) {
+    if (category === "undefined") {
       const params = new URLSearchParams(searchParams);
-      params.set("category", categoriesCounts?.[0]?.label);
+      params.set("category", uniqueCategories?.[0]);
       router.replace(`${pathname}?${params.toString()}`);
     }
-  }, [categoriesCounts, filtered.length, pathname, router, searchParams]);
+  }, [uniqueCategories, category, pathname, router, searchParams]);
 
-  if (isLoading) return <LoadPage />;
+  if (isLoading || !categoriesCounts.length || !category) return <LoadPage />;
 
-  if (!items || (items?.length === 0 && !adminPageAuth && !isLoading))
+  if (!items || (items?.length === 0 && !adminPageAuth))
     return <p className="flex justify-center text-2xl">Out of stock</p>;
   else if (!items || (items?.length === 0 && adminPageAuth))
     return <OutOfStockPage />;
 
   return (
     <div>
-      <div className="sm:flex justify-end mb-5 hidden">
+      <div className="sm:flex justify-end items-center gap-5 mb-5 hidden">
+        <HideSoldOutCheckBox setHideSoldOut={setHideSoldOut} />
         <SelectCn
           onChange={handleChange}
           selectLabel="sortBy"
-          selectOptions={sortOptions}
+          selectOptions={SORT_OPTIONS}
           initialSelection={sortBy}
           color={color}
         />

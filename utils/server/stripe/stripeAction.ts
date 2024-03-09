@@ -19,7 +19,7 @@ export async function stripeAction(cart: Cart): Promise<string> {
     console.log(storeItems, "store items");
     console.log(cartItems, "cart items");
 
-    const session = await stripe.checkout.sessions.create({
+    let session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "payment",
       line_items: cartItems.map((item) => {
@@ -39,7 +39,7 @@ export async function stripeAction(cart: Cart): Promise<string> {
             quantity: item.quantity,
           };
       }),
-      success_url: `${process.env.SERVER_URL}/payment/success`,
+      success_url: `${process.env.SERVER_URL}/payment/success/{CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.SERVER_URL}/payment/cancel`,
       // customer_email: order.email,
       phone_number_collection: {
@@ -50,6 +50,7 @@ export async function stripeAction(cart: Cart): Promise<string> {
         allowed_countries: ["LT"],
       },
     });
+
     return session.url;
   } catch (error: any) {
     console.log(error.message);

@@ -32,7 +32,7 @@ export const orderSchema = z.object({
 export const itemSchema = z.object({
   title: z.string().min(1, "Title is required").max(255),
   price: z.coerce.number().min(1, "Price is required"),
-  stock: z.coerce.number().min(1, "minimum 1 in stock"),
+  stock: z.coerce.number().min(0, "minimum 0 in stock"),
   category: z.string().min(1, "Category is required").max(255),
   description: z.string().optional(),
   thumbnailPicture: z.string().min(1, "Thumbnail is required, select image"),

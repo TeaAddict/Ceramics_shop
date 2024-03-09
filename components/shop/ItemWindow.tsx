@@ -52,7 +52,11 @@ const ItemWindow = async ({
             {session && <FavStar itemId={item.id} />}
           </div>
 
-          <ItemCartInterface item={item} params={params} />
+          {item.stock > 0 ? (
+            <ItemCartInterface item={item} params={params} />
+          ) : (
+            <p className="text-2xl text-destructive">Item is sold out</p>
+          )}
 
           {item.description && (
             <p className="md:max-w-72 capitalize">{item.description}</p>

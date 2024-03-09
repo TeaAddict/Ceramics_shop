@@ -30,11 +30,16 @@ const FormInput = <T extends FieldValues>({
 }: InputProps<T>) => {
   return (
     <div className="grid grid-cols-4 items-center gap-4">
-      <p className={`capitalize col-span-${labelSize}`}>{label}</p>
+      <p
+        className="capitalize"
+        style={{ gridColumn: `span ${labelSize} / span 1` }}
+      >
+        {label}
+      </p>
       <Input
         {...register(name, { valueAsNumber: type === "number" })}
         id={name}
-        className={`col-span-${inputSize}`}
+        style={{ gridColumn: `span ${inputSize} / span 1` }}
         disabled={isSubmitting}
         type={type}
       />

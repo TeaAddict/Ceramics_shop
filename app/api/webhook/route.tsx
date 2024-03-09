@@ -25,12 +25,16 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ received: false }, { status: 400 });
     }
 
-    console.log(event.type, "EVENT TYPE");
     if (event.type === "checkout.session.completed") {
       const sessionWithLineItems = await stripe.checkout.sessions.retrieve(
         event.data.object.id,
         { expand: ["line_items", "line_items.data.price.product"] }
       );
+      console.log("============================================");
+      console.log(sessionWithLineItems, "SESSIONNNNN");
+      console.log("============================================");
+      console.log(event, "EVENT IDDDDDDDDDDDDDDDDDDDDDDDDDD");
+      console.log("============================================");
 
       const lineItems = sessionWithLineItems.line_items?.data;
       if (!lineItems) {

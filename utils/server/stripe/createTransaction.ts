@@ -12,6 +12,7 @@ export function createTransaction(event: Stripe.CheckoutSessionCompletedEvent) {
     //   automatic_tax: sessionInfo.automatic_tax,
     amountSubtotal: sessionInfo.amount_subtotal,
     amountTotal: sessionInfo.amount_total,
+    sessionId: sessionInfo.id,
   };
   return transaction;
 }

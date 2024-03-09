@@ -12,16 +12,18 @@ datasource db {
 
 model Contacts{
   id Int @id @default(autoincrement())
-  phone String
-  email String
-  physicalLocation String  
+  phone String  @default("866666666")
+  email String  @default("placeholder@email.com")
+  physicalLocation String  @default("placeholder st.")
 }
 
 model GeneralSettings{
   id Int @id @default(autoincrement())
-  itemsPerPage Int
+  itemsPerPage Int  @default(8)
   featuredSort String
+  displaySold Boolean @default(false)
 }
+
 
 model Item {
   id          String    @id @default(uuid())
@@ -93,10 +95,28 @@ model Transaction{
   currency String?
   amountSubtotal Float?
   amountTotal Float?
+  sessionId String
   createdAt DateTime @default(now())
   soldItems SoldItem[]
   customerId String
   customerDetails Customer @relation(fields: [customerId], references: [id])
+  orderId String @unique
+  order Order @relation(fields: [orderId], references: [id])
+}
+
+model Order{
+  id String @id @default(uuid())
+  createdAt DateTime @default(now())
+  expiresAt  DateTime
+  status DeliveryStatus
+  transaction Transaction? 
+}
+
+enum DeliveryStatus {
+  SHIPPING
+  SHIPPED
+  ARRIVED
+  COLLECTED
 }
 
 model Address{

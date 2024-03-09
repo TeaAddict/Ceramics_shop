@@ -43,7 +43,18 @@ export const ADMIN_MENU = [
   },
 ];
 
-export const sortOptions = [
+export const FEATURE_SOLD = [
+  {
+    name: "Display sold",
+    value: "true",
+  },
+  {
+    name: "Hide sold",
+    value: "false",
+  },
+];
+
+export const SORT_OPTIONS = [
   {
     name: "Price: lowest first",
     value: "price-asc",
