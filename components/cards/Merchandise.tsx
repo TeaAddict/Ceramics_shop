@@ -49,11 +49,16 @@ const Merchandise = ({
           <h3 className="font-bold text-xl capitalize">{title}</h3>
 
           <div className="flex flex-col items-center gap-3">
-            <div className="flex gap-1">
+            <div className="w-full flex justify-between items-center">
               <p>{formatToEuroCurrency(price)}</p>
+              {item.stock < 1 && (
+                <p className="font-semibold uppercase text-destructive">
+                  sold out
+                </p>
+              )}
             </div>
 
-            <div className="flex w-full justify-around gap-3">
+            <div className="flex w-full justify-between gap-3">
               <DeleteItemButton id={item.id} />
               <EditItemModal item={item} />
             </div>

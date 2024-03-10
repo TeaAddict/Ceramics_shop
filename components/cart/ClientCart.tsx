@@ -6,12 +6,25 @@ import { Button } from "../ui/button";
 import BackButton from "../shared/BackButton";
 import MyCartTable from "./MyCartTable";
 import OrderSummary from "./OrderSummary";
+import { useWebhookStatus } from "@/hooks/payment/useWebhookStatus";
+import CustomReturnMessage from "../shared/CustomReturnMessage";
+import { Contacts } from "@prisma/client";
 
-const ClientCart = () => {
+const ClientCart = ({ contacts }: { contacts: Contacts }) => {
   const cart = useAppSelector((state) => state.cartReducer.cartItems);
   const orderTotal = useAppSelector((state) => state.cartReducer.orderTotal);
   const formatedOrderTotal = formatToEuroCurrency(orderTotal);
+  const webhookStatus = useWebhookStatus();
 
+  if (webhookStatus)
+    return (
+      <CustomReturnMessage>
+        Our online payment system is temporarily unavailable. For orders, please
+        contact us by phone: {contacts.phone} or at {contacts.email} also you
+        can visit our physical location {contacts.physicalLocation}. We
+        appreciate your understanding and apologize for any inconvenience.
+      </CustomReturnMessage>
+    );
   if (cart.length === 0)
     return (
       <section className="padding-container flex-col justify-center items-center gap-10">

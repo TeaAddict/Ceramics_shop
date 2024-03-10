@@ -5,7 +5,7 @@ import { Button } from "../ui/button";
 import Order from "./Order";
 import { ModalWindow } from "../shared/ModalWindow";
 
-const OrderClient = async ({ params }: { params: { session_id: string } }) => {
+const OrderClient = async ({ params }: { params: { sessionId: string } }) => {
   return (
     <div className="flex flex-1 flex-col justify-center items-center gap-10">
       <div className="text-primary">
@@ -24,7 +24,6 @@ const OrderClient = async ({ params }: { params: { session_id: string } }) => {
           title="Order details"
         >
           <Order params={params} />
-          <div></div>
         </ModalWindow>
         <Link href={"/shop"}>
           <Button className="uppercase">Continue shoping</Button>

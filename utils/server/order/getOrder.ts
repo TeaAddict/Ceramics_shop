@@ -9,6 +9,7 @@ export async function getOrder(id: string) {
       include: {
         customerDetails: { include: { address: true } },
         soldItems: true,
+        order: true,
       },
     });
     return transaction;
