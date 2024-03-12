@@ -1,9 +1,9 @@
 -- CreateTable
 CREATE TABLE `Contacts` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `phone` VARCHAR(191) NOT NULL,
-    `email` VARCHAR(191) NOT NULL,
-    `physicalLocation` VARCHAR(191) NOT NULL,
+    `phone` VARCHAR(191) NOT NULL DEFAULT '866666666',
+    `email` VARCHAR(191) NOT NULL DEFAULT 'placeholder@email.com',
+    `physicalLocation` VARCHAR(191) NOT NULL DEFAULT 'placeholder st.',
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -11,8 +11,9 @@ CREATE TABLE `Contacts` (
 -- CreateTable
 CREATE TABLE `GeneralSettings` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `itemsPerPage` INTEGER NOT NULL,
+    `itemsPerPage` INTEGER NOT NULL DEFAULT 8,
     `featuredSort` VARCHAR(191) NOT NULL,
+    `displaySold` BOOLEAN NOT NULL DEFAULT false,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -25,7 +26,7 @@ CREATE TABLE `Item` (
     `stock` INTEGER NOT NULL,
     `category` VARCHAR(191) NOT NULL,
     `description` VARCHAR(191) NULL,
-    `thumbnailId` VARCHAR(191) NULL,
+    `thumbnailId` VARCHAR(191) NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
     UNIQUE INDEX `Item_title_key`(`title`),
@@ -39,7 +40,7 @@ CREATE TABLE `Picture` (
     `name` VARCHAR(191) NOT NULL,
     `width` INTEGER NOT NULL,
     `height` INTEGER NOT NULL,
-    `itemId` VARCHAR(191) NULL,
+    `itemId` VARCHAR(191) NOT NULL,
 
     UNIQUE INDEX `Picture_name_key`(`name`),
     PRIMARY KEY (`id`)
@@ -140,10 +141,10 @@ CREATE TABLE `Customer` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
-ALTER TABLE `Item` ADD CONSTRAINT `Item_thumbnailId_fkey` FOREIGN KEY (`thumbnailId`) REFERENCES `Picture`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `Item` ADD CONSTRAINT `Item_thumbnailId_fkey` FOREIGN KEY (`thumbnailId`) REFERENCES `Picture`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Picture` ADD CONSTRAINT `Picture_itemId_fkey` FOREIGN KEY (`itemId`) REFERENCES `Item`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `Picture` ADD CONSTRAINT `Picture_itemId_fkey` FOREIGN KEY (`itemId`) REFERENCES `Item`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Favourites` ADD CONSTRAINT `Favourites_itemId_fkey` FOREIGN KEY (`itemId`) REFERENCES `Item`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;

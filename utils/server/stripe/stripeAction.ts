@@ -53,7 +53,7 @@ export async function stripeAction(cart: Cart): Promise<string> {
 
     return session.url;
   } catch (error: any) {
-    console.log(error.message);
+    console.log(`Error creating payment link ${error.message}`);
     return error.message;
   }
 }

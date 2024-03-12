@@ -1,7 +1,6 @@
 import OrderClient from "@/components/order/OrderClient";
-import React from "react";
 
-const SuccessPage = ({ params }: { params: { sessionId: string } }) => {
+const SuccessPage = async ({ params }: { params: { sessionId: string } }) => {
   return (
     <div className="padding-container">
       <OrderClient params={params} />

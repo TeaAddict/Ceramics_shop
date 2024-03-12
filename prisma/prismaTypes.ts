@@ -10,8 +10,9 @@ export type ItemWithPicThumbFav = Prisma.ItemGetPayload<
 
 const transactionFull = Prisma.validator<Prisma.TransactionDefaultArgs>()({
   include: {
-    soldItems: true,
+    soldItems: { include: { item: { include: { thumbnail: true } } } },
     customerDetails: { include: { address: true } },
+    order: true,
   },
 });
 

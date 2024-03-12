@@ -7,8 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "stripeCli": "stripe listen --forward-to localhost:3000/api/webhook",
-    "test": "hehe"
+    "stripecli": "stripe listen --forward-to localhost:3000/api/webhook"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",

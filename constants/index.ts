@@ -29,15 +29,18 @@ export const NAV_BAR_LINKS = [
 ];
 
 export const ADMIN_MENU = [
+  // {
+  //   label: "dashboard",
+  // },
   {
-    label: "dashboard",
+    label: "orders",
   },
   {
     label: "shopboard",
   },
-  {
-    label: "account",
-  },
+  // {
+  //   label: "account",
+  // },
   {
     label: "settings",
   },

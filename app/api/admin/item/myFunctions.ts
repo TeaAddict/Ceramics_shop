@@ -17,9 +17,7 @@ export function parseFormData(data: FormData) {
     pictures: [],
   };
   let addedList: string[] = [];
-  Array.from(data).map((item) => {
-    const key = item[0] as keyof ParsedItem;
-    const val = item[1];
+  data.forEach((val, key) => {
     if (key.startsWith("picture") && !addedList.includes(key)) {
       addedList.push(key);
       const res = data.getAll(key);
@@ -31,10 +29,10 @@ export function parseFormData(data: FormData) {
         picture: res[1] as File,
       };
       parsed.pictures.push(picObj);
-    } else if (typeof parsed[key] === "string") {
-      (parsed[key] as string) = val.toString();
-    } else if (typeof parsed[key] === "number") {
-      (parsed[key] as number) = Number(val);
+    } else if (typeof parsed[key as keyof ParsedItem] === "string") {
+      (parsed[key as keyof ParsedItem] as string) = val.toString();
+    } else if (typeof parsed[key as keyof ParsedItem] === "number") {
+      (parsed[key as keyof ParsedItem] as number) = Number(val);
     }
   });
   return parsed;

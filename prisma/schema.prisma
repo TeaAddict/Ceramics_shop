@@ -24,7 +24,6 @@ model GeneralSettings{
   displaySold Boolean @default(false)
 }
 
-
 model Item {
   id          String    @id @default(uuid())
   title       String    @unique
@@ -45,8 +44,8 @@ model Picture {
   name        String @unique
   width       Int
   height      Int
-  itemId      String?
-  item        Item?  @relation("itemPictures", fields: [itemId], references: [id])
+  itemId      String
+  item        Item  @relation("itemPictures", fields: [itemId], references: [id])
   itemThumbnailId Item? @relation("thumbnail")
 }
 

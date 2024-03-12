@@ -1,6 +1,7 @@
 "use server";
 
 import prisma from "@/lib/prisma";
+import { TransactionFull } from "@/prisma/prismaTypes";
 
 export async function getOrder(id: string) {
   try {
@@ -8,12 +9,12 @@ export async function getOrder(id: string) {
       where: { sessionId: id },
       include: {
         customerDetails: { include: { address: true } },
-        soldItems: true,
+        soldItems: { include: { item: { include: { thumbnail: true } } } },
         order: true,
       },
     });
     return transaction;
   } catch (error: any) {
-    return new Error("Problem getting order details", error.message);
+    throw new Error("Problem getting order details", error.message);
   }
 }

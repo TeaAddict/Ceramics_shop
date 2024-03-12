@@ -16,8 +16,9 @@ const VerticalMenu = ({
 }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const currentParam = searchParams.get(paramName);
   const pathname = usePathname();
-  const [active, setActive] = useState(menuList[0].label);
+  const [active, setActive] = useState(currentParam || menuList[0].label);
 
   const isStillActive = menuList.find((el) => el.label === active);
 

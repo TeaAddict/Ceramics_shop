@@ -15,6 +15,7 @@ import { sortItems } from "@/utils/item/sortItems";
 import { GeneralSettings } from "@prisma/client";
 import { getUniquePropertyNames } from "@/utils/functions/getUniquePropertyNames";
 import HideSoldOutCheckBox from "./HideSoldOutCheckBox";
+import CustomReturnMessage from "../shared/CustomReturnMessage";
 
 const ShopWindow = ({
   searchParams,
@@ -34,6 +35,7 @@ const ShopWindow = ({
   const adminPageAuth = isAdmin && isAdminPage;
   const { data, isLoading } = useItems();
   const items = data ?? [];
+
   const [hideSoldOut, setHideSoldOut] = useState(
     forUrlSearchParams.get("hideSold") === "true" ?? false
   );
@@ -72,11 +74,10 @@ const ShopWindow = ({
     }
   }, [uniqueCategories, category, pathname, router, searchParams]);
 
-  if (isLoading || !categoriesCounts.length || !category) return <LoadPage />;
-
+  if (isLoading || (!category && data?.length)) return <LoadPage />;
   if (!items || (items?.length === 0 && !adminPageAuth))
-    return <p className="flex justify-center text-2xl">Out of stock</p>;
-  else if (!items || (items?.length === 0 && adminPageAuth))
+    return <CustomReturnMessage text="Currently we are out of stock" />;
+  if (!items || (items?.length === 0 && adminPageAuth))
     return <OutOfStockPage />;
 
   return (

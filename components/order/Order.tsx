@@ -1,58 +1,88 @@
 "use server";
 
-import React from "react";
-import { getOrder } from "@/utils/server/order/getOrder";
-import MyCartTable from "../cart/MyCartTable";
+import { TransactionFull } from "@/prisma/prismaTypes";
+import { parseDate } from "@/utils/functions/parseDate";
+import MyCartTable, { CartItem } from "../cart/MyCartTable";
+import ProductTable, { Product } from "./ProductTable";
 
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+// const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-const Order = async ({ params }: { params: { sessionId: string } }) => {
-  // const session = await stripe.checkout.sessions.retrieve(params.session_id);
+const Order = async ({
+  params,
+  data,
+}: {
+  params: { sessionId: string };
+  data: TransactionFull;
+}) => {
+  const createdAtClean = parseDate(data.createdAt);
+  const address = data.customerDetails.address;
 
-  // console.log(session, "SESSION");
-  console.log(params.sessionId);
-  const res = await getOrder(params.sessionId);
-  console.log(res);
-
+  // id: string;
+  //   title: string;
+  //   picture: string;
+  //   stock: number;
+  //   quantity: number;
+  //   unitPrice: number;
+  //   totalPrice: number;
+  const cartItem: Product[] = data.soldItems.map((item) => {
+    return {
+      id: item.itemId,
+      title: item.name,
+      picture: item.item.thumbnail?.name!,
+      stock: item.item.stock,
+      quantity: item.quantity || 0,
+      unitPrice: item.unitAmount,
+      totalPrice: item.amountTotal,
+    };
+  });
   return (
-    <div className="flex flex-col gap-7 bg-red-800">
+    <div className="flex flex-col gap-7">
       <div>
         <p>Order id:</p>
-        {/* <p>{session.id}</p> */}
+        <p>{data.orderId}</p>
         <p>Order date:</p>
-        <p>[order date]</p>
+        <p>{createdAtClean}</p>
       </div>
       <div>
         <h3>Shipping information</h3>
-        <p>Shipping Address:</p>
-        <p>[state]</p>
-        <p>[country]</p>
-        <p>[street]</p>
-        <p>[zip code]</p>
+        <div className="grid grid-cols-2">
+          <p>Country:</p>
+          <p>{address.country}</p>
+          <p>State:</p>
+          <p>{address.state}</p>
+          <p>City:</p>
+          <p>{address.city}</p>
+          <p>Address:</p>
+          <div>
+            <p>{address.line1}</p>
+            <p>{address.line2}</p>
+          </div>
+          <p>Postal code:</p>
+          <p>{address.postal_code}</p>
+        </div>
       </div>
       <div>
         <h3>Product</h3>
-        <div>{/* <MyCartTable data={} /> */}</div>
+        <div>
+          <ProductTable data={cartItem} />
+        </div>
       </div>
       <div>
         <h3>Billing details</h3>
-        <div className="flex justify-between">
+        <div className="grid grid-cols-2">
+          <p>Amount:</p>
+          <p>{data.amountTotal}</p>
+          <p>Country:</p>
+          <p>{address.country}</p>
+          <p>State:</p>
+          <p>{address.state}</p>
+          <p>City:</p>
+          <p>{address.city}</p>
+          <p>Address:</p>
           <div>
-            <p>Billing Address</p>
-            <p>[state]</p>
-            <p>[country]</p>
-            <p>[street]</p>
-            <p>[zip code]</p>
-            <p>[email]</p>
+            <p>{address.line1}</p>
+            <p>{address.line2}</p>
           </div>
-
-          <div>
-            <p>Billing method</p>
-            <p>[credit card]</p>
-            <p>Amount</p>
-            <p>[$amount]</p>
-          </div>
-          <p></p>
         </div>
       </div>
     </div>

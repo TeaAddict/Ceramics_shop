@@ -25,7 +25,6 @@ const ShopItems = ({
   const currentPageEndItem = (currentPage - 1) * itemsPerPage + itemsPerPage;
 
   const currentItems = data.slice(currentPageStartItem, currentPageEndItem);
-
   return (
     <div
       className={`w-full sm:space-y-10 rounded-md pb-3 sm:p-5 ${

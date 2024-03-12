@@ -34,11 +34,6 @@ export async function POST(request: NextRequest) {
         event.data.object.id,
         { expand: ["line_items", "line_items.data.price.product"] }
       );
-      console.log("============================================");
-      console.log(sessionWithLineItems, "SESSIONNNNN");
-      console.log("============================================");
-      console.log(event, "EVENT IDDDDDDDDDDDDDDDDDDDDDDDDDD");
-      console.log("============================================");
 
       const lineItems = sessionWithLineItems.line_items?.data;
       if (!lineItems) {
