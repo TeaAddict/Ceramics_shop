@@ -104,7 +104,7 @@ model Transaction{
 }
 
 model Order{
-  id String @id @default(uuid())
+  id String @id @default(cuid())
   createdAt DateTime @default(now())
   expiresAt  DateTime
   status DeliveryStatus

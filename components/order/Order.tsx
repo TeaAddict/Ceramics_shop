@@ -2,8 +2,8 @@
 
 import { TransactionFull } from "@/prisma/prismaTypes";
 import { parseDate } from "@/utils/functions/parseDate";
-import MyCartTable, { CartItem } from "../cart/MyCartTable";
 import ProductTable, { Product } from "./ProductTable";
+import { formatCentsToEuroCurrency } from "@/utils/helper";
 
 // const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
@@ -17,19 +17,11 @@ const Order = async ({
   const createdAtClean = parseDate(data.createdAt);
   const address = data.customerDetails.address;
 
-  // id: string;
-  //   title: string;
-  //   picture: string;
-  //   stock: number;
-  //   quantity: number;
-  //   unitPrice: number;
-  //   totalPrice: number;
   const cartItem: Product[] = data.soldItems.map((item) => {
     return {
       id: item.itemId,
       title: item.name,
       picture: item.item.thumbnail?.name!,
-      stock: item.item.stock,
       quantity: item.quantity || 0,
       unitPrice: item.unitAmount,
       totalPrice: item.amountTotal,
@@ -71,7 +63,7 @@ const Order = async ({
         <h3>Billing details</h3>
         <div className="grid grid-cols-2">
           <p>Amount:</p>
-          <p>{data.amountTotal}</p>
+          <p>{formatCentsToEuroCurrency(data.amountTotal || 0)}</p>
           <p>Country:</p>
           <p>{address.country}</p>
           <p>State:</p>

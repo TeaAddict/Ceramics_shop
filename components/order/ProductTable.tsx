@@ -1,13 +1,10 @@
 import React from "react";
-import { formatToEuroCurrency } from "@/utils/helper";
-import Image from "next/image";
-import { Button } from "../ui/button";
+import { formatCentsToEuroCurrency } from "@/utils/helper";
 
 export type Product = {
   id: string;
   title: string;
   picture: string;
-  stock: number;
   quantity: number;
   unitPrice: number;
   totalPrice: number;
@@ -19,7 +16,6 @@ const ProductTable = ({ data }: { data: Product[] }) => {
       <thead>
         <tr className="grid grid-cols-[1fr_1fr_1fr_1fr] justify-start uppercase text-xs">
           <th className="justify-start flex">name</th>
-          {/* <th className="justify-start flex">PICTURE</th> */}
           <th className="justify-start flex">unit price</th>
           <th className="justify-start flex">quantity</th>
           <th className="justify-start flex">total</th>
@@ -32,18 +28,9 @@ const ProductTable = ({ data }: { data: Product[] }) => {
             key={index}
           >
             <td className="h-full flex items-center capitalize">{row.title}</td>
-            {/* <td className="aspect-square max-w-32 my-2 relative">
-              <Image
-                alt=""
-                src={`/uploads/${row.picture}`}
-                className="object-cover"
-                fill
-                sizes="30vw"
-              />
-            </td> */}
-            <td>{formatToEuroCurrency(row.unitPrice)}</td>
+            <td>{formatCentsToEuroCurrency(row.unitPrice)}</td>
             <td>{row.quantity}</td>
-            <td>{formatToEuroCurrency(row.totalPrice)}</td>
+            <td>{formatCentsToEuroCurrency(row.totalPrice)}</td>
           </tr>
         ))}
       </tbody>

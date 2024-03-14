@@ -15,6 +15,7 @@ const AdminPage = async ({ searchParams }: { searchParams: SearchParams }) => {
   const session = await getServerSession();
   let isAdmin = false;
   if (session?.user?.name) isAdmin = await isAdminRole(session?.user?.name);
+
   if (!isAdmin) return <p className="padding-container">Admin required</p>;
   if (isAdmin)
     return (
@@ -24,7 +25,7 @@ const AdminPage = async ({ searchParams }: { searchParams: SearchParams }) => {
             <VerticalMenu menuList={ADMIN_MENU} paramName="tab" />
           </div>
 
-          <div className=" w-full rounded-md bg-accent">
+          <div className="padding-container rounded-md bg-accent overflow-auto">
             <TabContent searchParams={searchParams} />
           </div>
         </div>

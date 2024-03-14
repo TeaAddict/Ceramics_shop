@@ -5,13 +5,16 @@ import Account from "../shared/Account";
 import { SearchParams } from "@/app/(root)/admin/page";
 import { capitalizeFirstLetter } from "@/utils/helper";
 import ServerSettings from "./settings/ServerSettings";
+import OrdersServer from "./orders/OrdersServer";
 
+// TODO: open page coresponding to tab through index admin list?
 const TabContent = ({ searchParams }: { searchParams: SearchParams }) => {
   const { tab } = searchParams;
   const compName = capitalizeFirstLetter(tab || "");
   return (
-    <div>
+    <div className="overflow-x-auto w-full">
       {tab === "dashboard" && <Dashboard />}
+      {tab === "orders" && <OrdersServer />}
       {tab === "shopboard" && <Shopboard searchParams={searchParams} />}
       {tab === "account" && <Account />}
       {tab === "settings" && <ServerSettings />}

@@ -28,7 +28,7 @@ const GeneralSettings = ({ settings }: { settings: SettingsModel | null }) => {
       <h2 className="pb-3">General</h2>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="max-h-[90vh] flex flex-col gap-5 w-72"
+        className="max-h-[90vh] flex flex-col gap-5 max-w-72"
       >
         <div className="flex flex-col gap-5 p-1">
           <FormInput
@@ -42,7 +42,7 @@ const GeneralSettings = ({ settings }: { settings: SettingsModel | null }) => {
             type="number"
           />
 
-          <div className="flex">
+          <div className="flex flex-col md:flex-row gap-3">
             <p>&quot;Featured&quot; sort</p>
             <Controller
               control={control}
@@ -56,7 +56,7 @@ const GeneralSettings = ({ settings }: { settings: SettingsModel | null }) => {
               )}
             />
           </div>
-          <div className="flex gap-3">
+          <div className="flex flex-col md:flex-row gap-3">
             <p>&quot;Featured&quot; sold out</p>
             <Controller
               control={control}

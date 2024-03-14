@@ -9,7 +9,7 @@ const ServerSettings = async () => {
   const generalSettings = await getGeneralSettings();
 
   return (
-    <div className="padding-container justify-evenly">
+    <div className="flex flex-col md:flex-row justify-evenly items-center">
       <GeneralSettings settings={generalSettings} />
       <ContactsSettings contacts={contacts} />
     </div>

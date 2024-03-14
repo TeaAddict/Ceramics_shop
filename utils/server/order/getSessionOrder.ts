@@ -39,7 +39,7 @@ export async function getSessionOrder(
     }
     return { data: order };
   } catch (error: any) {
-    console.log(error);
+    console.error(`Problem getting order data: ${error.message}`);
     throw new Error(`Problem getting order data: ${error.message}`);
   }
 }

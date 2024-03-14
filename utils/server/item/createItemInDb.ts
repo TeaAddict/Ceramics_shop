@@ -40,6 +40,7 @@ export async function createItemInDb(
       });
     } else {
       throw new Error("Did not found thumbnail image");
+      // console.error("Did not found thumbnail image");
     }
   } catch (e: any) {
     console.log(`Problem creating item: ${e.message}`);

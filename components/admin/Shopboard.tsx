@@ -15,7 +15,7 @@ const Shopboard = async ({
 
   if (!settings) return <LoadPage />;
   return (
-    <div className="padding-container flex-col">
+    <div className="flex-col">
       <ShopWindow
         searchParams={searchParams}
         color="inverted"

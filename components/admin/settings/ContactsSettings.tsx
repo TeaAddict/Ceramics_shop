@@ -28,7 +28,7 @@ const ContactsSettings = ({ contacts }: { contacts: Contacts | null }) => {
       <h2 className="pb-3">Contacts</h2>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="max-h-[90vh] flex flex-col gap-5 w-72"
+        className="max-h-[90vh] flex flex-col gap-5 max-w-72"
       >
         <div className="flex flex-col gap-5 p-1">
           <FormInput

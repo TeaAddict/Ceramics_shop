@@ -10,6 +10,15 @@ export function formatToEuroCurrency(number: number): string {
   });
   return formatter.format(number);
 }
+export function formatCentsToEuroCurrency(number: number): string {
+  const nonCents = number / 100;
+  const formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "EUR",
+    minimumFractionDigits: 2,
+  });
+  return formatter.format(nonCents);
+}
 
 export async function getImagesFilesWithDimensions(
   pictures: FileList
@@ -109,4 +118,15 @@ export async function getImagesWithDimensions(
 
   await readNextFile(0);
   return filesWithDimensions;
+}
+
+export function convertToCamelCase(list: string[]) {
+  return list.map((value) => {
+    let res = value;
+    if (value.includes(" ")) {
+      const [first, second] = value.split(" ");
+      res = first.concat(capitalizeFirstLetter(second));
+    }
+    return res;
+  });
 }

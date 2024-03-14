@@ -11,7 +11,7 @@ export async function decrementItemStock(soldItems: SoldItem[]) {
         });
 
         if (result.stock < 0)
-          throw new Error(`Stock cannot be negative for item: ${result.title}`);
+          console.error(`Stock cannot be negative for item: ${result.title}`);
       })
     );
   } catch (error) {

@@ -7,8 +7,6 @@ import FavStar from "../shared/star/FavStar";
 import ItemCartInterface from "../cart/ItemCartInterface";
 import CustomReturnMessage from "../shared/CustomReturnMessage";
 import { getItem } from "@/utils/server/getItem";
-import { formatToEuroCurrency } from "@/utils/helper";
-import AddToCartButton from "../cart/AddToCartButton";
 
 const ItemWindow = async ({
   params,
@@ -21,7 +19,7 @@ const ItemWindow = async ({
   type TItem = typeof item;
 
   if (!item || Object.keys(item).length === 0)
-    return <CustomReturnMessage>Product does not exist</CustomReturnMessage>;
+    return <CustomReturnMessage text="Product does not exist" />;
 
   return (
     <section className="flex flex-col gap-5">
