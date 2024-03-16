@@ -8,7 +8,9 @@ import {
   CarouselApi,
 } from "@/components/ui/carousel";
 import Image from "next/image";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import Autoplay from "embla-carousel-autoplay";
+import PhotoSwipeLightbox from "photoswipe/lightbox";
 
 type Pictures = {
   id: string;
@@ -19,10 +21,12 @@ type Pictures = {
 };
 
 type Props = {
-  items: Pictures[];
+  images: Pictures[];
+  galleryID: string;
 };
 
-export function CarouselCn({ items }: Props) {
+export function CarouselCn({ images, galleryID }: Props) {
+  const plugin = useRef(Autoplay({ delay: 3000, stopOnInteraction: true }));
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [mainApi, setMainApi] = useState<CarouselApi>();
   const [thumbApi, setThumbApi] = useState<CarouselApi>();
@@ -50,35 +54,62 @@ export function CarouselCn({ items }: Props) {
     mainApi.on("reInit", onSelect);
   }, [mainApi, onSelect]);
 
-  //TODO DELETE
-  const arr = Array.from(Array(20).keys());
+  useEffect(() => {
+    let lightbox = new PhotoSwipeLightbox({
+      gallery: "#" + galleryID,
+      children: "a",
+      pswpModule: () => import("photoswipe"),
+    });
+    lightbox.init();
+
+    return () => {
+      lightbox.destroy();
+      lightbox = null!;
+    };
+  }, [galleryID]);
+
   return (
     <div className="w-[15rem] xs:w-[20rem] md:w-[30rem]">
-      {/* <Carousel className="w-full max-w-sm" setApi={setMainApi}> */}
-      <Carousel className="" setApi={setMainApi}>
-        {/* <CarouselContent className="-ml-1"> */}
-        <CarouselContent className="">
-          {items.map((item) => (
-            <CarouselItem key={item.name} className="pl-4">
-              <div className="p-1">
-                <Card className="cursor-pointer">
-                  <CardContent className="flex aspect-square items-center justify-center p-6 relative">
-                    <Image
-                      alt="carouselImg"
-                      src={`/uploads/${item.name}`}
-                      fill
-                      className="object-cover rounded-md"
-                      sizes="(max-width: 500px) 100px"
-                    />
-                  </CardContent>
-                </Card>
-              </div>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
+      <Carousel
+        className=""
+        setApi={setMainApi}
+        plugins={[plugin.current]}
+        onMouseEnter={plugin.current.stop}
+        onMouseLeave={plugin.current.reset}
+      >
+        <div className="pswp-gallery" id={galleryID}>
+          <CarouselContent className="">
+            {images.map((image, index) => (
+              <CarouselItem key={image.name} className="pl-4">
+                <div className="p-1">
+                  <Card className="cursor-pointer">
+                    <a
+                      href={`/uploads/${image.name}`}
+                      data-pswp-width={image.width}
+                      data-pswp-height={image.height}
+                      key={galleryID + "-" + index}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <CardContent className="flex aspect-square items-center justify-center p-6 relative">
+                        <Image
+                          alt="carouselImg"
+                          src={`/uploads/${image.name}`}
+                          fill
+                          className="object-cover rounded-md"
+                          sizes="(max-width: 500px) 100px"
+                        />
+                      </CardContent>
+                    </a>
+                  </Card>
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </div>
       </Carousel>
 
-      {items.length > 1 && (
+      {images.length > 1 && (
         <Carousel
           className="w-full overflow-hidden"
           setApi={setThumbApi}
@@ -88,7 +119,7 @@ export function CarouselCn({ items }: Props) {
           }}
         >
           <CarouselContent className="-ml-0">
-            {items.map((item, index) => (
+            {images.map((item, index) => (
               <CarouselItem
                 key={item.name}
                 className="pl-1 basis-20"
