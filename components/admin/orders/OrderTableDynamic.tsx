@@ -4,7 +4,7 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import OrderStatusBadge from "./OrderStatusBadge";
 import { convertToCamelCase } from "@/utils/helper";
 import { sortTableBody } from "@/utils/orderFunctions/sortTableBody";
-import { useUpdateSearchParams } from "@/utils/client/updateSearchParams";
+import { useUpdateSearchParams } from "@/hooks/useUpdateSearchParams";
 import { addAscOrDesc } from "./addAscOrDesc";
 
 /**
@@ -22,7 +22,7 @@ type Props = {
   body: { [key: string]: any }[];
   onClickHead?: Function;
   onClickBody?: Function;
-  initSort?: string;
+  initSort?: [{ name: string; value: string }];
 };
 
 const OrderTableDynamic = ({
@@ -33,16 +33,16 @@ const OrderTableDynamic = ({
   initSort,
 }: Props) => {
   const headCamelCase = convertToCamelCase(head);
-  const { paramValue, setParamValue } = useUpdateSearchParams(
-    initSort ?? head[0].concat("-desc")
+  const { lastParams, setLastParams } = useUpdateSearchParams(
+    initSort ?? [{ name: "sortBy", value: head[0].concat("-desc") }]
   );
-  const sorted = sortTableBody(body, paramValue);
+  const sorted = sortTableBody(body, lastParams[0].value);
 
   function handleSort(val: string) {
     onClickHead?.(val);
 
-    const sortBy = addAscOrDesc(val, paramValue);
-    setParamValue(sortBy);
+    const sortBy = addAscOrDesc(val, lastParams[0].value);
+    setLastParams([{ name: "sortBy", value: sortBy }]);
   }
   function handleClick(row: any) {
     onClickBody?.(row);

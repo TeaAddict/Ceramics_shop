@@ -17,9 +17,9 @@ import { SoldItemType } from "@/prisma/prismaTypes";
 export function soldItemToProduct(data: SoldItemType[]): Product[] {
   return data.map((item) => {
     return {
-      id: item.itemId,
+      id: item.itemId ?? "deleted",
       title: item.name,
-      picture: item.item.thumbnail?.name!,
+      picture: item.item?.thumbnail?.name ?? "deleted",
       quantity: item.quantity || 0,
       unitPrice: item.unitAmount,
       totalPrice: item.amountTotal,
