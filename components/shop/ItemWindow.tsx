@@ -1,13 +1,12 @@
 "use server";
 
-import PhotoSwipeCarousel from "@/components/shop/photo/PhotoSwipeCarousel";
 import BackButton from "@/components/shared/BackButton";
 import { Session } from "next-auth";
 import FavStar from "../shared/star/FavStar";
 import ItemCartInterface from "../cart/ItemCartInterface";
 import CustomReturnMessage from "../shared/CustomReturnMessage";
 import { getItem } from "@/utils/server/getItem";
-import ImageDisplay from "./photo/ImageDisplay";
+import { ImageShowcase } from "./photo/ImageShowcase";
 
 const ItemWindow = async ({
   params,
@@ -32,7 +31,7 @@ const ItemWindow = async ({
           {session && <FavStar itemId={item.id} />}
         </div>
         <div className="flex flex-col justify-center md:justify-start items-center md:items-start">
-          <ImageDisplay item={item} />
+          <ImageShowcase images={item.pictures} galleryID="image-showcase" />
         </div>
         <div className="flex flex-col gap-10 min-w-44">
           <div className="hidden md:flex gap-3">
