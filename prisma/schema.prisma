@@ -30,7 +30,7 @@ model Item {
   price       Float
   stock       Int
   category    String
-  description String?
+  description String? @db.Text
   pictures    Picture[] @relation("itemPictures")
   thumbnailId String?  @unique
   thumbnail   Picture?  @relation("thumbnail", fields: [thumbnailId], references: [id])
@@ -83,8 +83,8 @@ model SoldItem{
   createdAt DateTime @default(now())
   transactionId String
   transaction Transaction @relation(fields: [transactionId], references: [id])
-  itemId String
-  item Item @relation(fields: [itemId], references: [id])
+  itemId String?
+  item Item? @relation(fields: [itemId], references: [id])
 }
 
 model Transaction{

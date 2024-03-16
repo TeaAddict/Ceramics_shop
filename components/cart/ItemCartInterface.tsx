@@ -35,7 +35,7 @@ const ItemCartInterface = ({
 
   if (cartItem)
     return (
-      <div className="space-y-5 flex md:flex-col justify-around md:justify-normal">
+      <div className="flex md:flex-col justify-around md:justify-normal items-start">
         <p className="text-2xl uppercase font-semibold">
           EUR {formatToEuroCurrency(item.price)}
         </p>
@@ -44,8 +44,8 @@ const ItemCartInterface = ({
     );
 
   return (
-    <div className="space-y-5 flex md:flex-col justify-around md:justify-normal">
-      <div className="space-y-5">
+    <div className="flex gap-5 md:flex-col justify-around md:justify-normal items-start">
+      <div className="flex flex-col gap-5">
         <p className="text-2xl uppercase font-semibold">
           EUR {formatToEuroCurrency(item.price)}
         </p>

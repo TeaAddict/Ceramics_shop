@@ -26,7 +26,7 @@ const ItemWindow = async ({
     <section className="flex flex-col gap-5">
       <BackButton />
 
-      <div className="flex flex-col md:flex-row md:justify-center gap-5 md:gap-52">
+      <div className="flex flex-col md:flex-row md:justify-center gap-5  lg:justify-evenly">
         <div className="flex gap-3 md:hidden">
           <h3 className="font-semibold text-3xl capitalize">{item.title}</h3>
           {session && <FavStar itemId={item.id} />}
@@ -47,7 +47,10 @@ const ItemWindow = async ({
           )}
 
           {item.description && (
-            <p className="md:max-w-72 capitalize">{item.description}</p>
+            <div>
+              <h3>Description:</h3>
+              <p className="md:max-w-72 capitalize">{item.description}</p>
+            </div>
           )}
         </div>
       </div>

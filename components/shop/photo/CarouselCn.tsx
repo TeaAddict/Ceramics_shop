@@ -32,7 +32,7 @@ export function CarouselCn({ items }: Props) {
       if (!mainApi || !thumbApi) return;
       thumbApi.scrollTo(index);
       setSelectedIndex(index);
-      mainApi.scrollTo(thumbApi.selectedScrollSnap());
+      mainApi.scrollTo(index);
     },
     [mainApi, thumbApi]
   );
@@ -50,12 +50,16 @@ export function CarouselCn({ items }: Props) {
     mainApi.on("reInit", onSelect);
   }, [mainApi, onSelect]);
 
+  //TODO DELETE
+  const arr = Array.from(Array(20).keys());
   return (
-    <div>
-      <Carousel className="w-full max-w-sm" setApi={setMainApi}>
-        <CarouselContent className="-ml-1">
+    <div className="w-[15rem] xs:w-[20rem] md:w-[30rem]">
+      {/* <Carousel className="w-full max-w-sm" setApi={setMainApi}> */}
+      <Carousel className="" setApi={setMainApi}>
+        {/* <CarouselContent className="-ml-1"> */}
+        <CarouselContent className="">
           {items.map((item) => (
-            <CarouselItem key={item.name} className="pl-1">
+            <CarouselItem key={item.name} className="pl-4">
               <div className="p-1">
                 <Card className="cursor-pointer">
                   <CardContent className="flex aspect-square items-center justify-center p-6 relative">
@@ -64,6 +68,7 @@ export function CarouselCn({ items }: Props) {
                       src={`/uploads/${item.name}`}
                       fill
                       className="object-cover rounded-md"
+                      sizes="(max-width: 500px) 100px"
                     />
                   </CardContent>
                 </Card>
@@ -73,29 +78,29 @@ export function CarouselCn({ items }: Props) {
         </CarouselContent>
       </Carousel>
 
-      <Carousel
-        className="w-full max-w-sm"
-        setApi={setThumbApi}
-        opts={{
-          containScroll: "keepSnaps",
-          dragFree: true,
-        }}
-      >
-        <CarouselContent className="-ml-1">
-          {items.map((item, index) => (
-            <CarouselItem
-              key={item.name}
-              className="pl-1 basis-1/3"
-              onClick={() => {
-                onThumbClick(index);
-              }}
-            >
-              <div className="p-1">
+      {items.length > 1 && (
+        <Carousel
+          className="w-full overflow-hidden"
+          setApi={setThumbApi}
+          opts={{
+            containScroll: "keepSnaps",
+            dragFree: true,
+          }}
+        >
+          <CarouselContent className="-ml-0">
+            {items.map((item, index) => (
+              <CarouselItem
+                key={item.name}
+                className="pl-1 basis-20"
+                onClick={() => {
+                  onThumbClick(index);
+                }}
+              >
                 <Card
                   className={`${
                     selectedIndex === index &&
                     "outline outline-primary outline-4 -outline-offset-1 rounded-sm"
-                  } cursor-pointer`}
+                  } cursor-pointer m-1`}
                 >
                   <CardContent className="flex aspect-square items-center justify-center p-6 relative">
                     <Image
@@ -103,14 +108,15 @@ export function CarouselCn({ items }: Props) {
                       src={`/uploads/${item.name}`}
                       fill
                       className="object-cover"
+                      sizes="(max-width: 500px) 100px"
                     />
                   </CardContent>
                 </Card>
-              </div>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-      </Carousel>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </Carousel>
+      )}
     </div>
   );
 }
