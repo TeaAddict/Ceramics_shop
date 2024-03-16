@@ -1,5 +1,7 @@
 "use client";
-
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import PhotoSwipeLightbox from "photoswipe/lightbox";
+import "photoswipe/style.css";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
@@ -8,38 +10,19 @@ import {
   CarouselApi,
 } from "@/components/ui/carousel";
 import Image from "next/image";
-import { useCallback, useEffect, useRef, useState } from "react";
 import Autoplay from "embla-carousel-autoplay";
-import PhotoSwipeLightbox from "photoswipe/lightbox";
-
-type Pictures = {
-  id: string;
-  name: string;
-  width: number;
-  height: number;
-  itemId: string;
-};
+import { Pictures } from "./ImageShowcase";
 
 type Props = {
   images: Pictures[];
   galleryID: string;
 };
 
-export function CarouselCn({ images, galleryID }: Props) {
+const MainDisplay = ({ images, galleryID }: Props) => {
   const plugin = useRef(Autoplay({ delay: 3000, stopOnInteraction: true }));
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [mainApi, setMainApi] = useState<CarouselApi>();
   const [thumbApi, setThumbApi] = useState<CarouselApi>();
-
-  const onThumbClick = useCallback(
-    (index: number) => {
-      if (!mainApi || !thumbApi) return;
-      thumbApi.scrollTo(index);
-      setSelectedIndex(index);
-      mainApi.scrollTo(index);
-    },
-    [mainApi, thumbApi]
-  );
 
   const onSelect = useCallback(() => {
     if (!mainApi || !thumbApi) return;
@@ -58,6 +41,7 @@ export function CarouselCn({ images, galleryID }: Props) {
     let lightbox = new PhotoSwipeLightbox({
       gallery: "#" + galleryID,
       children: "a",
+      showHideAnimationType: "fade",
       pswpModule: () => import("photoswipe"),
     });
     lightbox.init();
@@ -67,18 +51,16 @@ export function CarouselCn({ images, galleryID }: Props) {
       lightbox = null!;
     };
   }, [galleryID]);
-
   return (
-    <div className="w-[15rem] xs:w-[20rem] md:w-[30rem]">
+    <div>
       <Carousel
-        className=""
         setApi={setMainApi}
-        plugins={[plugin.current]}
-        onMouseEnter={plugin.current.stop}
-        onMouseLeave={plugin.current.reset}
+        // plugins={[plugin.current]}
+        // onMouseEnter={plugin.current.stop}
+        // onMouseLeave={plugin.current.reset}
       >
         <div className="pswp-gallery" id={galleryID}>
-          <CarouselContent className="">
+          <CarouselContent>
             {images.map((image, index) => (
               <CarouselItem key={image.name} className="pl-4">
                 <div className="p-1">
@@ -93,10 +75,10 @@ export function CarouselCn({ images, galleryID }: Props) {
                     >
                       <CardContent className="flex aspect-square items-center justify-center p-6 relative">
                         <Image
-                          alt="carouselImg"
-                          src={`/uploads/${image.name}`}
-                          fill
                           className="object-cover rounded-md"
+                          src={`/uploads/${image.name}`}
+                          alt="carouselImg"
+                          fill
                           sizes="(max-width: 500px) 100px"
                         />
                       </CardContent>
@@ -108,46 +90,8 @@ export function CarouselCn({ images, galleryID }: Props) {
           </CarouselContent>
         </div>
       </Carousel>
-
-      {images.length > 1 && (
-        <Carousel
-          className="w-full overflow-hidden"
-          setApi={setThumbApi}
-          opts={{
-            containScroll: "keepSnaps",
-            dragFree: true,
-          }}
-        >
-          <CarouselContent className="-ml-0">
-            {images.map((item, index) => (
-              <CarouselItem
-                key={item.name}
-                className="pl-1 basis-20"
-                onClick={() => {
-                  onThumbClick(index);
-                }}
-              >
-                <Card
-                  className={`${
-                    selectedIndex === index &&
-                    "outline outline-primary outline-4 -outline-offset-1 rounded-sm"
-                  } cursor-pointer m-1`}
-                >
-                  <CardContent className="flex aspect-square items-center justify-center p-6 relative">
-                    <Image
-                      alt="carouselImg"
-                      src={`/uploads/${item.name}`}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 500px) 100px"
-                    />
-                  </CardContent>
-                </Card>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-        </Carousel>
-      )}
     </div>
   );
-}
+};
+
+export default MainDisplay;
