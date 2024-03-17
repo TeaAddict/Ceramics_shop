@@ -13,7 +13,7 @@ const Hero = () => {
         alt="Hero bg"
         src="/assets/hero2.png"
         className="object-cover bg-center bg-no-repeat"
-        sizes="100vw"
+        sizes="(max-width: 500px) 100px"
         fill
       />
 

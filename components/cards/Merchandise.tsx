@@ -39,7 +39,7 @@ const Merchandise = ({
               src={`/uploads/${thumbnail.name}`}
               alt={title}
               fill
-              sizes="30vw"
+              sizes="(max-width: 500px) 100px"
               className="object-cover rounded-t-md hover:brightness-90"
             />
           </Link>
@@ -79,7 +79,7 @@ const Merchandise = ({
                 src={`/uploads/${thumbnail.name}`}
                 alt={title}
                 fill
-                sizes="30vw"
+                sizes="(max-width: 500px) 100px"
                 className={`object-cover rounded-t-md ${
                   isAdmin && "hover:brightness-75"
                 }`}

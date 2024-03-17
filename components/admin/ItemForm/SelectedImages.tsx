@@ -33,7 +33,7 @@ const SelectedImages = ({
                 fill
                 src={image}
                 style={{ objectFit: "cover" }}
-                sizes="30vw"
+                sizes="(max-width: 500px) 100px"
               />
             </div>
           );

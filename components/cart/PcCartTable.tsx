@@ -42,7 +42,7 @@ const PcCartTable = ({
                 src={`/uploads/${row.picture}`}
                 className="object-cover"
                 fill
-                sizes="30vw"
+                sizes="(max-width: 500px) 100px"
               />
             </td>
             <td>{formatToEuroCurrency(row.unitPrice)}</td>

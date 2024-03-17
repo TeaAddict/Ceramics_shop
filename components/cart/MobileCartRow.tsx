@@ -41,7 +41,7 @@ const MobileCartRow = ({
             alt=""
             src={`/uploads/${thumbnailImage}`}
             fill
-            sizes="30vw"
+            sizes="(max-width: 500px) 100px"
             className="object-cover"
           />
         </div>

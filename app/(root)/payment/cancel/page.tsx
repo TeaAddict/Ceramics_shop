@@ -1,7 +1,10 @@
+import CustomReturnMessage from "@/components/shared/CustomReturnMessage";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import React from "react";
 
 const CancelPage = () => {
-  return <div className="padding-container flex-col">CancelPage</div>;
+  return <CustomReturnMessage text="Payment canceled!" />;
 };
 
 export default CancelPage;

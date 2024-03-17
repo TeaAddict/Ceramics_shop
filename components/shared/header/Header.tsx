@@ -9,6 +9,7 @@ import LoginButton from "./LoginButton";
 import LogoutButton from "./LogoutButton";
 import Link from "next/link";
 import ProfileButton from "@/components/profile/ProfileButton";
+import LanguageButton from "../LanguageButton";
 
 const Header = async () => {
   const session = await getServerSession(authOptions);
@@ -48,6 +49,9 @@ const Header = async () => {
             <LogoutButton />
           </div>
         )}
+
+        <LanguageButton />
+
         <div className="md:hidden">
           <MobileMenu session={session} />
         </div>
