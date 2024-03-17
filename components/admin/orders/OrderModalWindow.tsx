@@ -6,6 +6,7 @@ import ProductTable from "@/components/order/ProductTable";
 import { soldItemToProduct } from "@/utils/orderFunctions/soldItemToProduct";
 import { updateStatus } from "@/utils/server/order/updateStatus";
 import { formatCentsToEuroCurrency } from "@/utils/helper";
+import toast from "react-hot-toast";
 
 const OrderModalWindow = ({ row }: { row: TableOrder }) => {
   const product = soldItemToProduct(row.soldItems);
@@ -23,7 +24,11 @@ const OrderModalWindow = ({ row }: { row: TableOrder }) => {
             initialSelection={row.status}
             selectOptions={SHIPPING_STATUS}
             onChange={async (e) => {
-              await updateStatus(row.id, e);
+              toast.promise(updateStatus(row.id, e), {
+                loading: "Saving...",
+                success: <b>Settings saved!</b>,
+                error: <b>Could not save.</b>,
+              });
             }}
           />
         </div>

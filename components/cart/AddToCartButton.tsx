@@ -5,6 +5,7 @@ import { AppDispatch } from "@/redux/store";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { Button } from "../ui/button";
+import toast from "react-hot-toast";
 
 const AddToCartButton = ({
   item,
@@ -16,7 +17,7 @@ const AddToCartButton = ({
   const dispatch = useDispatch<AppDispatch>();
 
   function handleAddToCart() {
-    if (item)
+    if (item) {
       dispatch(
         addItem({
           id: item.id,
@@ -28,6 +29,9 @@ const AddToCartButton = ({
           title: item.title,
         })
       );
+
+      toast.success(`Added ${quantity} ${item.title} to cart!`);
+    }
   }
 
   return <Button onClick={handleAddToCart}>ADD TO CART</Button>;

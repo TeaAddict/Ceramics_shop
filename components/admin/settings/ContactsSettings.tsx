@@ -2,11 +2,12 @@
 
 import { useForm } from "react-hook-form";
 import { Button } from "../../ui/button";
-import { updateSettings } from "@/utils/server/settings/updateSettings";
+import { updateContactSettings } from "@/utils/server/settings/updateContactSettings";
 import { Contacts } from "@prisma/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { contactsSchema } from "@/utils/server/settings/types";
 import FormInput from "@/components/form/FormInput";
+import toast from "react-hot-toast";
 
 const ContactsSettings = ({ contacts }: { contacts: Contacts | null }) => {
   const {
@@ -20,7 +21,11 @@ const ContactsSettings = ({ contacts }: { contacts: Contacts | null }) => {
   });
 
   async function onSubmit(data: Contacts) {
-    await updateSettings(data);
+    toast.promise(updateContactSettings(data), {
+      loading: "Saving...",
+      success: <b>Settings saved!</b>,
+      error: <b>Could not save.</b>,
+    });
   }
 
   return (

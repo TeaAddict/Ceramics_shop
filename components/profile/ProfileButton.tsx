@@ -23,6 +23,7 @@ const ProfileButton = ({
           alt="profile_icon"
           src={image}
           fill
+          sizes="(max-width: 500px) 100px"
           className="object-cover rounded-full"
         />
       </div>

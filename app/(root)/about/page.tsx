@@ -12,6 +12,7 @@ const AboutPage = () => {
           alt="about-img"
           src={"/assets/about3.jpg"}
           fill
+          sizes="(max-width: 500px) 100px"
           className="object-cover object-left"
         />
       </div>

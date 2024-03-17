@@ -11,6 +11,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addItem, updateItem } from "@/utils/itemFunctions";
 import { setFormError } from "./setFormError";
+import toast from "react-hot-toast";
 
 const ItemForm = ({
   item,
@@ -60,22 +61,30 @@ const ItemForm = ({
   const mutationAddItem = useMutation({
     mutationFn: (data: FormData) => addItem(data),
     onSuccess: (data) => {
-      if (data.errors) setFormError(setError, data.errors);
+      if (data.errors) {
+        setFormError(setError, data.errors);
+        toast.error("Problem adding item");
+      }
       if (data.success) {
         setOpen(false);
         reset();
         queryClient.invalidateQueries({ queryKey: ["items"] });
+        toast.success("Successfully added item!");
       }
     },
   });
   const mutationUpdateItem = useMutation({
     mutationFn: (data: { data: FormData; id: string }) => updateItem(data),
     onSuccess: (data) => {
-      if (data.errors) setFormError(setError, data.errors);
+      if (data.errors) {
+        setFormError(setError, data.errors);
+        toast.error("Problem updating item");
+      }
       if (data.success) {
         setOpen(false);
         reset();
         queryClient.invalidateQueries({ queryKey: ["items"] });
+        toast.success("Successfully updated item!");
       }
     },
   });

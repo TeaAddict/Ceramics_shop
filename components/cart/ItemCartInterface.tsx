@@ -29,13 +29,10 @@ const ItemCartInterface = ({
   function handleDecrease() {
     if (quantity > 1) setQuantity((quantity: number) => quantity - 1);
   }
-  function handleRemoveFromCart() {
-    if (item) dispatch(removeItem(params.id));
-  }
 
   if (cartItem)
     return (
-      <div className="flex md:flex-col justify-around md:justify-normal items-start">
+      <div className="flex md:flex-col justify-around md:justify-normal items-start gap-5">
         <p className="text-2xl uppercase font-semibold">
           EUR {formatToEuroCurrency(item.price)}
         </p>

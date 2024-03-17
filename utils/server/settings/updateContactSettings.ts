@@ -1,12 +1,12 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { GeneralSettings } from "@prisma/client";
+import { Contacts } from "@prisma/client";
 
-export async function updateGeneralSettings(data: GeneralSettings) {
+export async function updateContactSettings(data: Contacts) {
   try {
-    await prisma.generalSettings.upsert({
-      create: data,
+    await prisma.contacts.upsert({
+      create: { ...data, id: 1 },
       update: data,
       where: { id: 1 },
     });

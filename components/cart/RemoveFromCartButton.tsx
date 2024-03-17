@@ -1,10 +1,11 @@
 "use client";
 import { ItemWithPicThumbFav } from "@/prisma/prismaTypes";
 import { removeItem } from "@/redux/features/cartSlice";
-import { AppDispatch, useAppSelector } from "@/redux/store";
+import { AppDispatch } from "@/redux/store";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { Button } from "../ui/button";
+import toast from "react-hot-toast";
 
 const RemoveFromCartButton = ({
   item,
@@ -14,12 +15,12 @@ const RemoveFromCartButton = ({
   params: { id: string };
 }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const cart = useAppSelector((state) => state.cartReducer.cartItems);
-
-  const cartItem = cart.find((item) => item.id === params.id);
 
   function handleRemoveFromCart() {
-    if (item) dispatch(removeItem(params.id));
+    if (item) {
+      dispatch(removeItem(params.id));
+      toast.success(`Removed ${item.title} from cart!`);
+    }
   }
 
   return <Button onClick={handleRemoveFromCart}>REMOVE FROM CART</Button>;

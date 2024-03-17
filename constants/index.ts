@@ -40,6 +40,29 @@ export const NAV_BAR_LINKS = [
   },
 ];
 
+export const FOOTER_QUICK_LINKS = [
+  {
+    label: "Home",
+    href: "/",
+  },
+  {
+    label: "Shop",
+    href: "/shop",
+  },
+  {
+    label: "About us",
+    href: "/about",
+  },
+  {
+    label: "Contact us",
+    href: "/contacts",
+  },
+  {
+    label: "Privacy policy",
+    href: "/privacyPolicy",
+  },
+];
+
 export const ADMIN_MENU = [
   // {
   //   label: "dashboard",

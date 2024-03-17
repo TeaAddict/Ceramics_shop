@@ -8,6 +8,7 @@ import { FEATURE_SOLD, SORT_OPTIONS } from "@/constants";
 import { Button } from "@/components/ui/button";
 import { GeneralSettings as SettingsModel } from "@prisma/client";
 import { updateGeneralSettings } from "@/utils/server/settings/updateGeneralSettings";
+import toast from "react-hot-toast";
 
 const GeneralSettings = ({ settings }: { settings: SettingsModel | null }) => {
   const {
@@ -20,7 +21,11 @@ const GeneralSettings = ({ settings }: { settings: SettingsModel | null }) => {
   });
 
   async function onSubmit(data: SettingsModel) {
-    await updateGeneralSettings(data);
+    toast.promise(updateGeneralSettings(data), {
+      loading: "Saving...",
+      success: <b>Settings saved!</b>,
+      error: <b>Could not save.</b>,
+    });
   }
 
   return (

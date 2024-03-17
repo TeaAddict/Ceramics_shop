@@ -5,6 +5,7 @@ import Footer from "@/components/shared/Footer";
 import Header from "@/components/shared/header/Header";
 import { ReduxProvider } from "@/redux/provider";
 import QueryProvider from "@/lib/QueryProvider";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,6 +28,7 @@ export default function RootLayout({
             <main className="overflow-hidden flex flex-col flex-1">
               {children}
             </main>
+            <Toaster />
             <Footer />
           </ReduxProvider>
         </QueryProvider>
