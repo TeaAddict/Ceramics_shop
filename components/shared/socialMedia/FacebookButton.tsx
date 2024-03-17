@@ -4,7 +4,7 @@ import { FaFacebook } from "react-icons/fa";
 
 const FacebookButton = ({ size = 40 }: { size?: number }) => {
   return (
-    <Link href={""} className="hover:text-primary">
+    <Link href={"https://www.facebook.com/"} className="hover:text-primary">
       <FaFacebook size={size} />
     </Link>
   );

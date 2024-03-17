@@ -38,8 +38,6 @@ const OrdersTable = ({ data }: { data: TableOrder[] }) => {
     setRowData(rowData);
   }
 
-  function handleSort(val: string) {}
-
   return (
     <div>
       <Dialog open={open} onOpenChange={setOpen}>
@@ -47,7 +45,6 @@ const OrdersTable = ({ data }: { data: TableOrder[] }) => {
           head={ORDER_TABLE_HEAD}
           body={tableBody}
           onClickBody={handleClick}
-          onClickHead={handleSort}
         />
         <DialogContent>
           <DialogHeader>

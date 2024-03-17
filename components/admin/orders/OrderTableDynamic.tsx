@@ -34,15 +34,14 @@ const OrderTableDynamic = ({
 }: Props) => {
   const headCamelCase = convertToCamelCase(head);
   const { lastParams, setLastParams } = useUpdateSearchParams(
-    initSort ?? [{ name: "sortBy", value: head[0].concat("-desc") }]
+    initSort ?? [{ name: "orderSortBy", value: head[0].concat("-desc") }]
   );
   const sorted = sortTableBody(body, lastParams[0].value);
 
   function handleSort(val: string) {
     onClickHead?.(val);
-
     const sortBy = addAscOrDesc(val, lastParams[0].value);
-    setLastParams([{ name: "sortBy", value: sortBy }]);
+    setLastParams([{ name: "orderSortBy", value: sortBy }]);
   }
   function handleClick(row: any) {
     onClickBody?.(row);
