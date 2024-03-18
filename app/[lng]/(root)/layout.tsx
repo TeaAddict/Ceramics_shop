@@ -16,20 +16,22 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  params: { lng },
 }: {
   children: React.ReactNode;
+  params: { lng: string };
 }) {
   return (
     <html lang="en">
       <body className={`${inter.className} min-h-screen flex flex-col`}>
         <QueryProvider>
           <ReduxProvider>
-            <Header />
+            <Header lng={lng} />
             <main className="overflow-hidden flex flex-col flex-1">
               {children}
             </main>
             <Toaster />
-            <Footer />
+            <Footer lng={lng} />
           </ReduxProvider>
         </QueryProvider>
       </body>

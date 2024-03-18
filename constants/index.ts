@@ -19,46 +19,68 @@ export const SHIPPING_STATUS = [
 
 export const NAV_BAR_LINKS = [
   {
-    label: "Home",
+    label: "home",
     route: "/",
     icon: BiHomeAlt2,
   },
   {
-    label: "Shop",
+    label: "shop",
     route: "/shop",
     icon: BiShoppingBag,
   },
   {
-    label: "About",
+    label: "about",
     route: "/about",
     icon: GrGroup,
   },
   {
-    label: "Contacts",
+    label: "contacts",
     route: "/contacts",
     icon: LuPhone,
   },
 ];
 
+// export const FOOTER_QUICK_LINKS = [
+//   {
+//     label: "Home",
+//     href: "/",
+//   },
+//   {
+//     label: "Shop",
+//     href: "/shop",
+//   },
+//   {
+//     label: "About us",
+//     href: "/about",
+//   },
+//   {
+//     label: "Contact us",
+//     href: "/contacts",
+//   },
+//   {
+//     label: "Privacy policy",
+//     href: "/privacyPolicy",
+//   },
+// ];
 export const FOOTER_QUICK_LINKS = [
   {
-    label: "Home",
+    label: "home",
     href: "/",
   },
   {
-    label: "Shop",
+    label: "shop",
     href: "/shop",
   },
   {
-    label: "About us",
+    label: "aboutUs",
     href: "/about",
   },
   {
-    label: "Contact us",
+    label: "contactUs",
     href: "/contacts",
   },
   {
-    label: "Privacy policy",
+    label: "privacyPolicy",
     href: "/privacyPolicy",
   },
 ];

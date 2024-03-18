@@ -1,9 +1,10 @@
 import React from "react";
 import ShopWindow from "../shop/ShopWindow";
 import MobileFooter from "../shop/MobileFooter";
-import { getCategories } from "@/app/api/_functions/getCategories";
 import { getGeneralSettings } from "@/utils/server/settings/getGeneralSettings";
 import LoadPage from "../shared/loadSpinner/LoadPage";
+import { getCategories } from "@/utils/server/item/getCategories";
+import CustomReturnMessage from "../shared/CustomReturnMessage";
 
 const Shopboard = async ({
   searchParams,
@@ -13,7 +14,13 @@ const Shopboard = async ({
   const categories = await getCategories();
   const settings = await getGeneralSettings();
 
-  if (!settings) return <LoadPage />;
+  if (!settings)
+    return (
+      <CustomReturnMessage
+        text="Please set up settings first"
+        backButton={false}
+      />
+    );
   return (
     <div className="flex-col">
       <ShopWindow

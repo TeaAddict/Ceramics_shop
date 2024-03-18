@@ -1,0 +1,21 @@
+{
+  "heading": {
+    "h1_1": "Discover the Elegance of",
+    "h1_2": "Handmade Ceramics",
+    "subheading": "Whether you're looking for a statement piece or a thoughtful gift, you'll find it here.",
+    "button1": "Get Started",
+    "button2": "Learn More"
+  },
+  "carouselSection": {
+    "h1": "Featured Works"
+  },
+  "faq": {
+    "h1": "FAQ",
+    "p1_1": "Can I request custom designs or personalized ceramics?",
+    "p1_2": "Absolutely! We offer custom orders and personalization services. Contact us with your ideas, and we'll work with you to create a unique and special piece.",
+    "p2_1": "Are your ceramics handmade?",
+    "p2_2": "Yes, the majority of our ceramics are handmade by skilled artisans. Each piece is unique, and slight variations in color and texture are part of the charm of handmade items.",
+    "p3_1": "Can I visit your physical store to see the ceramics in person?",
+    "p3_2": "Currently, we operate as an online store, and our ceramics are available for purchase through our website. We do not have a physical storefront, but we provide detailed product descriptions and images to help you make informed decisions."
+  }
+}

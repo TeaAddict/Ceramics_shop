@@ -1,9 +1,9 @@
 import MobileFooter from "@/components/shop/MobileFooter";
 import ShopWindow from "@/components/shop/ShopWindow";
-import { getCategories } from "@/app/api/_functions/getCategories";
 import { isAdminRole } from "@/utils/server/isAdminRole";
 import { getGeneralSettings } from "@/utils/server/settings/getGeneralSettings";
 import LoadPage from "@/components/shared/loadSpinner/LoadPage";
+import { getCategories } from "../../../../utils/server/item/getCategories";
 
 const ShopPage = async ({
   color = "default",

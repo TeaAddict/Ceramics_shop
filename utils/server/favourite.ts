@@ -1,8 +1,8 @@
 "use server";
 
+import { authOptions } from "@/app/[lng]/api/auth/[...nextauth]/options";
 import prisma from "@/lib/prisma";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../../app/api/auth/[...nextauth]/options";
 
 export async function isFavourited(itemId: string) {
   const session = await getServerSession(authOptions);

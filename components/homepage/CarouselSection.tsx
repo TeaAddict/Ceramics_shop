@@ -10,14 +10,18 @@ import {
 import MerchandiseCard from "@/components/cards/Merchandise";
 import { useItems } from "@/hooks/useItems";
 import { sortItems } from "@/utils/item/sortItems";
+import { useTranslation } from "@/app/i18n/client";
 
 const CarouselSection = ({
   sortBy,
   isSoldDisplayed,
+  lng,
 }: {
   sortBy: string | undefined;
   isSoldDisplayed: boolean | undefined;
+  lng: string;
 }) => {
+  const { t } = useTranslation(lng, "home");
   const { data } = useItems();
   if (!data || data?.length === 0 || !sortBy) return;
 
@@ -36,7 +40,7 @@ const CarouselSection = ({
   return (
     <article className="my-10 flex justify-center">
       <div className="flex flex-col px-14 sm:px-20 md:px-20 lg:px-0 w-full max-w-3xl gap-5">
-        <h2 className="text-2xl font-semibold">Featured Works</h2>
+        <h2 className="text-2xl font-semibold">{t("carouselSection.h1")}</h2>
         <Carousel
           opts={{
             align: "start",

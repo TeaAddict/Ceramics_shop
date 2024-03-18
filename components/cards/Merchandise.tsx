@@ -5,6 +5,7 @@ import { formatToEuroCurrency } from "@/utils/helper";
 import { EditItemModal } from "../admin/EditItemModal";
 import { ProductSchema } from "@/lib/types";
 import DeleteItemButton from "../admin/DeleteItemButton";
+import LoadPage from "../shared/loadSpinner/LoadPage";
 
 interface Props {
   item: ProductSchema;
@@ -34,15 +35,19 @@ const Merchandise = ({
     return (
       <div className="border-2 bg-white rounded-md flex flex-col space-y-4">
         <div className="relative border-b-2 aspect-square">
-          <Link className="absolute w-full h-full" href={href}>
-            <Image
-              src={`/uploads/${thumbnail.name}`}
-              alt={title}
-              fill
-              sizes="(max-width: 500px) 100px"
-              className="object-cover rounded-t-md hover:brightness-90"
-            />
-          </Link>
+          {thumbnail ? (
+            <Link className="absolute w-full h-full" href={href}>
+              <Image
+                src={`/uploads/${thumbnail.name}`}
+                alt={title}
+                fill
+                sizes="(max-width: 500px) 100px"
+                className="object-cover rounded-t-md hover:brightness-90"
+              />
+            </Link>
+          ) : (
+            <LoadPage />
+          )}
         </div>
 
         <div className="flex flex-col !mt-0 gap-3 px-4 py-3 justify-between overflow-hidden">
@@ -75,15 +80,19 @@ const Merchandise = ({
         <Link href={href}>
           <div className="relative border-b-2 aspect-square">
             <div className="absolute w-full h-full">
-              <Image
-                src={`/uploads/${thumbnail.name}`}
-                alt={title}
-                fill
-                sizes="(max-width: 500px) 100px"
-                className={`object-cover rounded-t-md ${
-                  isAdmin && "hover:brightness-75"
-                }`}
-              />
+              {thumbnail ? (
+                <Image
+                  src={`/uploads/${thumbnail.name}`}
+                  alt={title}
+                  fill
+                  sizes="(max-width: 500px) 100px"
+                  className={`object-cover rounded-t-md ${
+                    isAdmin && "hover:brightness-75"
+                  }`}
+                />
+              ) : (
+                <LoadPage />
+              )}
             </div>
           </div>
 

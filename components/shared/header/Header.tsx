@@ -4,14 +4,14 @@ import CartBadge from "./CartBadge";
 import MobileMenu from "./MobileMenu";
 import NavButtons from "./NavButtons";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import LoginButton from "./LoginButton";
 import LogoutButton from "./LogoutButton";
 import Link from "next/link";
 import ProfileButton from "@/components/profile/ProfileButton";
-import LanguageButton from "../LanguageButton";
+import { authOptions } from "@/app/api/auth/[...nextauth]/options";
+import LanguageButton from "./LanguageButton";
 
-const Header = async () => {
+const Header = async ({ lng }: { lng: string }) => {
   const session = await getServerSession(authOptions);
 
   return (
@@ -26,10 +26,9 @@ const Header = async () => {
         />
       </Link>
       <div className="hidden md:flex">
-        <NavButtons />
+        <NavButtons lng={lng} />
       </div>
       <div className="flex items-center gap-5">
-        {/* <div className="hidden sm:block"> */}
         <div className="">
           <CartBadge />
         </div>
@@ -49,9 +48,7 @@ const Header = async () => {
             <LogoutButton />
           </div>
         )}
-
-        <LanguageButton />
-
+        <LanguageButton lng={lng} />
         <div className="md:hidden">
           <MobileMenu session={session} />
         </div>

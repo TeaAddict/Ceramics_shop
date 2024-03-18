@@ -1,0 +1,16 @@
+{
+  "contactUs": "Contact Us",
+  "quickLinks": {
+    "h2": "Quick Links",
+    "home": "Home",
+    "shop": "Shop",
+    "aboutUs": "About us",
+    "contactUs": "Contact us",
+    "privacyPolicy": "Privacy policy"
+  },
+  "followUs": {
+    "h2": "Follow us",
+    "p": "Connect with us on social media for updates and inspiration!"
+  },
+  "reserved": "Skomantes Keramika. All rights reserved."
+}

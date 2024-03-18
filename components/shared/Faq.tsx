@@ -1,3 +1,4 @@
+import { useTranslation } from "@/app/i18n";
 import {
   Accordion,
   AccordionContent,
@@ -6,39 +7,23 @@ import {
 } from "@/components/ui/accordion";
 
 // TODO: make it updatable
-const Faq = () => {
+const Faq = async ({ lng }: { lng: string }) => {
+  const { t } = await useTranslation(lng, "home");
   return (
     <article className="flex flex-col justify-center my-20 mx-auto max-w-[50vw] w-full gap-5">
-      <h2 className="text-2xl font-semibold">FAQ</h2>
+      <h2 className="text-2xl font-semibold">{t("faq.h1")}</h2>
       <Accordion type="single" collapsible className="w-full">
         <AccordionItem value="item-1">
-          <AccordionTrigger>
-            Can I request custom designs or personalized ceramics?
-          </AccordionTrigger>
-          <AccordionContent>
-            Absolutely! We offer custom orders and personalization services.
-            Contact us with your ideas, and we&apos;ll work with you to create a
-            unique and special piece.
-          </AccordionContent>
+          <AccordionTrigger>{t("faq.p1_1")}</AccordionTrigger>
+          <AccordionContent>{t("faq.p1_2")}</AccordionContent>
         </AccordionItem>
         <AccordionItem value="item-2">
-          <AccordionTrigger>Are your ceramics handmade?</AccordionTrigger>
-          <AccordionContent>
-            Yes, the majority of our ceramics are handmade by skilled artisans.
-            Each piece is unique, and slight variations in color and texture are
-            part of the charm of handmade items.
-          </AccordionContent>
+          <AccordionTrigger>{t("faq.p2_1")}</AccordionTrigger>
+          <AccordionContent>{t("faq.p2_2")}</AccordionContent>
         </AccordionItem>
         <AccordionItem value="item-3">
-          <AccordionTrigger>
-            Can I visit your physical store to see the ceramics in person?
-          </AccordionTrigger>
-          <AccordionContent>
-            Currently, we operate as an online store, and our ceramics are
-            available for purchase through our website. We do not have a
-            physical storefront, but we provide detailed product descriptions
-            and images to help you make informed decisions.
-          </AccordionContent>
+          <AccordionTrigger>{t("faq.p3_1")}</AccordionTrigger>
+          <AccordionContent>{t("faq.p3_2")}</AccordionContent>
         </AccordionItem>
       </Accordion>
     </article>

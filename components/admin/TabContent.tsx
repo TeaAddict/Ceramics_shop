@@ -2,10 +2,10 @@ import React from "react";
 import Dashboard from "./Dashboard";
 import Shopboard from "./Shopboard";
 import Account from "../shared/Account";
-import { SearchParams } from "@/app/(root)/admin/page";
 import { capitalizeFirstLetter } from "@/utils/helper";
 import ServerSettings from "./settings/ServerSettings";
 import OrdersServer from "./orders/OrdersServer";
+import { SearchParams } from "@/app/[lng]/(root)/admin/page";
 
 // TODO: open page coresponding to tab through index admin list?
 const TabContent = ({ searchParams }: { searchParams: SearchParams }) => {

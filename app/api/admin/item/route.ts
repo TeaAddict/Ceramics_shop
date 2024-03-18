@@ -1,8 +1,5 @@
-import { ParsedItem, productSchemaServer } from "@/lib/types";
-import prisma from "@/lib/prisma";
+import { productSchemaServer } from "@/lib/types";
 import { NextRequest, NextResponse } from "next/server";
-import { Prisma } from "@prisma/client";
-
 import { parsePictureData } from "@/utils/myFunctions";
 import { parseFormData } from "./myFunctions";
 import { createItemInDb } from "@/utils/server/item/createItemInDb";

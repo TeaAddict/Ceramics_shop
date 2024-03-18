@@ -1,11 +1,13 @@
 "use client";
 
+import { useTranslation } from "@/app/i18n/client";
 import { NAV_BAR_LINKS } from "@/constants";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 
-const NavButtons = () => {
+const NavButtons = ({ lng }: { lng: string }) => {
+  const { t } = useTranslation(lng, "head");
   const pathname = usePathname();
 
   return (
@@ -30,7 +32,7 @@ const NavButtons = () => {
             }`}
           >
             {React.createElement(link.icon)}
-            <div className="hidden lg:block">{link.label}</div>
+            <div className="hidden lg:block">{t(`${link.label}`)}</div>
           </Link>
         );
       })}
