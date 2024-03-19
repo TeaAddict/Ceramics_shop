@@ -1,0 +1,9 @@
+{
+  "title": "Contacts",
+  "phone": "Phone:",
+  "email": "Email:",
+  "physicalLocation": "Physical location:",
+  "p1": "Thank you for your interest in our ceramic works! Whether you have a query about our products, want to discuss a custom order, or simply want to say hello, we'd love to hear from you. Feel free to reach out using any of the methods.",
+  "p2": "You can also connect with us on:",
+  "error": "Contacts currently not added"
+}

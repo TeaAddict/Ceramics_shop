@@ -1,0 +1,15 @@
+{
+  "emptyCart": "Your cart is currently empty.",
+  "emptyCartBtn": "Start shopping!",
+
+  "product": "PRODUCT",
+  "picture": "PICTURE",
+  "unitPrice": "UNIT PRICE",
+  "quantity": "QUANTITY",
+  "total": "TOTAL",
+  "yourCart": "Your Cart",
+
+  "orderTotal": "ORDER TOTAL",
+  "clearCart": "Clear cart",
+  "submit": "Submit"
+}

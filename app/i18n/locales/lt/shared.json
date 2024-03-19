@@ -1,0 +1,9 @@
+{
+  "backBtn": "Atgal",
+
+  "login": "Prisijungti",
+  "logout": "Atsijungti",
+  "loggingOut": "Atsijungiama...",
+  "logoutSuccess": "Sėkmingai atsijungta!",
+  "logoutError": "Nepavyko atsijungti."
+}

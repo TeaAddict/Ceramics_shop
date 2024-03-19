@@ -1,9 +1,9 @@
 import ClientCart from "@/components/cart/ClientCart";
 
-const CartPage = async () => {
+const CartPage = async ({ params: { lng } }: { params: { lng: string } }) => {
   return (
     <>
-      <ClientCart />
+      <ClientCart lng={lng} />
     </>
   );
 };

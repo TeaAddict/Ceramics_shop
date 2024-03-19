@@ -7,8 +7,6 @@ import { countProperties } from "@/utils/countProperties";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { NewItemModal } from "../admin/NewItemModal";
 import { useItems } from "@/hooks/useItems";
-import { SORT_OPTIONS } from "@/constants";
-import OutOfStockPage from "./OutOfStockPage";
 import { useEffect, useState } from "react";
 import LoadPage from "../shared/loadSpinner/LoadPage";
 import { sortItems } from "@/utils/item/sortItems";
@@ -16,18 +14,24 @@ import { GeneralSettings } from "@prisma/client";
 import { getUniquePropertyNames } from "@/utils/functions/getUniquePropertyNames";
 import HideSoldOutCheckBox from "./HideSoldOutCheckBox";
 import CustomReturnMessage from "../shared/CustomReturnMessage";
+import { sortOptions } from "@/utils/functions/sortOptions";
+import { useTranslation } from "@/app/i18n/client";
 
 const ShopWindow = ({
   searchParams,
   color = "default",
   isAdmin = false,
   settings,
+  lng,
 }: {
   searchParams: { tab: string; category: string; sortBy: string; page: string };
   color?: "default" | "inverted";
   isAdmin?: boolean;
   settings: GeneralSettings;
+  lng: string;
 }) => {
+  const { t } = useTranslation(lng, "shop");
+  const translatedOptions = sortOptions(t);
   const forUrlSearchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
@@ -78,16 +82,26 @@ const ShopWindow = ({
   if (!items || (items?.length === 0 && !adminPageAuth))
     return <CustomReturnMessage text="Currently we are out of stock" />;
   if (!items || (items?.length === 0 && adminPageAuth))
-    return <OutOfStockPage />;
+    return (
+      <CustomReturnMessage
+        text="Currently shop is out of items"
+        backButton={false}
+      >
+        <NewItemModal />
+      </CustomReturnMessage>
+    );
 
   return (
     <div>
       <div className="sm:flex justify-end items-center gap-5 mb-5 hidden">
-        <HideSoldOutCheckBox setHideSoldOut={setHideSoldOut} />
+        <HideSoldOutCheckBox
+          setHideSoldOut={setHideSoldOut}
+          label={t("hideSoldOut")}
+        />
         <SelectCn
           onChange={handleChange}
-          selectLabel="sortBy"
-          selectOptions={SORT_OPTIONS}
+          selectLabel={t("select.sortBy")}
+          selectOptions={translatedOptions}
           initialSelection={sortBy}
           color={color}
         />
@@ -100,7 +114,7 @@ const ShopWindow = ({
 
       <div className="flex flex-col sm:flex-row">
         <div className="space-y-10 w-52 hidden sm:block">
-          <h3 className="font-semibold">Categories</h3>
+          <h3 className="font-semibold">{t("categories")}</h3>
           <VerticalMenu
             pageParam={true}
             menuList={categoriesCounts}

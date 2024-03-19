@@ -5,16 +5,20 @@ import { IoLocationOutline } from "react-icons/io5";
 import { getContacts } from "@/utils/server/settings/getContacts";
 import CustomReturnMessage from "@/components/shared/CustomReturnMessage";
 import FacebookButton from "@/components/shared/socialMedia/FacebookButton";
+import { useTranslation } from "@/app/i18n";
 
-// TODO: getData from db
-const ContactPage = async () => {
+const ContactPage = async ({
+  params: { lng },
+}: {
+  params: { lng: string };
+}) => {
+  const { t } = await useTranslation(lng, "contacts");
   const contacts = await getContacts();
 
-  if (!contacts)
-    return <CustomReturnMessage text="Contacts currently not added!" />;
+  if (!contacts) return <CustomReturnMessage text={t("error")} />;
   return (
     <div className="padding-container flex-col">
-      <h1>Contacts</h1>
+      <h1>{t("title")}</h1>
 
       <div className="flex justify-around">
         <div className="flex flex-col gap-10">
@@ -25,7 +29,7 @@ const ContactPage = async () => {
               </div>
 
               <div>
-                <p>Phone:</p>
+                <p>{t("phone")}</p>
                 <p>{contacts.phone}</p>
               </div>
             </div>
@@ -34,7 +38,7 @@ const ContactPage = async () => {
                 <MdOutlineEmail />
               </div>
               <div>
-                <p>Email:</p>
+                <p>{t("email")}</p>
                 <p>{contacts.email}</p>
               </div>
             </div>
@@ -43,22 +47,17 @@ const ContactPage = async () => {
                 <IoLocationOutline />
               </div>
               <div>
-                <p>Physical location:</p>
+                <p>{t("physicalLocation")}</p>
                 <p>{contacts.physicalLocation}</p>
               </div>
             </div>
           </div>
         </div>
         <div className="max-w-[40vw] flex flex-col gap-5">
-          <p>
-            Thank you for your interest in our ceramic works! Whether you have a
-            query about our products, want to discuss a custom order, or simply
-            want to say hello, we&apos;d love to hear from you. Feel free to
-            reach out using any of the methods.
-          </p>
+          <p>{t("p1")}</p>
 
           <div className="flex gap-3 items-center">
-            <p>You can also connect with us on: </p>
+            <p>{t("p2")}</p>
             <FacebookButton size={45} />
           </div>
         </div>

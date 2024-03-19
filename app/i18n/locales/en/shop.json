@@ -1,3 +1,12 @@
 {
-  "heh": "asd"
+  "title": "Shop",
+  "categories": "Categories",
+  "hideSoldOut": "Hide sold out",
+  "select": {
+    "sortBy": "sortBy",
+    "priceLF": "Price: lowest first",
+    "priceHF": "Price: highest first",
+    "dateNF": "Date: newest first",
+    "dateOF": "Date: oldest first"
+  }
 }

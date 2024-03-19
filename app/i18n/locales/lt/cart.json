@@ -1,0 +1,15 @@
+{
+  "emptyCart": "Jūsų krepšelis šiuo metu tuščias.",
+  "emptyCartBtn": "Pradėti apsipirkti!",
+
+  "product": "PRODUKTAS",
+  "picture": "PAVEIKSLAS",
+  "unitPrice": "VIENETO KAINA",
+  "quantity": "KIEKIS",
+  "total": "SUMA",
+  "yourCart": "Jūsų krepšelis",
+
+  "orderTotal": "IŠ VISO",
+  "clearCart": "Išvalyti krepšelį",
+  "submit": "Užsakyti"
+}

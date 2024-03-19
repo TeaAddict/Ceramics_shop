@@ -6,6 +6,8 @@ import QuantityPicker from "../shared/QuantityPicker";
 import { Button } from "../ui/button";
 import { useDispatch } from "react-redux";
 import { removeItem } from "@/redux/features/cartSlice";
+import useCurrentLanguage from "@/hooks/useCurrentLanguage";
+import { useTranslation } from "@/app/i18n/client";
 
 const PcCartTable = ({
   data,
@@ -16,17 +18,19 @@ const PcCartTable = ({
   handleIncrease: Function;
   handleDecrease: Function;
 }) => {
+  const lng = useCurrentLanguage();
+  const { t } = useTranslation(lng, "cart");
   const dispatch = useDispatch();
 
   return (
     <table className="w-full flex flex-col gap-10">
       <thead>
         <tr className="grid grid-cols-[1fr_1fr_1fr_1fr_1fr_0.2fr] justify-start">
-          <th className="justify-start flex">PRODUCT</th>
-          <th className="justify-start flex">PICTURE</th>
-          <th className="justify-start flex">UNIT PRICE</th>
-          <th className="justify-start flex">QUANTITY</th>
-          <th className="justify-start flex">TOTAL</th>
+          <th className="justify-start flex">{t("product")}</th>
+          <th className="justify-start flex">{t("picture")}</th>
+          <th className="justify-start flex">{t("unitPrice")}</th>
+          <th className="justify-start flex">{t("quantity")}</th>
+          <th className="justify-start flex">{t("total")}</th>
         </tr>
       </thead>
       <tbody>

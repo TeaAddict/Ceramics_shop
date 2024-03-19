@@ -1,0 +1,9 @@
+{
+  "backBtn": "Go back",
+
+  "login": "Login",
+  "logout": "Logout",
+  "loggingOut": "Logging out...",
+  "logoutSuccess": "Logged out successfully!",
+  "logoutError": "Could not logout."
+}

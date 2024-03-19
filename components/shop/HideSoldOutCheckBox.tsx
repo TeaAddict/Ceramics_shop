@@ -5,8 +5,10 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const HideSoldOutCheckBox = ({
   setHideSoldOut,
+  label,
 }: {
   setHideSoldOut: Dispatch<SetStateAction<boolean>>;
+  label: string;
 }) => {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -24,7 +26,7 @@ const HideSoldOutCheckBox = ({
 
   return (
     <div>
-      <CheckBox handler={handleChange}>Hide sold out</CheckBox>
+      <CheckBox handler={handleChange}>{label}</CheckBox>
     </div>
   );
 };

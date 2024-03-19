@@ -6,24 +6,22 @@ import { Button } from "../ui/button";
 import BackButton from "../shared/BackButton";
 import MyCartTable from "./MyCartTable";
 import OrderSummary from "./OrderSummary";
+import { useTranslation } from "@/app/i18n/client";
+import CustomReturnMessage from "../shared/CustomReturnMessage";
 
-const ClientCart = () => {
+const ClientCart = ({ lng }: { lng: string }) => {
+  const { t } = useTranslation(lng, "cart");
   const cart = useAppSelector((state) => state.cartReducer.cartItems);
   const orderTotal = useAppSelector((state) => state.cartReducer.orderTotal);
   const formatedOrderTotal = formatToEuroCurrency(orderTotal);
 
   if (cart.length === 0)
     return (
-      <section className="padding-container flex-col justify-center items-center gap-10">
-        <p className="text-2xl font-semibold">
-          Your cart is currently empty. Begin shopping now!
-        </p>
-        <div>
-          <Link href="/shop">
-            <Button>Start shopping!</Button>
-          </Link>
-        </div>
-      </section>
+      <CustomReturnMessage text={t("emptyCart")} backButton={false}>
+        <Link href="/shop">
+          <Button>{t("emptyCartBtn")}</Button>
+        </Link>
+      </CustomReturnMessage>
     );
 
   return (
@@ -31,7 +29,7 @@ const ClientCart = () => {
       <BackButton />
       <MyCartTable data={cart} />
 
-      <OrderSummary orderTotal={formatedOrderTotal} />
+      <OrderSummary orderTotal={formatedOrderTotal} lng={lng} />
     </section>
   );
 };

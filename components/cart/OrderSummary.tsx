@@ -4,14 +4,21 @@ import { clearCart } from "@/redux/features/cartSlice";
 import { stripeAction } from "@/utils/server/stripe/stripeAction";
 import { useAppSelector } from "@/redux/store";
 import { useRouter } from "next/navigation";
+import { useTranslation } from "@/app/i18n/client";
 
-const OrderSummary = ({ orderTotal }: { orderTotal: string }) => {
+const OrderSummary = ({
+  orderTotal,
+  lng,
+}: {
+  orderTotal: string;
+  lng: string;
+}) => {
+  const { t } = useTranslation(lng, "cart");
   const router = useRouter();
   const cart = useAppSelector((state) => state.cartReducer.cartItems);
   const dispatch = useDispatch();
 
   async function onSubmit() {
-    console.log("submitted form");
     const paymentLink = await stripeAction(cart);
     router.replace(paymentLink);
   }
@@ -20,7 +27,7 @@ const OrderSummary = ({ orderTotal }: { orderTotal: string }) => {
     <div className="flex justify-end">
       <div className="flex flex-col gap-5">
         <div className="flex justify-between font-semibold gap-5">
-          <p className="">ORDER TOTAL</p>
+          <p className="">{t("orderTotal")}</p>
           <p className="">{orderTotal}</p>
         </div>
         <div className="flex gap-10">
@@ -31,10 +38,10 @@ const OrderSummary = ({ orderTotal }: { orderTotal: string }) => {
             variant={"secondary"}
             size={"lg"}
           >
-            Clear cart
+            {t("clearCart")}
           </Button>
           <Button onClick={onSubmit} size={"lg"}>
-            Submit
+            {t("submit")}
           </Button>
         </div>
       </div>

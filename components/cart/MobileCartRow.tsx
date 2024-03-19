@@ -1,7 +1,7 @@
 import React from "react";
 import QuantityPicker from "../shared/QuantityPicker";
 import Image from "next/image";
-import { formatToEuroCurrency } from "@/utils/helper";
+import { capitalizeFirstLetter, formatToEuroCurrency } from "@/utils/helper";
 import { Button } from "../ui/button";
 import { removeItem } from "@/redux/features/cartSlice";
 import { useDispatch } from "react-redux";
@@ -25,39 +25,42 @@ const MobileCartRow = ({
 }) => {
   const dispatch = useDispatch();
   return (
-    <div className="flex justify-between items-center">
-      <div className="flex gap-5">
+    <div className="flex items-center">
+      <div className="flex gap-2 items-center justify-evenly w-full">
         <div className="flex items-center">
-          <QuantityPicker
-            currentQuantity={quantity}
-            orientation="vertical"
-            increaseFunc={handleIncrease}
-            decreaseFunc={handleDecrease}
-            id={id}
-          />
+          <div className="flex flex-col gap-3">
+            <div>
+              <p>{capitalizeFirstLetter(title)}</p>
+              <p>{formatToEuroCurrency(price)}</p>
+            </div>
+            <QuantityPicker
+              currentQuantity={quantity}
+              orientation="horizontal"
+              increaseFunc={handleIncrease}
+              decreaseFunc={handleDecrease}
+              id={id}
+            />
+          </div>
         </div>
         <div className="relative aspect-square w-28">
           <Image
-            alt=""
+            alt="cart_image"
             src={`/uploads/${thumbnailImage}`}
             fill
             sizes="(max-width: 500px) 100px"
             className="object-cover"
           />
         </div>
-        <div>
-          <p>{title}</p>
-          <p>{formatToEuroCurrency(price)}</p>
-        </div>
+
+        <Button
+          variant={"outline"}
+          onClick={() => {
+            dispatch(removeItem(id));
+          }}
+        >
+          X
+        </Button>
       </div>
-      <Button
-        variant={"outline"}
-        onClick={() => {
-          dispatch(removeItem(id));
-        }}
-      >
-        X
-      </Button>
     </div>
   );
 };

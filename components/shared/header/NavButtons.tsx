@@ -19,7 +19,7 @@ const NavButtons = ({ lng }: { lng: string }) => {
 
         return (
           <Link
-            href={link.route}
+            href={`${link.route}`}
             key={link.label}
             style={{
               pointerEvents:
