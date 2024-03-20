@@ -28,6 +28,8 @@
   "delete": "Ištrinti",
   "edit": "Redaguoti",
 
+  "shopClosed": "Šiuo metu parduotuvėje nėra prekių",
+  "missingSettings": "Pirmiausia nustatykite nustatymus",
   "itemIsSoldOut": "Prekė išparduota",
   "description": "Aprašymas:"
 }

@@ -16,6 +16,7 @@ import HideSoldOutCheckBox from "./HideSoldOutCheckBox";
 import CustomReturnMessage from "../shared/CustomReturnMessage";
 import { translateSortOptions } from "@/utils/functions/translateSortOptions";
 import { useTranslation } from "@/app/i18n/client";
+import MobileFooter from "./MobileFooter";
 
 const ShopWindow = ({
   searchParams,
@@ -79,13 +80,10 @@ const ShopWindow = ({
 
   if (isLoading || (!category && data?.length)) return <LoadPage />;
   if (!items || (items?.length === 0 && !adminPageAuth))
-    return <CustomReturnMessage text="Currently we are out of stock" />;
+    return <CustomReturnMessage text={t("shopClosed")} />;
   if (!items || (items?.length === 0 && adminPageAuth))
     return (
-      <CustomReturnMessage
-        text="Currently shop is out of items"
-        backButton={false}
-      >
+      <CustomReturnMessage text={t("shopClosed")} backButton={false}>
         <NewItemModal />
       </CustomReturnMessage>
     );
@@ -131,6 +129,12 @@ const ShopWindow = ({
           color={color}
           isAdmin={adminPageAuth}
           settings={settings}
+        />
+      </div>
+      <div className="sm:hidden">
+        <MobileFooter
+          categories={categoriesCounts}
+          searchParams={searchParams}
         />
       </div>
     </div>

@@ -43,7 +43,9 @@ const Footer = async ({ lng }: { lng: string }) => {
           <h3 className="text-lg font-bold mb-4">{t("followUs.h2")}</h3>
           <div className="flex flex-col gap-3">
             <p>{t("followUs.p")}</p>
-            <FacebookButton />
+            <div className="flex">
+              <FacebookButton />
+            </div>
           </div>
         </div>
       </div>

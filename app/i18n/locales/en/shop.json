@@ -28,6 +28,8 @@
   "delete": "Delete",
   "edit": "Edit",
 
+  "shopClosed": "Shop is currently out of items",
+  "missingSettings": "Please set up settings first",
   "itemIsSoldOut": "Item is sold out",
   "description": "Description:"
 }

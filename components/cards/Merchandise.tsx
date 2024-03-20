@@ -54,8 +54,7 @@ const Merchandise = ({
             <LoadPage />
           )}
         </div>
-
-        <div className="flex flex-col sm:gap-3 px-1 sm:px-4 py-1 ms:py-3 justify-between overflow-hidden">
+        <div className="flex flex-col sm:gap-3 px-1 sm:px-4 py-1 ms:py-3 sm:pb-3 justify-between overflow-hidden">
           <h3 className="font-bold text-xl capitalize">{title}</h3>
 
           <div className="flex flex-col items-center gap-1">

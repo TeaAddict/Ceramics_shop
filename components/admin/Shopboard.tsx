@@ -1,13 +1,8 @@
 import React from "react";
 import ShopWindow from "../shop/ShopWindow";
-import MobileFooter from "../shop/MobileFooter";
 import { getGeneralSettings } from "@/utils/server/settings/getGeneralSettings";
-import {
-  getCategories,
-  getUniqueCategories,
-} from "@/utils/server/item/getCategories";
 import CustomReturnMessage from "../shared/CustomReturnMessage";
-import { countProperties } from "@/utils/countProperties";
+import { useTranslation } from "@/app/i18n";
 
 const Shopboard = async ({
   searchParams,
@@ -16,17 +11,14 @@ const Shopboard = async ({
   searchParams: { tab: string; category: string; sortBy: string; page: string };
   lng: string;
 }) => {
-  const categories = await getCategories();
-  const categoriesCounts = countProperties(categories, "category");
+  const { t } = await useTranslation(lng, "shop");
   const settings = await getGeneralSettings();
 
   if (!settings)
     return (
-      <CustomReturnMessage
-        text="Please set up settings first"
-        backButton={false}
-      />
+      <CustomReturnMessage text={t("missingSettings")} backButton={false} />
     );
+
   return (
     <div className="flex-col">
       <ShopWindow
@@ -36,12 +28,6 @@ const Shopboard = async ({
         settings={settings}
         lng={lng}
       />
-      <div className="sm:hidden">
-        <MobileFooter
-          categories={categoriesCounts}
-          searchParams={searchParams}
-        />
-      </div>
     </div>
   );
 };

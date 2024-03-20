@@ -123,22 +123,24 @@ const ItemForm = ({
     >
       <ScrollArea className="flex flex-col pr-3">
         <div className="flex flex-col gap-5 p-1">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <p>{t("itemModal.title")}</p>
-            <Input {...register("title")} id="title" className="col-span-3" />
+          <div className="grid grid-cols-5 items-center gap-4">
+            <p className="col-span-2">{t("itemModal.title")}</p>
+            <div className="col-span-3">
+              <Input {...register("title")} id="title" className="col-span-3" />
+            </div>
             {errors.title && (
-              <p className="text-destructive col-span-3">{`${errors.title.message}`}</p>
+              <p className="text-destructive col-span-4">{`${errors.title.message}`}</p>
             )}
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <p>{t("itemModal.price")}</p>
+          <div className="grid grid-cols-5 items-center gap-4">
+            <p className="col-span-2">{t("itemModal.price")}</p>
             <Input {...register("price")} id="price" className="col-span-3" />
             {errors.price && (
-              <p className="text-destructive col-span-3">{`${errors.price.message}`}</p>
+              <p className="text-destructive col-span-4">{`${errors.price.message}`}</p>
             )}
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <p>{t("itemModal.stock")}</p>
+          <div className="grid grid-cols-5 items-center gap-4">
+            <p className="col-span-2">{t("itemModal.stock")}</p>
             <Input
               {...register("stock")}
               type="number"
@@ -146,25 +148,25 @@ const ItemForm = ({
               className="col-span-3"
             />
             {errors.stock && (
-              <p className="text-destructive col-span-3">{`${errors.stock.message}`}</p>
+              <p className="text-destructive col-span-4">{`${errors.stock.message}`}</p>
             )}
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <p>{t("itemModal.category")}</p>
+          <div className="grid grid-cols-5 items-center gap-4">
+            <p className="col-span-2">{t("itemModal.category")}</p>
             <Input
               {...register("category")}
               id="category"
               className="col-span-3"
             />
             {errors.category && (
-              <p className="text-destructive col-span-3">{`${errors.category.message}`}</p>
+              <p className="text-destructive col-span-4">{`${errors.category.message}`}</p>
             )}
           </div>
           <div className="grid w-full gap-1.5">
             <p>{t("itemModal.description")}</p>
             <Textarea {...register("description")} id="description" />
             {errors.description && (
-              <p className="text-destructive col-span-3">{`${errors.description.message}`}</p>
+              <p className="text-destructive col-span-4">{`${errors.description.message}`}</p>
             )}
           </div>
 
