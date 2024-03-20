@@ -1,6 +1,7 @@
 {
   "title": "Parduotuvė",
   "categories": "Kategorijos",
+  "sortBy": "Rūšiuoti pagal",
   "hideSoldOut": "Slėpti Išparduotus",
   "select": {
     "sortBy": "Rūšiuoti pagal",
@@ -8,5 +9,25 @@
     "priceHF": "Kaina: pirmiausia aukščiausia",
     "dateNF": "Data: pirmiausia naujausi",
     "dateOF": "Data: pirmiausia seniausi"
-  }
+  },
+
+  "itemModal": {
+    "addItem": "Pridėti produktą",
+    "addNewItem": "Pridėti naują produktą",
+    "title": "Pavadinimas",
+    "price": "Kaina",
+    "stock": "Kiekis",
+    "category": "Kategorija",
+    "description": "Aprašymas",
+    "pictures": "Nuotraukos",
+    "resetForm": "Atstatyti forma",
+    "editItem": "Redaguoti produkta"
+  },
+
+  "soldOut": "Išparduota",
+  "delete": "Ištrinti",
+  "edit": "Redaguoti",
+
+  "itemIsSoldOut": "Prekė išparduota",
+  "description": "Aprašymas:"
 }

@@ -1,0 +1,37 @@
+{
+  "h1": "UAB „Skomantes keramika“ privatumo politika",
+  "p": "Šioje privatumo politikoje aprašoma, kaip „Skomantes keramika“ renka, naudoja ir saugo mūsų svetainėje besilankančių vartotojų asmeninę informaciją. Ši politika taikoma svetainei {{url}} ir visoms susijusioms paslaugoms ar sąveikoms.",
+
+  "p1": {
+    "h2": "1. Informacija, kurią renkame:",
+    "p": "Iš vartotojų galime rinkti šių tipų asmeninę informaciją: Kontaktinė informacija: Vardas, adresas, el. pašto adresas ir telefono numeris. Informacija apie užsakymą: išsami informacija apie produktus ar paslaugas, kuriuos perkate iš mūsų. Mokėjimo informacija: kredito kortelės duomenys, atsiskaitymo adresas ir kita su mokėjimu susijusi informacija."
+  },
+  "p2": {
+    "h2": "2. Kaip mes naudojame jūsų informaciją:",
+    "p": "Surinktą informaciją naudojame šiais tikslais: Užsakymų apdorojimas: užsakymams vykdyti ir valdyti, įskaitant mokėjimų apdorojimą ir produktų pristatymą. Bendravimas: bendrauti su jumis apie jūsų užsakymus, teikti klientų aptarnavimą ir atsakyti į užklausas. Rinkodara: gavę jūsų sutikimą galime siųsti jums reklaminius el. laiškus apie naujus produktus, specialius pasiūlymus ar kitus atnaujinimus."
+  },
+  "p3": {
+    "h2": "3. Duomenų saugumas:",
+    "p": "Mes imamės atitinkamų priemonių, kad apsaugotume jūsų asmeninę informaciją nuo neteisėtos prieigos, atskleidimo, pakeitimo ir sunaikinimo. Mūsų svetainėje naudojamos saugios technologijos, užtikrinančios Jūsų duomenų konfidencialumą."
+  },
+  "p4": {
+    "h2": "4. Dalijimasis informacija:",
+    "p": "Mes neparduodame, neprekiaujame ar kitaip neperduodame jūsų asmeninės informacijos trečiosioms šalims be jūsų sutikimo. Tačiau galime dalytis informacija su patikimomis trečiosiomis šalimis, dalyvaujančiomis mūsų svetainės veikime, pvz., mokėjimų tvarkytojais ir siuntimo įmonėmis.."
+  },
+  "p5": {
+    "h2": "5. Jūsų teisės:",
+    "p": "Jūs turite teisę pasiekti, taisyti arba ištrinti savo asmeninę informaciją. Norėdami pasinaudoti šiomis teisėmis arba jei turite klausimų apie mūsų privatumo praktiką, susisiekite su mumis adresu {{email}}."
+  },
+  "p6": {
+    "h2": "6. Slapukai:",
+    "p": "Mūsų svetainė gali naudoti slapukus, kad pagerintų vartotojo patirtį. Galite koreguoti savo naršyklės nustatymus, kad atsisakytumėte slapukų, tačiau tai gali apriboti kai kurias funkcijas."
+  },
+  "p7": {
+    "h2": "7. Privatumo politikos pakeitimai:",
+    "p": "Mes pasiliekame teisę bet kada atnaujinti arba keisti šią Privatumo politiką. Pakeitimai įsigalios iš karto po paskelbimo svetainėje."
+  },
+  "p8": {
+    "h2": "8. Kontaktinė informacija:",
+    "p": "Jei turite klausimų ar neaiškumų dėl šios privatumo politikos, susisiekite su mumis adresu: „Skomantes keramika“ {{physicalLocation}} {{email}} {{phone}} Įsigaliojimo data: {{date}}"
+  }
+}

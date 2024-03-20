@@ -10,6 +10,8 @@ import { useState } from "react";
 import { FaFilter } from "react-icons/fa";
 import LabelButton from "../shared/LabelButton";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import useCurrentLanguage from "@/hooks/useCurrentLanguage";
+import { useTranslation } from "@/app/i18n/client";
 
 export function MobileFilterByModal({
   categories,
@@ -18,6 +20,8 @@ export function MobileFilterByModal({
   categories: string[];
   filterBy: string;
 }) {
+  const lng = useCurrentLanguage();
+  const { t } = useTranslation(lng, "shop");
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -39,7 +43,7 @@ export function MobileFilterByModal({
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Category</DialogTitle>
+          <DialogTitle>{t("categories")}</DialogTitle>
         </DialogHeader>
         <div className="flex flex-col gap-3 divide-y-2">
           {categories.map((el) => (

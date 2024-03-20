@@ -1,0 +1,60 @@
+{
+  "adminReq": "Admin required for this page",
+
+  "orders": "orders",
+  "shopboard": "shopboard",
+  "settings": "settings",
+
+  "outOfOrders": "Currently no orders",
+
+  "id": "id",
+  "status": "status",
+  "firstName": "first name",
+  "lastName": "last name",
+  "email": "email",
+  "phone": "phone",
+  "created": "created",
+
+  "orderId": "Order id",
+  "shippingStatus": "Shipping status:",
+  "totalAmount": "Total amount:",
+  "products": "Products:",
+
+  "shipping": "SHIPPING",
+  "shipped": "SHIPPED",
+  "arrived": "ARRIVED",
+  "collected": "COLLECTED",
+
+  "general": {
+    "h2": "General",
+    "itemsPerPage": "Items Per Page",
+    "featuredSort": "„Featured“ sort",
+    "featuredSoldOut": "„Featured“ sold out"
+  },
+  "select": {
+    "sortBy": "sortBy",
+    "priceLF": "Price: lowest first",
+    "priceHF": "Price: highest first",
+    "dateNF": "Date: newest first",
+    "dateOF": "Date: oldest first"
+  },
+  "select2": {
+    "displaySold": "Display sold",
+    "hideSold": "Hide sold"
+  },
+
+  "contacts": {
+    "h2": "Contacts",
+    "phone": "Phone",
+    "email": "Email",
+    "physicalLocation": "Physical location"
+  },
+
+  "settingsToast": {
+    "loading": "Saving...",
+    "success": "Settings saved!",
+    "error": "Could not save."
+  },
+
+  "update": "Update"
+}

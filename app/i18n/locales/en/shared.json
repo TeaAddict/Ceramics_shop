@@ -5,5 +5,16 @@
   "logout": "Logout",
   "loggingOut": "Logging out...",
   "logoutSuccess": "Logged out successfully!",
-  "logoutError": "Could not logout."
+  "logoutError": "Could not logout.",
+
+  "name": "name",
+  "unitPrice": "unit price",
+  "quantity": "quantity",
+  "total": "total",
+
+  "saving": {
+    "loading": "Saving...",
+    "success": "Settings saved!",
+    "error": "Could not save."
+  }
 }

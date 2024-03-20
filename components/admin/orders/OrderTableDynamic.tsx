@@ -18,7 +18,7 @@ import { addAscOrDesc } from "./addAscOrDesc";
  */
 
 type Props = {
-  head: string[];
+  head: { label: string; value: string }[];
   body: { [key: string]: any }[];
   onClickHead?: Function;
   onClickBody?: Function;
@@ -32,9 +32,8 @@ const OrderTableDynamic = ({
   onClickBody,
   initSort,
 }: Props) => {
-  const headCamelCase = convertToCamelCase(head);
   const { lastParams, setLastParams } = useUpdateSearchParams(
-    initSort ?? [{ name: "orderSortBy", value: head[0].concat("-desc") }]
+    initSort ?? [{ name: "orderSortBy", value: head[0].value.concat("-desc") }]
   );
   const sorted = sortTableBody(body, lastParams[0].value);
 
@@ -52,13 +51,13 @@ const OrderTableDynamic = ({
       <table className="text-left w-full text-sm">
         <thead className="uppercase">
           <tr className="border-b-4">
-            {headCamelCase.map((el) => (
+            {head.map((el) => (
               <th
                 className="px-6 py-3 hover:bg-gray-200 cursor-pointer"
-                onClick={() => handleSort(el)}
-                key={el}
+                onClick={() => handleSort(el.value)}
+                key={el.value}
               >
-                {el}
+                {el.label}
               </th>
             ))}
           </tr>
@@ -70,14 +69,14 @@ const OrderTableDynamic = ({
               className="border-t hover:bg-gray-200 cursor-pointer"
               onClick={() => handleClick(row)}
             >
-              {headCamelCase.map((el) => (
-                <td className="px-6 py-4" key={el}>
-                  {typeof row[el] === "object" ? (
-                    (row[el] as Date).toUTCString()
-                  ) : el !== "status" ? (
-                    row[el]
+              {head.map((el) => (
+                <td className="px-6 py-4" key={el.value}>
+                  {typeof row[el.value] === "object" ? (
+                    (row[el.value] as Date).toUTCString()
+                  ) : el.value !== "status" ? (
+                    row[el.value]
                   ) : (
-                    <OrderStatusBadge status={row[el]} />
+                    <OrderStatusBadge status={row[el.value]} />
                   )}
                 </td>
               ))}

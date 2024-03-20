@@ -1,28 +1,31 @@
 import React from "react";
 import { TableOrder } from "./OrdersTable";
 import { SelectCn } from "@/components/shared/SelectCn";
-import { SHIPPING_STATUS } from "@/constants";
 import ProductTable from "@/components/order/ProductTable";
 import { soldItemToProduct } from "@/utils/orderFunctions/soldItemToProduct";
 import { updateStatus } from "@/utils/server/order/updateStatus";
 import { formatCentsToEuroCurrency } from "@/utils/helper";
 import toast from "react-hot-toast";
+import { useTranslation } from "@/app/i18n/client";
+import { translateStatusOptions } from "@/utils/functions/translateStatusOptions";
 
-const OrderModalWindow = ({ row }: { row: TableOrder }) => {
+const OrderModalWindow = ({ row, lng }: { row: TableOrder; lng: string }) => {
   const product = soldItemToProduct(row.soldItems);
+  const { t } = useTranslation(lng, "admin");
+  const translatedOptions = translateStatusOptions(t);
 
   return (
     <div>
       <div className="flex flex-col gap-10">
         <div>
-          <p>Order id:</p>
+          <p>{t("orderId")}</p>
           <p>{row.id}</p>
         </div>
         <div className="flex items-center gap-3">
-          <p>Shipping status:</p>
+          <p>{t("shippingStatus")}</p>
           <SelectCn
             initialSelection={row.status}
-            selectOptions={SHIPPING_STATUS}
+            selectOptions={translatedOptions}
             onChange={async (e) => {
               toast.promise(updateStatus(row.id, e), {
                 loading: "Saving...",
@@ -33,12 +36,12 @@ const OrderModalWindow = ({ row }: { row: TableOrder }) => {
           />
         </div>
         <div className="flex gap-3">
-          <p>Total amount:</p>
+          <p>{t("totalAmount")}</p>
           <p>{formatCentsToEuroCurrency(row.amountTotal)}</p>
         </div>
         <div className="flex flex-col gap-3">
-          <h3>Products:</h3>
-          <ProductTable data={product} />
+          <h3>{t("products")}</h3>
+          <ProductTable data={product} lng={lng} />
         </div>
       </div>
     </div>

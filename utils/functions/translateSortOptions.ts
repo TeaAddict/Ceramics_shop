@@ -1,6 +1,6 @@
 import { TFunction } from "i18next";
 
-export function sortOptions(t: TFunction<"shop", undefined>) {
+export function translateSortOptions(t: TFunction<"shop", undefined>) {
   const translatedOptions = [
     {
       name: t("select.priceLF"),

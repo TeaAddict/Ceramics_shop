@@ -13,6 +13,8 @@ import OrderTableDynamic from "./OrderTableDynamic";
 import { ORDER_TABLE_HEAD } from "@/constants";
 import { transformToTableBody } from "@/utils/orderFunctions/transformToTableBody";
 import { DeliveryStatus } from "@prisma/client";
+import { useTranslation } from "@/app/i18n/client";
+import { translateOrderTableHead } from "@/utils/functions/translateOrderTableHead";
 
 export type TableOrder = {
   id: string;
@@ -27,10 +29,12 @@ export type TableOrder = {
   amountTotal: number;
 };
 
-const OrdersTable = ({ data }: { data: TableOrder[] }) => {
+const OrdersTable = ({ data, lng }: { data: TableOrder[]; lng: string }) => {
   const tableBody = transformToTableBody(data);
   const [open, setOpen] = useState(false);
   const [rowData, setRowData] = useState(data[0]);
+  const { t } = useTranslation(lng, "admin");
+  const transaltedHead = translateOrderTableHead(t);
 
   function handleClick(row: TableOrder) {
     setOpen(true);
@@ -42,7 +46,7 @@ const OrdersTable = ({ data }: { data: TableOrder[] }) => {
     <div>
       <Dialog open={open} onOpenChange={setOpen}>
         <OrderTableDynamic
-          head={ORDER_TABLE_HEAD}
+          head={transaltedHead}
           body={tableBody}
           onClickBody={handleClick}
         />
@@ -53,7 +57,7 @@ const OrdersTable = ({ data }: { data: TableOrder[] }) => {
               {capitalizeFirstLetter(rowData.lastName)}
             </DialogTitle>
           </DialogHeader>
-          <OrderModalWindow row={rowData} />
+          <OrderModalWindow row={rowData} lng={lng} />
         </DialogContent>
       </Dialog>
     </div>

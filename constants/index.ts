@@ -1,3 +1,4 @@
+import { useTranslation } from "@/app/i18n";
 import { DeliveryStatus } from "@prisma/client";
 import { BiShoppingBag } from "react-icons/bi";
 import { BiHomeAlt2 } from "react-icons/bi";

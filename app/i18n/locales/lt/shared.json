@@ -5,5 +5,16 @@
   "logout": "Atsijungti",
   "loggingOut": "Atsijungiama...",
   "logoutSuccess": "Sėkmingai atsijungta!",
-  "logoutError": "Nepavyko atsijungti."
+  "logoutError": "Nepavyko atsijungti.",
+
+  "name": "produktas",
+  "unitPrice": "vieneto kaina",
+  "quantity": "kiekis",
+  "total": "suma",
+
+  "saving": {
+    "loading": "Išsaugoma...",
+    "success": "Nustatymai išsaugoti!",
+    "error": "Nepavyko išsaugoti."
+  }
 }

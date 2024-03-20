@@ -8,8 +8,10 @@ import CustomReturnMessage from "../shared/CustomReturnMessage";
 
 const Shopboard = async ({
   searchParams,
+  lng,
 }: {
   searchParams: { tab: string; category: string; sortBy: string; page: string };
+  lng: string;
 }) => {
   const categories = await getCategories();
   const settings = await getGeneralSettings();
@@ -28,6 +30,7 @@ const Shopboard = async ({
         color="inverted"
         isAdmin={true}
         settings={settings}
+        lng={lng}
       />
       <div className="sm:hidden">
         <MobileFooter categories={categories} searchParams={searchParams} />

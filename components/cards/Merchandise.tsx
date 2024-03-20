@@ -6,6 +6,8 @@ import { EditItemModal } from "../admin/EditItemModal";
 import { ProductSchema } from "@/lib/types";
 import DeleteItemButton from "../admin/DeleteItemButton";
 import LoadPage from "../shared/loadSpinner/LoadPage";
+import { useTranslation } from "@/app/i18n/client";
+import useCurrentLanguage from "@/hooks/useCurrentLanguage";
 
 interface Props {
   item: ProductSchema;
@@ -31,9 +33,12 @@ const Merchandise = ({
   price,
   isAdmin,
 }: Props) => {
+  const lng = useCurrentLanguage();
+  const { t } = useTranslation(lng, "shop");
+
   if (isAdmin) {
     return (
-      <div className="border-2 bg-white rounded-md flex flex-col space-y-4">
+      <div className="border-2 bg-white rounded-md flex flex-col">
         <div className="relative border-b-2 aspect-square">
           {thumbnail ? (
             <Link className="absolute w-full h-full" href={href}>
@@ -50,22 +55,22 @@ const Merchandise = ({
           )}
         </div>
 
-        <div className="flex flex-col !mt-0 gap-3 px-4 py-3 justify-between overflow-hidden">
+        <div className="flex flex-col sm:gap-3 px-1 sm:px-4 py-1 ms:py-3 justify-between overflow-hidden">
           <h3 className="font-bold text-xl capitalize">{title}</h3>
 
-          <div className="flex flex-col items-center gap-3">
-            <div className="w-full flex justify-between items-center">
+          <div className="flex flex-col items-center gap-1">
+            <div className="w-full flex flex-wrap justify-between items-center gap-1">
               <p>{formatToEuroCurrency(price)}</p>
               {item.stock < 1 && (
                 <p className="font-semibold uppercase text-destructive">
-                  sold out
+                  {t("soldOut")}
                 </p>
               )}
             </div>
 
-            <div className="flex w-full justify-between gap-3">
-              <DeleteItemButton id={item.id} />
+            <div className="flex flex-col sm:flex-row flex-wrap w-full justify-between gap-1">
               <EditItemModal item={item} />
+              <DeleteItemButton id={item.id} />
             </div>
           </div>
         </div>
@@ -101,7 +106,7 @@ const Merchandise = ({
             {item.stock > 0 ? (
               <p>{formatToEuroCurrency(price)}</p>
             ) : (
-              <p className="uppercase font-bold">sold out</p>
+              <p className="uppercase font-bold">{t("soldOut")}</p>
             )}
           </div>
         </Link>

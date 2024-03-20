@@ -14,7 +14,7 @@ import { GeneralSettings } from "@prisma/client";
 import { getUniquePropertyNames } from "@/utils/functions/getUniquePropertyNames";
 import HideSoldOutCheckBox from "./HideSoldOutCheckBox";
 import CustomReturnMessage from "../shared/CustomReturnMessage";
-import { sortOptions } from "@/utils/functions/sortOptions";
+import { translateSortOptions } from "@/utils/functions/translateSortOptions";
 import { useTranslation } from "@/app/i18n/client";
 
 const ShopWindow = ({
@@ -31,7 +31,7 @@ const ShopWindow = ({
   lng: string;
 }) => {
   const { t } = useTranslation(lng, "shop");
-  const translatedOptions = sortOptions(t);
+  const translatedOptions = translateSortOptions(t);
   const forUrlSearchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();

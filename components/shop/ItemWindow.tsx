@@ -7,14 +7,16 @@ import ItemCartInterface from "../cart/ItemCartInterface";
 import CustomReturnMessage from "../shared/CustomReturnMessage";
 import { getItem } from "@/utils/server/getItem";
 import { ImageShowcase } from "./photo/ImageShowcase";
+import { useTranslation } from "@/app/i18n";
 
 const ItemWindow = async ({
   params,
   session,
 }: {
-  params: { id: string };
+  params: { id: string; lng: string };
   session: Session | null;
 }) => {
+  const { t } = await useTranslation(params.lng, "shop");
   const item = await getItem(params.id);
   type TItem = typeof item;
 
@@ -42,12 +44,12 @@ const ItemWindow = async ({
           {item.stock > 0 ? (
             <ItemCartInterface item={item} params={params} />
           ) : (
-            <p className="text-2xl text-destructive">Item is sold out</p>
+            <p className="text-2xl text-destructive">{t("itemIsSoldOut")}</p>
           )}
 
           {item.description && (
             <div>
-              <h3>Description:</h3>
+              <h3>{t("description")}</h3>
               <p className="md:max-w-72 capitalize">{item.description}</p>
             </div>
           )}

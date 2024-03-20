@@ -8,8 +8,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { contactsSchema } from "@/utils/server/settings/types";
 import FormInput from "@/components/form/FormInput";
 import toast from "react-hot-toast";
+import useCurrentLanguage from "@/hooks/useCurrentLanguage";
+import { useTranslation } from "@/app/i18n/client";
 
 const ContactsSettings = ({ contacts }: { contacts: Contacts | null }) => {
+  const lng = useCurrentLanguage();
+  const { t } = useTranslation(lng, "admin");
+  const { t: tt } = useTranslation(lng, "shared");
   const {
     register,
     handleSubmit,
@@ -22,43 +27,43 @@ const ContactsSettings = ({ contacts }: { contacts: Contacts | null }) => {
 
   async function onSubmit(data: Contacts) {
     toast.promise(updateContactSettings(data), {
-      loading: "Saving...",
-      success: <b>Settings saved!</b>,
-      error: <b>Could not save.</b>,
+      loading: tt("saving.loading"),
+      success: tt("saving.success"),
+      error: tt("saving.error"),
     });
   }
 
   return (
     <div className="bg-background p-5 rounded-md">
-      <h2 className="pb-3">Contacts</h2>
+      <h2 className="pb-3">{t("contacts.h2")}</h2>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="max-h-[90vh] flex flex-col gap-5 max-w-72"
       >
         <div className="flex flex-col gap-5 p-1">
           <FormInput
-            label="phone"
+            label={t("contacts.phone")}
             name="phone"
             errors={errors}
             register={register}
             isSubmitting={isSubmitting}
           />
           <FormInput
-            label="email"
+            label={t("contacts.email")}
             name="email"
             errors={errors}
             register={register}
             isSubmitting={isSubmitting}
           />
           <FormInput
-            label="physical location"
+            label={t("contacts.physicalLocation")}
             name="physicalLocation"
             errors={errors}
             register={register}
             isSubmitting={isSubmitting}
           />
         </div>
-        <Button disabled={isSubmitting}>Update</Button>
+        <Button disabled={isSubmitting}>{t("update")}</Button>
       </form>
     </div>
   );

@@ -4,13 +4,21 @@ import { SelectCn } from "@/components/shared/SelectCn";
 import FormInput from "@/components/form/FormInput";
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
-import { FEATURE_SOLD, SORT_OPTIONS } from "@/constants";
 import { Button } from "@/components/ui/button";
 import { GeneralSettings as SettingsModel } from "@prisma/client";
 import { updateGeneralSettings } from "@/utils/server/settings/updateGeneralSettings";
 import toast from "react-hot-toast";
+import useCurrentLanguage from "@/hooks/useCurrentLanguage";
+import { useTranslation } from "@/app/i18n/client";
+import { translateSortOptions } from "@/utils/functions/translateSortOptions";
+import { transtaleSoldOptions } from "@/utils/functions/transtaleSoldOptions";
 
 const GeneralSettings = ({ settings }: { settings: SettingsModel | null }) => {
+  const lng = useCurrentLanguage();
+  const { t } = useTranslation(lng, "admin");
+  const { t: tt } = useTranslation(lng, "shared");
+  const translatedOptions = translateSortOptions(t);
+  const translateSoldOptions = transtaleSoldOptions(t);
   const {
     control,
     register,
@@ -22,22 +30,22 @@ const GeneralSettings = ({ settings }: { settings: SettingsModel | null }) => {
 
   async function onSubmit(data: SettingsModel) {
     toast.promise(updateGeneralSettings(data), {
-      loading: "Saving...",
-      success: <b>Settings saved!</b>,
-      error: <b>Could not save.</b>,
+      loading: tt("saving.loading"),
+      success: tt("saving.success"),
+      error: tt("saving.error"),
     });
   }
 
   return (
     <div className="flex flex-col h-fit bg-background rounded-md p-5">
-      <h2 className="pb-3">General</h2>
+      <h2 className="pb-3">{t("general.h2")}</h2>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="max-h-[90vh] flex flex-col gap-5 max-w-72"
       >
         <div className="flex flex-col gap-5 p-1">
           <FormInput
-            label="Items per page"
+            label={t("general.itemsPerPage")}
             name="itemsPerPage"
             labelSize="2"
             inputSize="2"
@@ -48,13 +56,13 @@ const GeneralSettings = ({ settings }: { settings: SettingsModel | null }) => {
           />
 
           <div className="flex flex-col md:flex-row gap-3">
-            <p>&quot;Featured&quot; sort</p>
+            <p>{t("general.featuredSort")}</p>
             <Controller
               control={control}
               name="featuredSort"
               render={({ field: { onChange, value } }) => (
                 <SelectCn
-                  selectOptions={SORT_OPTIONS}
+                  selectOptions={translatedOptions}
                   onChange={onChange}
                   initialSelection={value}
                 />
@@ -62,13 +70,13 @@ const GeneralSettings = ({ settings }: { settings: SettingsModel | null }) => {
             />
           </div>
           <div className="flex flex-col md:flex-row gap-3">
-            <p>&quot;Featured&quot; sold out</p>
+            <p>{t("general.featuredSoldOut")}</p>
             <Controller
               control={control}
               name="displaySold"
               render={({ field: { onChange, value } }) => (
                 <SelectCn
-                  selectOptions={FEATURE_SOLD}
+                  selectOptions={translateSoldOptions}
                   onChange={onChange}
                   initialSelection={String(value)}
                 />
@@ -76,7 +84,7 @@ const GeneralSettings = ({ settings }: { settings: SettingsModel | null }) => {
             />
           </div>
         </div>
-        <Button disabled={isSubmitting}>Update</Button>
+        <Button disabled={isSubmitting}>{t("update")}</Button>
       </form>
     </div>
   );

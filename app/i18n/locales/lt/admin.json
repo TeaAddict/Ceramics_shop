@@ -1,0 +1,59 @@
+{
+  "adminReq": "Šiam puslapiui reikalingas administratorius",
+
+  "orders": "užsakymai",
+  "shopboard": "parduotuvė",
+  "settings": "nustatymai",
+
+  "outOfOrders": "Šiuo metu užsakymų nėra",
+
+  "id": "id",
+  "status": "statusas",
+  "firstName": "Vardas",
+  "lastName": "Pavardė",
+  "email": "paštas",
+  "phone": "telefonas",
+  "created": "sukurtas",
+
+  "orderId": "Užsakymo id",
+  "shippingStatus": "Siuntimo būsena:",
+  "totalAmount": "Mokėjimo suma:",
+  "products": "Produktai:",
+
+  "shipping": "SIUNČIAMAS",
+  "shipped": "IŠSIŲSTAS",
+  "arrived": "ATVYKO",
+  "collected": "PAIMTAS",
+
+  "general": {
+    "h2": "Pagrindiniai",
+    "itemsPerPage": "Produktu per puslapį",
+    "featuredSort": "„Naujausi“ rūšiavimas",
+    "featuredSoldOut": "„Naujausi“ išparduoti"
+  },
+  "select": {
+    "sortBy": "Rūšiuoti pagal",
+    "priceLF": "Kaina: pirmiausia žemiausia",
+    "priceHF": "Kaina: pirmiausia aukščiausia",
+    "dateNF": "Data: pirmiausia naujausi",
+    "dateOF": "Data: pirmiausia seniausi"
+  },
+  "select2": {
+    "displaySold": "Rodyti parduotus",
+    "hideSold": "Slėpti parduotus"
+  },
+
+  "contacts": {
+    "h2": "Kontaktai",
+    "phone": "Telefonas",
+    "email": "El. paštas",
+    "physicalLocation": "Fizinė vieta"
+  },
+
+  "settingsToast": {
+    "loading": "Saving...",
+    "success": "Settings saved!",
+    "error": "Could not save."
+  },
+  "update": "Atnaujinti"
+}

@@ -1,6 +1,7 @@
 {
   "title": "Shop",
   "categories": "Categories",
+  "sortBy": "Sort by",
   "hideSoldOut": "Hide sold out",
   "select": {
     "sortBy": "sortBy",
@@ -8,5 +9,25 @@
     "priceHF": "Price: highest first",
     "dateNF": "Date: newest first",
     "dateOF": "Date: oldest first"
-  }
+  },
+
+  "itemModal": {
+    "addItem": "Add item",
+    "addNewItem": "Add new item",
+    "title": "Title",
+    "price": "Price",
+    "stock": "Stock",
+    "category": "Category",
+    "description": "Description",
+    "pictures": "Pictures",
+    "resetForm": "Reset form",
+    "editItem": "Edit item"
+  },
+
+  "soldOut": "sold out",
+  "delete": "Delete",
+  "edit": "Edit",
+
+  "itemIsSoldOut": "Item is sold out",
+  "description": "Description:"
 }

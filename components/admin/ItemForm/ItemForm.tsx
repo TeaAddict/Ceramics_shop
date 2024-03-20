@@ -12,6 +12,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addItem, updateItem } from "@/utils/itemFunctions";
 import { setFormError } from "./setFormError";
 import toast from "react-hot-toast";
+import useCurrentLanguage from "@/hooks/useCurrentLanguage";
+import { useTranslation } from "@/app/i18n/client";
 
 const ItemForm = ({
   item,
@@ -20,6 +22,8 @@ const ItemForm = ({
   item?: ProductSchema;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
+  const lng = useCurrentLanguage();
+  const { t } = useTranslation(lng, "shop");
   const queryClient = useQueryClient();
   const isEdit = item ? true : false;
   const {
@@ -120,21 +124,21 @@ const ItemForm = ({
       <ScrollArea className="flex flex-col pr-3">
         <div className="flex flex-col gap-5 p-1">
           <div className="grid grid-cols-4 items-center gap-4">
-            <p>Title</p>
+            <p>{t("itemModal.title")}</p>
             <Input {...register("title")} id="title" className="col-span-3" />
             {errors.title && (
               <p className="text-destructive col-span-3">{`${errors.title.message}`}</p>
             )}
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
-            <p>Price</p>
+            <p>{t("itemModal.price")}</p>
             <Input {...register("price")} id="price" className="col-span-3" />
             {errors.price && (
               <p className="text-destructive col-span-3">{`${errors.price.message}`}</p>
             )}
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
-            <p>Stock</p>
+            <p>{t("itemModal.stock")}</p>
             <Input
               {...register("stock")}
               type="number"
@@ -146,7 +150,7 @@ const ItemForm = ({
             )}
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
-            <p>Category</p>
+            <p>{t("itemModal.category")}</p>
             <Input
               {...register("category")}
               id="category"
@@ -157,7 +161,7 @@ const ItemForm = ({
             )}
           </div>
           <div className="grid w-full gap-1.5">
-            <p>Description</p>
+            <p>{t("itemModal.description")}</p>
             <Textarea {...register("description")} id="description" />
             {errors.description && (
               <p className="text-destructive col-span-3">{`${errors.description.message}`}</p>
@@ -194,10 +198,10 @@ const ItemForm = ({
           type="button"
           variant={"secondary"}
         >
-          Reset form
+          {t("itemModal.resetForm")}
         </Button>
         <Button disabled={isSubmitting} type="submit">
-          {isEdit ? "Edit item" : "Add item"}
+          {isEdit ? t("itemModal.editItem") : t("itemModal.addItem")}
         </Button>
       </div>
     </form>

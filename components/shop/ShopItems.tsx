@@ -35,8 +35,8 @@ const ShopItems = ({
       <ul
         className={
           isAdmin
-            ? "sm:grid md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 flex flex-col"
-            : "sm:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 flex flex-col"
+            ? "xs:grid xs:grid-cols-2 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 flex flex-col"
+            : "xs:grid xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 flex flex-col"
         }
       >
         {currentItems.map((item) => {

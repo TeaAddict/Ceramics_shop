@@ -3,8 +3,12 @@ import { Button } from "../ui/button";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteItem } from "@/utils/itemFunctions";
 import toast from "react-hot-toast";
+import { useTranslation } from "@/app/i18n/client";
+import useCurrentLanguage from "@/hooks/useCurrentLanguage";
 
 const DeleteItemButton = ({ id }: { id: string }) => {
+  const lng = useCurrentLanguage();
+  const { t } = useTranslation(lng, "shop");
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
@@ -23,7 +27,7 @@ const DeleteItemButton = ({ id }: { id: string }) => {
   }
   return (
     <Button onClick={() => handleClick()} variant={"destructive"}>
-      Delete
+      {t("delete")}
     </Button>
   );
 };
