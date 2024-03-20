@@ -3,6 +3,7 @@ import prisma from "@/lib/prisma";
 import { parsePictureData } from "@/utils/myFunctions";
 import { Prisma } from "@prisma/client";
 import { parseFormData, updatePictures } from "../myFunctions";
+import { deleteImages } from "@/utils/functions/item/deleteImages";
 
 export async function POST(request: NextRequest) {
   const data = await request.formData();
@@ -67,7 +68,16 @@ export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  await prisma.picture.deleteMany({ where: { itemId: params.id } });
-  await prisma.item.delete({ where: { id: params.id } });
-  return NextResponse.json({ success: true });
+  try {
+    deleteImages(params.id);
+    await prisma.picture.deleteMany({ where: { itemId: params.id } });
+    await prisma.item.delete({ where: { id: params.id } });
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Problem deleting item" },
+      { status: 500 }
+    );
+  }
 }

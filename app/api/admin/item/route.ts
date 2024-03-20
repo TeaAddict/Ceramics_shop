@@ -11,7 +11,6 @@ export async function POST(request: NextRequest) {
 
     const parsed = parseFormData(data);
 
-    // Check if server got correct data type else return errors
     const schemaResult = productSchemaServer.safeParse(parsed);
     let backendErrors = {};
     if (!schemaResult.success) {
@@ -22,7 +21,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ errors: backendErrors });
     }
 
-    // parse picture data for DB
     const pictureData = parsePictureData(parsed);
 
     createItemInDb(parsed, pictureData, backendErrors);

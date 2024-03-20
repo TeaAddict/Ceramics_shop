@@ -10,6 +10,7 @@ export default async function HomePage({
 }) {
   const sortBy = await getGeneralSettings();
   const settings = await getGeneralSettings();
+
   return (
     <section>
       <Hero lng={lng} />
