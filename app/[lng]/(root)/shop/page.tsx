@@ -19,7 +19,6 @@ const ShopPage = async ({
   searchParams: { category: string; sortBy: string; tab: string; page: string };
   params: { lng: string };
 }) => {
-  // const categories = await getUniqueCategories();
   const categories = await getCategories();
   const settings = await getGeneralSettings();
   const isAdmin = await isAdminRole();

@@ -9,10 +9,10 @@ import {
 import { useState } from "react";
 import { FaFilter } from "react-icons/fa";
 import LabelButton from "../shared/LabelButton";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import useCurrentLanguage from "@/hooks/useCurrentLanguage";
 import { useTranslation } from "@/app/i18n/client";
 import { capitalizeFirstLetter } from "@/utils/helper";
+import { useUpdateSearchParams } from "@/hooks/useUpdateSearchParams";
 
 export function MobileFilterByModal({
   categories,
@@ -24,19 +24,13 @@ export function MobileFilterByModal({
   const lng = useCurrentLanguage();
   const { t } = useTranslation(lng, "shop");
   const [open, setOpen] = useState(false);
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
+  const { setLastParams } = useUpdateSearchParams();
 
   function handleClick(value: string) {
-    const params = new URLSearchParams(searchParams);
-    params.set("category", value.toString());
-    router.replace(`${pathname}?${params.toString()}`);
+    setLastParams([{ name: "category", value: value }]);
     setOpen(false);
   }
 
-  console.log(categories);
-  console.log(filterBy);
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>

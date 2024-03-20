@@ -1,7 +1,7 @@
 "use client";
 
 import { useUpdateSearchParams } from "@/hooks/useUpdateSearchParams";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
 const VerticalMenu = ({
