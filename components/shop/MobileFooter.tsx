@@ -7,7 +7,7 @@ const MobileFooter = ({
   categories,
   searchParams,
 }: {
-  categories: string[];
+  categories: { label: string; value: number }[];
   searchParams: { category: string; sortBy: string };
 }) => {
   const sortBy = searchParams["sortBy"] ?? SORT_OPTIONS[0].value;

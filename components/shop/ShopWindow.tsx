@@ -58,7 +58,6 @@ const ShopWindow = ({
   const categoryItems = inStockItems.filter(
     (item) => item.category === category
   );
-
   const categoriesCounts = countProperties(inStockItems, "category");
 
   const sortBy = searchParams["sortBy"] ?? "date-desc";

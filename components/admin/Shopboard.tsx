@@ -2,9 +2,12 @@ import React from "react";
 import ShopWindow from "../shop/ShopWindow";
 import MobileFooter from "../shop/MobileFooter";
 import { getGeneralSettings } from "@/utils/server/settings/getGeneralSettings";
-import LoadPage from "../shared/loadSpinner/LoadPage";
-import { getCategories } from "@/utils/server/item/getCategories";
+import {
+  getCategories,
+  getUniqueCategories,
+} from "@/utils/server/item/getCategories";
 import CustomReturnMessage from "../shared/CustomReturnMessage";
+import { countProperties } from "@/utils/countProperties";
 
 const Shopboard = async ({
   searchParams,
@@ -14,6 +17,7 @@ const Shopboard = async ({
   lng: string;
 }) => {
   const categories = await getCategories();
+  const categoriesCounts = countProperties(categories, "category");
   const settings = await getGeneralSettings();
 
   if (!settings)
@@ -33,7 +37,10 @@ const Shopboard = async ({
         lng={lng}
       />
       <div className="sm:hidden">
-        <MobileFooter categories={categories} searchParams={searchParams} />
+        <MobileFooter
+          categories={categoriesCounts}
+          searchParams={searchParams}
+        />
       </div>
     </div>
   );

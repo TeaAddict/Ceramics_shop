@@ -12,12 +12,13 @@ import LabelButton from "../shared/LabelButton";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import useCurrentLanguage from "@/hooks/useCurrentLanguage";
 import { useTranslation } from "@/app/i18n/client";
+import { capitalizeFirstLetter } from "@/utils/helper";
 
 export function MobileFilterByModal({
   categories,
   filterBy,
 }: {
-  categories: string[];
+  categories: { label: string; value: number }[];
   filterBy: string;
 }) {
   const lng = useCurrentLanguage();
@@ -48,11 +49,16 @@ export function MobileFilterByModal({
         <div className="flex flex-col gap-3 divide-y-2">
           {categories.map((el) => (
             <LabelButton
-              isActive={filterBy === el}
-              onClick={() => handleClick(el)}
-              key={el}
+              isActive={filterBy === el.label}
+              onClick={() => handleClick(el.label)}
+              key={el.label}
             >
-              {el}
+              <div className="flex gap-5 items-center">
+                <p>{capitalizeFirstLetter(el.label)}</p>
+                <div className="flex items-center justify-center border-2 rounded-full w-10 h-10">
+                  <p className="">{el.value}</p>
+                </div>
+              </div>
             </LabelButton>
           ))}
         </div>
