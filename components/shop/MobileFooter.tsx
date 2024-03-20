@@ -11,7 +11,7 @@ const MobileFooter = ({
   searchParams: { category: string; sortBy: string };
 }) => {
   const sortBy = searchParams["sortBy"] ?? SORT_OPTIONS[0].value;
-  const filterBy = searchParams["category"] ?? categories[0];
+  const filterBy = searchParams["category"] ?? categories[0].label;
 
   return (
     <div className="fixed bottom-0 left-0 bg-white/90 w-full grid grid-cols-2 py-3 items-center">

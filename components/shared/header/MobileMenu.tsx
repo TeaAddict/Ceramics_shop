@@ -9,7 +9,7 @@ const MobileMenu = ({ session }: { session: Session | null }) => {
   const [isMobileMenuActive, setIsMobileMenuActive] = useState(false);
 
   return (
-    <div>
+    <div className="flex items-center">
       <Hamburger
         isActive={isMobileMenuActive}
         setIsActive={setIsMobileMenuActive}

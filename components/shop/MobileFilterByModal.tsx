@@ -35,6 +35,8 @@ export function MobileFilterByModal({
     setOpen(false);
   }
 
+  console.log(categories);
+  console.log(filterBy);
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
