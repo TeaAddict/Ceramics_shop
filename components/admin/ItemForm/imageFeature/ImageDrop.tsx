@@ -16,10 +16,12 @@ type Props = {
   errors: FieldErrors<FieldValues>;
   setValue: UseFormSetValue<TItemSchema>;
   watchValues: [string, any];
+  isLoading?: boolean;
 };
 
 const ImageDrop = (props: Props) => {
-  const { initPictures, register, errors, setValue, watchValues } = props;
+  const { initPictures, register, errors, setValue, watchValues, isLoading } =
+    props;
 
   const [images, setImages] = useState<FileList | File[] | undefined | null>(
     initPictures
@@ -53,6 +55,7 @@ const ImageDrop = (props: Props) => {
           onChange: (e) => handleImageChange(e),
         })}
         id="pictures"
+        disabled={isLoading}
         type="file"
         accept="image/*"
         multiple
@@ -69,6 +72,7 @@ const ImageDrop = (props: Props) => {
             imgBlobUrl={imgBlobUrl}
             setValue={setValue}
             thumbnailPicture={watchValues[0]}
+            isLoading={isLoading}
           />
           {errors.thumbnailPicture && (
             <p className="text-destructive col-span-4">{`${errors.thumbnailPicture.message}`}</p>

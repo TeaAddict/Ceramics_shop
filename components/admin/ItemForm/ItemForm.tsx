@@ -25,6 +25,7 @@ const ItemForm = ({
   const lng = useCurrentLanguage();
   const { t } = useTranslation(lng, "shop");
   const queryClient = useQueryClient();
+  const isMutating = queryClient.isMutating() === 1;
   const isEdit = item ? true : false;
   const {
     register,
@@ -62,6 +63,7 @@ const ItemForm = ({
       }
     },
   });
+  const isLoading = isSubmitting || isMutating;
   const mutationAddItem = useMutation({
     mutationFn: (data: FormData) => addItem(data),
     onSuccess: (data) => {
@@ -126,7 +128,12 @@ const ItemForm = ({
           <div className="grid grid-cols-5 items-center gap-4">
             <p className="col-span-2">{t("itemModal.title")}</p>
             <div className="col-span-3">
-              <Input {...register("title")} id="title" className="col-span-3" />
+              <Input
+                {...register("title")}
+                id="title"
+                className="col-span-3"
+                disabled={isLoading}
+              />
             </div>
             {errors.title && (
               <p className="text-destructive col-span-4">{`${errors.title.message}`}</p>
@@ -134,7 +141,12 @@ const ItemForm = ({
           </div>
           <div className="grid grid-cols-5 items-center gap-4">
             <p className="col-span-2">{t("itemModal.price")}</p>
-            <Input {...register("price")} id="price" className="col-span-3" />
+            <Input
+              {...register("price")}
+              id="price"
+              className="col-span-3"
+              disabled={isLoading}
+            />
             {errors.price && (
               <p className="text-destructive col-span-4">{`${errors.price.message}`}</p>
             )}
@@ -146,6 +158,7 @@ const ItemForm = ({
               type="number"
               id="stock"
               className="col-span-3"
+              disabled={isLoading}
             />
             {errors.stock && (
               <p className="text-destructive col-span-4">{`${errors.stock.message}`}</p>
@@ -157,6 +170,7 @@ const ItemForm = ({
               {...register("category")}
               id="category"
               className="col-span-3"
+              disabled={isLoading}
             />
             {errors.category && (
               <p className="text-destructive col-span-4">{`${errors.category.message}`}</p>
@@ -164,7 +178,11 @@ const ItemForm = ({
           </div>
           <div className="grid w-full gap-1.5">
             <p>{t("itemModal.description")}</p>
-            <Textarea {...register("description")} id="description" />
+            <Textarea
+              {...register("description")}
+              id="description"
+              disabled={isLoading}
+            />
             {errors.description && (
               <p className="text-destructive col-span-4">{`${errors.description.message}`}</p>
             )}
@@ -177,6 +195,7 @@ const ItemForm = ({
               register={register}
               setValue={setValue}
               watchValues={watchValues}
+              isLoading={isLoading}
             />
           )}
 
@@ -187,13 +206,14 @@ const ItemForm = ({
               register={register}
               setValue={setValue}
               watchValues={watchValues}
+              isLoading={isLoading}
             />
           )}
         </div>
       </ScrollArea>
       <div className="flex justify-around">
         <Button
-          disabled={isSubmitting}
+          disabled={isLoading}
           onClick={() => {
             reset();
           }}
@@ -202,7 +222,7 @@ const ItemForm = ({
         >
           {t("itemModal.resetForm")}
         </Button>
-        <Button disabled={isSubmitting} type="submit">
+        <Button disabled={isLoading} type="submit">
           {isEdit ? t("itemModal.editItem") : t("itemModal.addItem")}
         </Button>
       </div>

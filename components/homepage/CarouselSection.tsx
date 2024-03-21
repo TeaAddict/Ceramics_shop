@@ -49,7 +49,7 @@ const CarouselSection = ({
           <CarouselContent>
             {items &&
               items.map((item, index) => (
-                <CarouselItem key={index} className="sm:basis-1/2 lg:basis-1/3">
+                <CarouselItem key={index} className="xs:basis-1/2 lg:basis-1/3">
                   <div className="p-1">
                     <MerchandiseCard
                       isAdmin={false}

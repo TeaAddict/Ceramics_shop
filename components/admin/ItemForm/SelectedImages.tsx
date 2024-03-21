@@ -9,20 +9,32 @@ const SelectedImages = ({
   thumbnailPicture,
   images,
   setValue,
+  isLoading,
 }: {
   imgBlobUrl: string[];
   thumbnailPicture: string;
   images: FileList | File[];
   setValue: UseFormSetValue<TItemSchema>;
+  isLoading?: boolean;
 }) => {
+  function handleClick(index: number) {
+    if (isLoading) return;
+    setValue("thumbnailPicture", images[index].name);
+  }
+
   return (
-    <ScrollArea className="flex justify-center h-64">
+    <ScrollArea
+      className={`flex justify-center h-64 ${
+        isLoading && "opacity-40 cursor-not-allowed"
+      } `}
+    >
       <div className="grid grid-cols-2">
         {imgBlobUrl.map((image, index) => {
           return (
             <div
               key={image}
-              onClick={() => setValue("thumbnailPicture", images[index].name)}
+              // onClick={() => setValue("thumbnailPicture", images[index].name)}
+              onClick={() => handleClick(index)}
               className={`w-auto aspect-square relative hover:brightness-50 ${
                 thumbnailPicture === images[index]?.name &&
                 "border-4 border-primary"
