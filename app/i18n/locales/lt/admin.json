@@ -14,6 +14,12 @@
   "email": "paštas",
   "phone": "telefonas",
   "created": "sukurtas",
+  "city": "miestas",
+  "state": "valstybė",
+  "country": "šalis",
+  "postal_code": "pašto kodas",
+  "line1": "adresas 1",
+  "line2": "adresas 2",
 
   "orderId": "Užsakymo id",
   "shippingStatus": "Siuntimo būsena:",
@@ -29,7 +35,8 @@
     "h2": "Pagrindiniai",
     "itemsPerPage": "Produktu per puslapį",
     "featuredSort": "„Naujausi“ rūšiavimas",
-    "featuredSoldOut": "„Naujausi“ išparduoti"
+    "featuredSoldOut": "„Naujausi“ išparduoti",
+    "paymentOnline": "Įgalinti mokėjimus"
   },
   "select": {
     "sortBy": "Rūšiuoti pagal",
@@ -41,6 +48,10 @@
   "select2": {
     "displaySold": "Rodyti parduotus",
     "hideSold": "Slėpti parduotus"
+  },
+  "select3": {
+    "enablePayments": "Įjungti mokėjimus",
+    "disablePayments": "Išjungti mokėjimus"
   },
 
   "contacts": {

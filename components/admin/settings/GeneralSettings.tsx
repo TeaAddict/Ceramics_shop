@@ -12,13 +12,15 @@ import useCurrentLanguage from "@/hooks/useCurrentLanguage";
 import { useTranslation } from "@/app/i18n/client";
 import { translateSortOptions } from "@/utils/functions/translateSortOptions";
 import { transtaleSoldOptions } from "@/utils/functions/transtaleSoldOptions";
+import { translatePaymentOptions } from "@/utils/functions/translatePaymentOptions";
 
 const GeneralSettings = ({ settings }: { settings: SettingsModel | null }) => {
   const lng = useCurrentLanguage();
   const { t } = useTranslation(lng, "admin");
   const { t: tt } = useTranslation(lng, "shared");
   const translatedOptions = translateSortOptions(t);
-  const translateSoldOptions = transtaleSoldOptions(t);
+  const translatedSoldOptions = transtaleSoldOptions(t);
+  const translatedPaymentOptions = translatePaymentOptions(t);
   const {
     control,
     register,
@@ -69,14 +71,28 @@ const GeneralSettings = ({ settings }: { settings: SettingsModel | null }) => {
               )}
             />
           </div>
-          <div className="flex flex-col md:flex-row gap-3">
+          <div className="flex flex-col md:flex-row lg:gap-3">
             <p>{t("general.featuredSoldOut")}</p>
             <Controller
               control={control}
               name="displaySold"
               render={({ field: { onChange, value } }) => (
                 <SelectCn
-                  selectOptions={translateSoldOptions}
+                  selectOptions={translatedSoldOptions}
+                  onChange={onChange}
+                  initialSelection={String(value)}
+                />
+              )}
+            />
+          </div>
+          <div className="flex flex-col md:flex-row lg:gap-3">
+            <p>{t("general.paymentOnline")}</p>
+            <Controller
+              control={control}
+              name="paymentOnline"
+              render={({ field: { onChange, value } }) => (
+                <SelectCn
+                  selectOptions={translatedPaymentOptions}
                   onChange={onChange}
                   initialSelection={String(value)}
                 />

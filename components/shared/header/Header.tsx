@@ -10,9 +10,11 @@ import Link from "next/link";
 import ProfileButton from "@/components/profile/ProfileButton";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import LanguageButton from "./LanguageButton";
+import { getGeneralSettings } from "@/utils/server/settings/getGeneralSettings";
 
 const Header = async ({ lng }: { lng: string }) => {
   const session = await getServerSession(authOptions);
+  const settings = await getGeneralSettings();
 
   return (
     <section className="sticky top-0 z-10 px-6 py-3 lg:px-20 3xl:px-24 flex items-center justify-between bg-white/90">
@@ -29,9 +31,11 @@ const Header = async ({ lng }: { lng: string }) => {
         <NavButtons lng={lng} />
       </div>
       <div className="flex items-center gap-5">
-        <div className="">
-          <CartBadge />
-        </div>
+        {settings?.paymentOnline && (
+          <div>
+            <CartBadge />
+          </div>
+        )}
         {!session ? (
           <div className="hidden md:block">
             <LoginButton />

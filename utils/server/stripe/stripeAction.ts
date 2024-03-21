@@ -16,9 +16,6 @@ export async function stripeAction(cart: Cart): Promise<string> {
     const storeItems = convertDbItemToMap(itemsInDb);
     const cartItems: CartItems = convertToCartItem(cart);
 
-    console.log(storeItems, "store items");
-    console.log(cartItems, "cart items");
-
     let session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "payment",

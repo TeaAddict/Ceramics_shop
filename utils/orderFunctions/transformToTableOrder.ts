@@ -14,6 +14,12 @@ export function transformToTableOrder(data: OrdersType[]): TableOrder[] {
       expiresAt: order.expiresAt,
       soldItems: order.transaction?.soldItems || [],
       amountTotal: order.transaction?.amountTotal || 0,
+      city: order.transaction?.customerDetails.address.city || "",
+      state: order.transaction?.customerDetails.address.state || "",
+      country: order.transaction?.customerDetails.address.country || "",
+      postal_code: order.transaction?.customerDetails.address.postal_code || "",
+      line1: order.transaction?.customerDetails.address.line1 || "",
+      line2: order.transaction?.customerDetails.address.line2 || "",
     };
   });
 

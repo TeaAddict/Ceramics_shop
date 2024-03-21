@@ -11,6 +11,12 @@ export function transformToTableBody(data: TableOrder[]) {
       email: row.email,
       phone: row.phone,
       // created: row.createdAt.toUTCString(),
+      city: row.city,
+      state: row.state,
+      country: row.country,
+      postal_code: row.postal_code,
+      line1: row.line1,
+      line2: row.line2,
       created: row.createdAt,
     };
     return res;

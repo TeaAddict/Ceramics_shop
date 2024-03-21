@@ -2,6 +2,7 @@
 
 import prisma from "@/lib/prisma";
 import { GeneralSettings } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 
 export async function updateGeneralSettings(data: GeneralSettings) {
   try {
@@ -10,6 +11,7 @@ export async function updateGeneralSettings(data: GeneralSettings) {
       update: data,
       where: { id: 1 },
     });
+    revalidatePath("/admin");
   } catch (error: any) {
     throw new Error(`Problem updating settings: ${error}`);
   }

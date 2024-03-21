@@ -89,7 +89,7 @@ const ShopWindow = ({
     );
 
   return (
-    <div>
+    <div className="sm:p-1">
       <div className="sm:flex justify-end items-center gap-5 mb-5 hidden">
         <HideSoldOutCheckBox
           setHideSoldOut={setHideSoldOut}

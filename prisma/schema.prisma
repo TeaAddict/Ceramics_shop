@@ -22,6 +22,7 @@ model GeneralSettings{
   itemsPerPage Int  @default(8)
   featuredSort String
   displaySold Boolean @default(false)
+  paymentOnline Boolean @default(false)
 }
 
 model Item {

@@ -29,7 +29,8 @@ const FormInput = <T extends FieldValues>({
   type = "text",
 }: InputProps<T>) => {
   return (
-    <div className="flex flex-col md:grid md:grid-cols-4 items-start md:items-center md:gap-4">
+    // <div className="flex flex-col md:grid md:grid-cols-4 items-start md:items-center md:gap-4">
+    <div className="flex flex-col lg:flex-row justify-start lg:items-center lg:gap-3">
       <p
         className="capitalize"
         style={{ gridColumn: `span ${labelSize} / span 1` }}

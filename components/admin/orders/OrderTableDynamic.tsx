@@ -2,7 +2,6 @@
 
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import OrderStatusBadge from "./OrderStatusBadge";
-import { convertToCamelCase } from "@/utils/helper";
 import { sortTableBody } from "@/utils/orderFunctions/sortTableBody";
 import { useUpdateSearchParams } from "@/hooks/useUpdateSearchParams";
 import { addAscOrDesc } from "./addAscOrDesc";
@@ -35,11 +34,12 @@ const OrderTableDynamic = ({
   const { lastParams, setLastParams } = useUpdateSearchParams(
     initSort ?? [{ name: "orderSortBy", value: head[0].value.concat("-desc") }]
   );
-  const sorted = sortTableBody(body, lastParams[0].value);
+  let lastParams2 = lastParams?.[0].value ?? head[0].value.concat("-desc");
+  const sorted = sortTableBody(body, lastParams2);
 
   function handleSort(val: string) {
     onClickHead?.(val);
-    const sortBy = addAscOrDesc(val, lastParams[0].value);
+    const sortBy = addAscOrDesc(val, lastParams2);
     setLastParams([{ name: "orderSortBy", value: sortBy }]);
   }
   function handleClick(row: any) {

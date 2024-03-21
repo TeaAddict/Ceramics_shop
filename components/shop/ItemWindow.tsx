@@ -8,6 +8,7 @@ import CustomReturnMessage from "../shared/CustomReturnMessage";
 import { getItem } from "@/utils/server/getItem";
 import { ImageShowcase } from "./photo/ImageShowcase";
 import { useTranslation } from "@/app/i18n";
+import { getGeneralSettings } from "@/utils/server/settings/getGeneralSettings";
 
 const ItemWindow = async ({
   params,
@@ -18,6 +19,7 @@ const ItemWindow = async ({
 }) => {
   const { t } = await useTranslation(params.lng, "shop");
   const item = await getItem(params.id);
+  const settings = await getGeneralSettings();
   type TItem = typeof item;
 
   if (!item || Object.keys(item).length === 0)
@@ -41,9 +43,10 @@ const ItemWindow = async ({
             {session && <FavStar itemId={item.id} />}
           </div>
 
-          {item.stock > 0 ? (
+          {settings?.paymentOnline && item.stock > 0 && (
             <ItemCartInterface item={item} params={params} />
-          ) : (
+          )}
+          {item.stock < 1 && (
             <p className="text-2xl text-destructive">{t("itemIsSoldOut")}</p>
           )}
 

@@ -42,7 +42,6 @@ const CheckOutForm = ({
   });
 
   async function onSubmit(data: TOrderSchema) {
-    console.log("submitted form");
     const paymentLink = await stripeAction(data);
     router.replace(paymentLink);
   }

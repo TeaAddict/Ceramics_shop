@@ -14,6 +14,12 @@
   "email": "email",
   "phone": "phone",
   "created": "created",
+  "city": "city",
+  "state": "state",
+  "country": "country",
+  "postal_code": "postal code",
+  "line1": "line1",
+  "line2": "line2",
 
   "orderId": "Order id",
   "shippingStatus": "Shipping status:",
@@ -29,7 +35,8 @@
     "h2": "General",
     "itemsPerPage": "Items Per Page",
     "featuredSort": "„Featured“ sort",
-    "featuredSoldOut": "„Featured“ sold out"
+    "featuredSoldOut": "„Featured“ sold out",
+    "paymentOnline": "Enable payments"
   },
   "select": {
     "sortBy": "sortBy",
@@ -41,6 +48,10 @@
   "select2": {
     "displaySold": "Display sold",
     "hideSold": "Hide sold"
+  },
+  "select3": {
+    "enablePayments": "Enable payments",
+    "disablePayments": "Disable payments"
   },
 
   "contacts": {

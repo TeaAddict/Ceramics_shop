@@ -10,11 +10,11 @@ import {
 import { capitalizeFirstLetter } from "@/utils/helper";
 import OrderModalWindow from "./OrderModalWindow";
 import OrderTableDynamic from "./OrderTableDynamic";
-import { ORDER_TABLE_HEAD } from "@/constants";
 import { transformToTableBody } from "@/utils/orderFunctions/transformToTableBody";
 import { DeliveryStatus } from "@prisma/client";
 import { useTranslation } from "@/app/i18n/client";
 import { translateOrderTableHead } from "@/utils/functions/translateOrderTableHead";
+import { TableHead } from "@/components/ui/table";
 
 export type TableOrder = {
   id: string;
@@ -27,6 +27,12 @@ export type TableOrder = {
   expiresAt: Date;
   soldItems: SoldItemType[];
   amountTotal: number;
+  city: string;
+  state: string;
+  country: string;
+  postal_code: string;
+  line1: string;
+  line2: string;
 };
 
 const OrdersTable = ({ data, lng }: { data: TableOrder[]; lng: string }) => {
