@@ -1,11 +1,11 @@
 "use client";
 import React, { createElement, useState } from "react";
-import { FlagComponent, LT, US } from "country-flag-icons/react/3x2";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { FlagComponent, LT, GB } from "country-flag-icons/react/3x2";
+import { usePathname, useRouter } from "next/navigation";
 
 export const LANGUAGES = [
   { countryCode: "lt", icon: LT },
-  { countryCode: "en", icon: US },
+  { countryCode: "en", icon: GB },
 ];
 
 export type Languages = {
@@ -18,7 +18,6 @@ const LanguageButton = ({ lng }: { lng: string }) => {
   const [language, setLanguage] = useState(initLanguage ?? LANGUAGES[0]);
   const router = useRouter();
   const pathname = usePathname();
-  // const searchParams = useSearchParams();
 
   function handleChangeLanguage(lang: Languages) {
     setLanguage(lang);
@@ -26,8 +25,6 @@ const LanguageButton = ({ lng }: { lng: string }) => {
       LANGUAGES.find((val) => pathname.includes(val.countryCode)) ??
       LANGUAGES[0];
     const newPath = pathname.replace(langObj?.countryCode, lang.countryCode);
-    // const params = new URLSearchParams(searchParams);
-    // router.replace(`${newPath}/${params.toString()}`);
     router.replace(newPath);
   }
 

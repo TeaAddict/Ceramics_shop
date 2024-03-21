@@ -48,7 +48,7 @@ export function ImageShowcase({
         autoplay={autoplay}
       />
 
-      {images.length > 2 && (
+      {images.length > 1 && (
         <ImageListDisplay
           images={images}
           mainApi={mainApi}

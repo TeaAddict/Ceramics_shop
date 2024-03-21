@@ -35,7 +35,11 @@ const ItemWindow = async ({
           {session && <FavStar itemId={item.id} />}
         </div>
         <div className="flex flex-col justify-center md:justify-start items-center md:items-start">
-          <ImageShowcase images={item.pictures} galleryID="image-showcase" />
+          <ImageShowcase
+            images={item.pictures}
+            galleryID="image-showcase"
+            autoplay={true}
+          />
         </div>
         <div className="flex flex-col gap-10 min-w-44">
           <div className="hidden md:flex gap-3">
