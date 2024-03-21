@@ -7,6 +7,11 @@ export type ItemWithPicThumbFav = Prisma.ItemGetPayload<
   typeof itemWithPicThumbFav
 >;
 
+// const itemWithPic = Prisma.validator<Prisma.ItemDefaultArgs>()({
+//   include: { pictures: false },
+// });
+// export type ItemWithPic = Prisma.ItemGetPayload<typeof itemWithPic>;
+
 const transactionFull = Prisma.validator<Prisma.TransactionDefaultArgs>()({
   include: {
     soldItems: { include: { item: { include: { thumbnail: true } } } },

@@ -23,9 +23,8 @@ export async function POST(request: NextRequest) {
 
     const pictureData = parsePictureData(parsed);
 
-    createItemInDb(parsed, pictureData, backendErrors);
-
-    saveImg(parsed);
+    backendErrors = await createItemInDb(parsed, pictureData, backendErrors);
+    if (!Object.keys(backendErrors).length) saveImg(parsed);
 
     return NextResponse.json(
       Object.keys(backendErrors).length > 0
@@ -33,7 +32,7 @@ export async function POST(request: NextRequest) {
         : { success: true }
     );
   } catch (error: any) {
-    console.error(`Problem in db creating item: ${error.message}`);
-    return NextResponse.json({ error: error }, { status: 500 });
+    console.error(`Problem in db creating item: ${error}`);
+    return NextResponse.json({ errors: error }, { status: 500 });
   }
 }

@@ -51,11 +51,11 @@ const ItemForm = ({
         };
       } else {
         return {
-          title: "",
+          title: "xcv",
           price: 1,
           stock: 1,
-          category: "",
-          description: "",
+          category: "v",
+          description: "asd",
           thumbnailPicture: "",
           pictures: undefined,
         };
