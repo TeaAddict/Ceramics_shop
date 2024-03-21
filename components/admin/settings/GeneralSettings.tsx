@@ -10,9 +10,9 @@ import { updateGeneralSettings } from "@/utils/server/settings/updateGeneralSett
 import toast from "react-hot-toast";
 import useCurrentLanguage from "@/hooks/useCurrentLanguage";
 import { useTranslation } from "@/app/i18n/client";
-import { translateSortOptions } from "@/utils/functions/translateSortOptions";
-import { transtaleSoldOptions } from "@/utils/functions/transtaleSoldOptions";
-import { translatePaymentOptions } from "@/utils/functions/translatePaymentOptions";
+import { translateSortOptions } from "@/utils/functions/translate/translateSortOptions";
+import { transtaleSoldOptions } from "@/utils/functions/translate/transtaleSoldOptions";
+import { translatePaymentOptions } from "@/utils/functions/translate/translatePaymentOptions";
 
 const GeneralSettings = ({ settings }: { settings: SettingsModel | null }) => {
   const lng = useCurrentLanguage();

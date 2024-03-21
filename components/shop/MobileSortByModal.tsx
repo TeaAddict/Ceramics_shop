@@ -13,7 +13,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { SORT_OPTIONS } from "@/constants";
 import useCurrentLanguage from "@/hooks/useCurrentLanguage";
 import { useTranslation } from "@/app/i18n/client";
-import { translateSortOptions } from "@/utils/functions/translateSortOptions";
+import { translateSortOptions } from "@/utils/functions/translate/translateSortOptions";
 
 export function MobileSortByModal({ sortBy }: { sortBy: string }) {
   const lng = useCurrentLanguage();

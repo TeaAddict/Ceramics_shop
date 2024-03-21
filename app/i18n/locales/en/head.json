@@ -2,5 +2,9 @@
   "home": "Home",
   "shop": "Shop",
   "about": "About",
-  "contacts": "Contacts"
+  "contacts": "Contacts",
+  "admin": "Admin",
+
+  "login": "Login",
+  "logout": "Logout"
 }

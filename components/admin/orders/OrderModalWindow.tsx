@@ -7,7 +7,7 @@ import { updateStatus } from "@/utils/server/order/updateStatus";
 import { formatCentsToEuroCurrency } from "@/utils/helper";
 import toast from "react-hot-toast";
 import { useTranslation } from "@/app/i18n/client";
-import { translateStatusOptions } from "@/utils/functions/translateStatusOptions";
+import { translateStatusOptions } from "@/utils/functions/translate/translateStatusOptions";
 
 const OrderModalWindow = ({ row, lng }: { row: TableOrder; lng: string }) => {
   const product = soldItemToProduct(row.soldItems);

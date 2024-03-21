@@ -4,7 +4,7 @@ import VerticalMenu from "@/components/shared/VerticalMenu";
 import TabContent from "@/components/admin/TabContent";
 import CustomReturnMessage from "@/components/shared/CustomReturnMessage";
 import { useTranslation } from "@/app/i18n";
-import { translateAdminMenu } from "@/utils/functions/translateAdminMenu";
+import { translateAdminMenu } from "@/utils/functions/translate/translateAdminMenu";
 
 export type SearchParams = {
   tab: string;

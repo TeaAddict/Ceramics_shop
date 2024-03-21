@@ -13,7 +13,7 @@ import OrderTableDynamic from "./OrderTableDynamic";
 import { transformToTableBody } from "@/utils/orderFunctions/transformToTableBody";
 import { DeliveryStatus } from "@prisma/client";
 import { useTranslation } from "@/app/i18n/client";
-import { translateOrderTableHead } from "@/utils/functions/translateOrderTableHead";
+import { translateOrderTableHead } from "@/utils/functions/translate/translateOrderTableHead";
 
 export type TableOrder = {
   id: string;

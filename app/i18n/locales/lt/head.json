@@ -2,5 +2,9 @@
   "home": "Namai",
   "shop": "Parduotuvė",
   "about": "Apie",
-  "contacts": "Kontaktai"
+  "contacts": "Kontaktai",
+  "admin": "Admin",
+
+  "login": "Prisijungti",
+  "logout": "Atsijungti"
 }

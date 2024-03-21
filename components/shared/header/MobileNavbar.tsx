@@ -1,4 +1,7 @@
-import { NAV_BAR_LINKS } from "@/constants";
+import { useTranslation } from "@/app/i18n/client";
+import useCurrentLanguage from "@/hooks/useCurrentLanguage";
+import { translateNavbar } from "@/utils/functions/translate/translateNavbar";
+import { capitalizeFirstLetter } from "@/utils/helper";
 import { Session } from "next-auth";
 import { signIn, signOut } from "next-auth/react";
 import Link from "next/link";
@@ -15,6 +18,9 @@ const MobileNavbar = ({
   isMobileMenuActive?: boolean;
   setIsMobileMenuActive: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
+  const lng = useCurrentLanguage();
+  const { t } = useTranslation(lng, "head");
+  const translatedNavbar = translateNavbar(t);
   const pathname = usePathname();
   const router = useRouter();
 
@@ -22,7 +28,7 @@ const MobileNavbar = ({
     if (!session) {
       signIn("undefined", { callbackUrl: "/" });
     } else {
-      router.replace(`/profile/${session?.user?.name}`);
+      router.replace(`/${lng}/admin`);
     }
     setIsMobileMenuActive((isMobileMenuActive) => !isMobileMenuActive);
   }
@@ -34,10 +40,9 @@ const MobileNavbar = ({
         }`}
       >
         <div className="flex flex-col h-full justify-between items-center">
-          <div></div>
-          <ul className=" flex flex-col gap-8 text-white/70 text-3xl">
-            {NAV_BAR_LINKS.map((nav) => {
-              const isActive = pathname === nav.route;
+          <ul className=" flex flex-col gap-8 text-white/70 text-3xl h-full justify-center">
+            {translatedNavbar.map((nav) => {
+              const isActive = pathname === `/${lng}${nav.route}`;
 
               return (
                 <li key={nav.label}>
@@ -51,20 +56,20 @@ const MobileNavbar = ({
                     }
                   >
                     <nav.icon />
-                    <p>{nav.label}</p>
+                    <p>{capitalizeFirstLetter(nav.label)}</p>
                   </Link>
                 </li>
               );
             })}
-            <li key={"profile"}>
+            <li key={"admin"}>
               <button
                 className={`flex gap-3 ${
-                  pathname === "/profile" && "text-white"
+                  pathname === `/${lng}/admin` && "text-white"
                 }`}
                 onClick={onAccountClick}
               >
                 <FaRegUser />
-                <p>Profile</p>
+                {session ? <p>Admin</p> : <p>{t("login")}</p>}
               </button>
             </li>
           </ul>
@@ -75,7 +80,7 @@ const MobileNavbar = ({
                 onClick={() => signOut({ callbackUrl: "/" })}
               >
                 <IoLogOutOutline />
-                <p>Logout</p>
+                <p>{t("logout")}</p>
               </button>
             </div>
           )}

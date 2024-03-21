@@ -14,7 +14,7 @@ import { GeneralSettings } from "@prisma/client";
 import { getUniquePropertyNames } from "@/utils/functions/getUniquePropertyNames";
 import HideSoldOutCheckBox from "./HideSoldOutCheckBox";
 import CustomReturnMessage from "../shared/CustomReturnMessage";
-import { translateSortOptions } from "@/utils/functions/translateSortOptions";
+import { translateSortOptions } from "@/utils/functions/translate/translateSortOptions";
 import { useTranslation } from "@/app/i18n/client";
 import MobileFooter from "./MobileFooter";
 
