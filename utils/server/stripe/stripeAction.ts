@@ -38,7 +38,6 @@ export async function stripeAction(cart: Cart): Promise<string> {
       }),
       success_url: `${process.env.SERVER_URL}/payment/success/{CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.SERVER_URL}/payment/cancel`,
-      // customer_email: order.email,
       phone_number_collection: {
         enabled: true,
       },

@@ -4,7 +4,7 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import OrderStatusBadge from "./OrderStatusBadge";
 import { sortTableBody } from "@/utils/orderFunctions/sortTableBody";
 import { useUpdateSearchParams } from "@/hooks/useUpdateSearchParams";
-import { addAscOrDesc } from "./addAscOrDesc";
+import { addAscOrDesc } from "../../../utils/functions/addAscOrDesc";
 
 /**
  * Represents an order table with dynamic sorting functionality.

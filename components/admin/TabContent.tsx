@@ -1,7 +1,5 @@
 import React from "react";
-import Dashboard from "./Dashboard";
 import Shopboard from "./Shopboard";
-import Account from "../shared/Account";
 import ServerSettings from "./settings/ServerSettings";
 import OrdersServer from "./orders/OrdersServer";
 import { SearchParams } from "@/app/[lng]/(root)/admin/page";
@@ -25,8 +23,6 @@ const TabContent = async ({
         <Shopboard searchParams={searchParams} lng={lng} />
       )}
       {tab === t("settings") && <ServerSettings />}
-      {/* {tab === "dashboard" && <Dashboard />} */}
-      {/* {tab === "account" && <Account />} */}
     </div>
   );
 };

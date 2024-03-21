@@ -14,7 +14,6 @@ import { transformToTableBody } from "@/utils/orderFunctions/transformToTableBod
 import { DeliveryStatus } from "@prisma/client";
 import { useTranslation } from "@/app/i18n/client";
 import { translateOrderTableHead } from "@/utils/functions/translateOrderTableHead";
-import { TableHead } from "@/components/ui/table";
 
 export type TableOrder = {
   id: string;

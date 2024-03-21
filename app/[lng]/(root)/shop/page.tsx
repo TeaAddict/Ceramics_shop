@@ -2,7 +2,6 @@ import ShopWindow from "@/components/shop/ShopWindow";
 import { isAdminRole } from "@/utils/server/isAdminRole";
 import { getGeneralSettings } from "@/utils/server/settings/getGeneralSettings";
 import LoadPage from "@/components/shared/loadSpinner/LoadPage";
-import { getCategories } from "../../../../utils/server/item/getCategories";
 import { useTranslation } from "@/app/i18n";
 
 const ShopPage = async ({

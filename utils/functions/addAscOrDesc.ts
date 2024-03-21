@@ -1,6 +1,3 @@
-import { useEffect, useState } from "react";
-
-// TODO find a where to place this
 export function addAscOrDesc(val: string, paramValue: string) {
   let sortBy;
   const [name, direction] = paramValue.split("-");

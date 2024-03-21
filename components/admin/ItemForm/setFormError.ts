@@ -36,7 +36,6 @@ export function setFormError(
       message: errors.pictures,
     });
   } else {
-    //TODO add toast
     alert("Something went wrong!");
   }
 }

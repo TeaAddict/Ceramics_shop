@@ -1,4 +1,3 @@
-import React from "react";
 import ShopWindow from "../shop/ShopWindow";
 import { getGeneralSettings } from "@/utils/server/settings/getGeneralSettings";
 import CustomReturnMessage from "../shared/CustomReturnMessage";

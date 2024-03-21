@@ -8,27 +8,6 @@ const ACCEPTED_IMAGE_TYPES = [
   "image/webp",
 ];
 
-const cartSchema = z.object({
-  id: z.string(),
-  title: z.string(),
-  picture: z.string(),
-  quantity: z.number(),
-  stock: z.number(),
-  unitPrice: z.number(),
-  totalPrice: z.number(),
-});
-
-// TODO: maybe remove? because I am filling form in stripe checkout
-export const orderSchema = z.object({
-  firstName: z.string().min(2, "First name is required"),
-  lastName: z.string().min(2, "Last name is required"),
-  email: z.string().email().min(4, "Email is required"),
-  phone: z.string().min(6, "Phone is required"),
-  address: z.string().min(4, "Address is required"),
-  orderTotal: z.string(),
-  cart: z.array(cartSchema),
-});
-
 export const itemSchema = z.object({
   title: z.string().min(1, "Title is required").max(255),
   price: z.coerce.number().min(1, "Price is required"),
@@ -124,4 +103,3 @@ export type Cart = {
 
 export type TItemSchema = z.infer<typeof itemSchema>;
 export type TProductSchemaServer = z.infer<typeof productSchemaServer>;
-export type TOrderSchema = z.infer<typeof orderSchema>;

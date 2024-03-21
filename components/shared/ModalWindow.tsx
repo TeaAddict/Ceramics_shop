@@ -40,7 +40,6 @@ export function ModalWindow({
           {buttonLabel}
         </Button>
       </DialogTrigger>
-      {/* <DialogContent className="sm:max-w-[425px]"> */}
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
