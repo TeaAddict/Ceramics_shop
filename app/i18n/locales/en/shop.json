@@ -31,5 +31,28 @@
   "shopClosed": "Shop is currently out of items",
   "missingSettings": "Please set up settings first",
   "itemIsSoldOut": "Item is sold out",
-  "description": "Description:"
+  "description": "Description:",
+
+  "orderSuccess": {
+    "thankYou": "Thank you for your purchase!",
+    "sendingEmail": "We will be sending you an email with details shortly",
+    "viewOrder": "VIEW ORDER",
+    "continueShoping": "CONTINUE SHOPPING",
+
+    "orderDetails": "Order details",
+    "orderId": "Order id:",
+    "orderDate": "Order date:",
+    "shippingInformation": "Shipping information",
+    "country": "Country:",
+    "state": "State:",
+    "city": "City:",
+    "address": "Address:",
+    "postalCode": "Postal code:",
+
+    "product": "Product",
+    "billingDetails": "Billing details",
+
+    "amount": "Amount"
+  },
+  "orderCanceled": "Payment canceled"
 }

@@ -4,6 +4,7 @@ import { TransactionFull } from "@/prisma/prismaTypes";
 import { parseDate } from "@/utils/functions/parseDate";
 import ProductTable, { Product } from "./ProductTable";
 import { formatCentsToEuroCurrency } from "@/utils/helper";
+import { useTranslation } from "@/app/i18n";
 
 // const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
@@ -11,18 +12,19 @@ const Order = async ({
   params,
   data,
 }: {
-  params: { sessionId: string };
+  params: { sessionId: string; lng: string };
   data: TransactionFull;
 }) => {
+  const { t } = await useTranslation(params.lng, "shop");
   const createdAtClean = parseDate(data.createdAt);
   const address = data.customerDetails.address;
 
   const cartItem: Product[] = data.soldItems.map((item) => {
     return {
-      id: item.itemId,
+      id: item.itemId ?? "",
       title: item.name,
-      picture: item.item.thumbnail?.name!,
-      quantity: item.quantity || 0,
+      picture: item.item?.thumbnail?.name!,
+      quantity: item.quantity ?? 0,
       unitPrice: item.unitAmount,
       totalPrice: item.amountTotal,
     };
@@ -30,47 +32,47 @@ const Order = async ({
   return (
     <div className="flex flex-col gap-7">
       <div>
-        <p>Order id:</p>
+        <p>{t("orderSuccess.orderId")}</p>
         <p>{data.orderId}</p>
-        <p>Order date:</p>
+        <p>{t("orderSuccess.orderDate")}</p>
         <p>{createdAtClean}</p>
       </div>
       <div>
-        <h3>Shipping information</h3>
+        <h3>{t("orderSuccess.shippingInformation")}</h3>
         <div className="grid grid-cols-2">
-          <p>Country:</p>
+          <p>{t("orderSuccess.country")}</p>
           <p>{address.country}</p>
-          <p>State:</p>
+          <p>{t("orderSuccess.state")}</p>
           <p>{address.state}</p>
-          <p>City:</p>
+          <p>{t("orderSuccess.city")}</p>
           <p>{address.city}</p>
-          <p>Address:</p>
+          <p>{t("orderSuccess.address")}</p>
           <div>
             <p>{address.line1}</p>
             <p>{address.line2}</p>
           </div>
-          <p>Postal code:</p>
+          <p>{t("orderSuccess.postalCode")}</p>
           <p>{address.postal_code}</p>
         </div>
       </div>
       <div>
-        <h3>Product</h3>
+        <h3>{t("orderSuccess.product")}</h3>
         <div>
-          <ProductTable data={cartItem} />
+          <ProductTable lng={params.lng} data={cartItem} />
         </div>
       </div>
       <div>
-        <h3>Billing details</h3>
+        <h3>{t("orderSuccess.billingDetails")}</h3>
         <div className="grid grid-cols-2">
-          <p>Amount:</p>
+          <p>{t("orderSuccess.amount")}</p>
           <p>{formatCentsToEuroCurrency(data.amountTotal || 0)}</p>
-          <p>Country:</p>
+          <p>{t("orderSuccess.country")}</p>
           <p>{address.country}</p>
-          <p>State:</p>
+          <p>{t("orderSuccess.state")}</p>
           <p>{address.state}</p>
-          <p>City:</p>
+          <p>{t("orderSuccess.city")}</p>
           <p>{address.city}</p>
-          <p>Address:</p>
+          <p>{t("orderSuccess.address")}</p>
           <div>
             <p>{address.line1}</p>
             <p>{address.line2}</p>

@@ -7,9 +7,15 @@ import { ModalWindow } from "../shared/ModalWindow";
 import CustomReturnMessage from "../shared/CustomReturnMessage";
 import LoadPage from "../shared/loadSpinner/LoadPage";
 import { getSessionOrder } from "@/utils/server/order/getSessionOrder";
+import { useTranslation } from "@/app/i18n";
 
-const OrderClient = async ({ params }: { params: { sessionId: string } }) => {
+const OrderSuccess = async ({
+  params,
+}: {
+  params: { sessionId: string; lng: string };
+}) => {
   const { data, error } = await getSessionOrder(params.sessionId);
+  const { t } = await useTranslation(params.lng, "shop");
 
   if (error) {
     return <CustomReturnMessage text={error} />;
@@ -22,25 +28,27 @@ const OrderClient = async ({ params }: { params: { sessionId: string } }) => {
         <GoCheckCircle size={80} />
       </div>
       <div>
-        <p className="text-3xl font-semibold">Thank you for your purchase!</p>
+        <p className="text-3xl font-semibold">{t("orderSuccess.thankYou")}</p>
         <p className="text-md font-semibold">
-          We will be sending you an email with details shortly
+          {t("orderSuccess.sendingEmail")}
         </p>
       </div>
       <div className="flex flex-col md:flex-row gap-5">
         <ModalWindow
-          buttonLabel="VIEW ORDER"
+          buttonLabel={t("orderSuccess.viewOrder")}
           variant={"secondary"}
-          title="Order details"
+          title={t("orderSuccess.orderDetails")}
         >
           <Order params={params} data={data} />
         </ModalWindow>
         <Link href={"/shop"}>
-          <Button className="uppercase">Continue shoping</Button>
+          <Button className="uppercase">
+            {t("orderSuccess.continueShoping")}
+          </Button>
         </Link>
       </div>
     </div>
   );
 };
 
-export default OrderClient;
+export default OrderSuccess;

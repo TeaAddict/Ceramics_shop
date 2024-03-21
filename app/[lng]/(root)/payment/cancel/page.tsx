@@ -1,10 +1,9 @@
+import { useTranslation } from "@/app/i18n";
 import CustomReturnMessage from "@/components/shared/CustomReturnMessage";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import React from "react";
 
-const CancelPage = () => {
-  return <CustomReturnMessage text="Payment canceled!" />;
+const CancelPage = async ({ params: { lng } }: { params: { lng: string } }) => {
+  const { t } = await useTranslation(lng, "shop");
+  return <CustomReturnMessage text={t("orderCanceled")} backButton={false} />;
 };
 
 export default CancelPage;

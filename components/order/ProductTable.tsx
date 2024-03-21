@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { formatCentsToEuroCurrency } from "@/utils/helper";
 import { useTranslation } from "@/app/i18n/client";

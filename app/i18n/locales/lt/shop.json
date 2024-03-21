@@ -31,5 +31,28 @@
   "shopClosed": "Šiuo metu parduotuvėje nėra prekių",
   "missingSettings": "Pirmiausia nustatykite nustatymus",
   "itemIsSoldOut": "Prekė išparduota",
-  "description": "Aprašymas:"
+  "description": "Aprašymas:",
+
+  "orderSuccess": {
+    "thankYou": "Dėkojame, kad pirkote mūsų parduotuvėje!",
+    "sendingEmail": "Netrukus atsiųsime jums el. laišką su išsamia informacija",
+    "viewOrder": "PERŽIŪRĖTI UŽSAKYMĄ",
+    "continueShoping": "TĘSTI APSIPIRKIMĄ",
+
+    "orderDetails": "Užsakymo detalės",
+    "orderId": "Užsakymo id:",
+    "orderDate": "Užsakymo data:",
+    "shippingInformation": "Pristatymo informacija",
+    "country": "Šalis:",
+    "state": "Valstybė:",
+    "city": "Miestas:",
+    "address": "Adresas:",
+    "postalCode": "Pašto kodas:",
+
+    "product": "Produktas",
+    "billingDetails": "Atsiskaitymo informacija",
+
+    "amount": "Suma"
+  },
+  "orderCanceled": "Mokėjimas atšauktas"
 }
