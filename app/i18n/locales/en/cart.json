@@ -11,5 +11,11 @@
 
   "orderTotal": "ORDER TOTAL",
   "clearCart": "Clear cart",
-  "submit": "Submit"
+  "submit": "Submit",
+
+  "itemCartInterface": {
+    "inStock": "in stock:",
+    "addToCart": "ADD TO CART",
+    "removeFromCart": "REMOVE FROM CART"
+  }
 }

@@ -11,6 +11,8 @@ import MerchandiseCard from "@/components/cards/Merchandise";
 import { useItems } from "@/hooks/useItems";
 import { sortItems } from "@/utils/item/sortItems";
 import { useTranslation } from "@/app/i18n/client";
+import React from "react";
+import Autoplay from "embla-carousel-autoplay";
 
 const CarouselSection = ({
   sortBy,
@@ -21,6 +23,9 @@ const CarouselSection = ({
   isSoldDisplayed: boolean | undefined;
   lng: string;
 }) => {
+  const plugin = React.useRef(
+    Autoplay({ delay: 2000, stopOnInteraction: true })
+  );
   const { t } = useTranslation(lng, "home");
   const { data } = useItems();
   if (!data || data?.length === 0 || !sortBy) return;
@@ -42,6 +47,9 @@ const CarouselSection = ({
       <div className="flex flex-col px-14 sm:px-20 md:px-20 lg:px-0 w-full max-w-3xl gap-5">
         <h2 className="text-2xl font-semibold">{t("carouselSection.h1")}</h2>
         <Carousel
+          plugins={[plugin.current]}
+          onMouseEnter={plugin.current.stop}
+          onMouseLeave={plugin.current.reset}
           opts={{
             align: "start",
           }}

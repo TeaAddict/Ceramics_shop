@@ -6,6 +6,8 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { Button } from "../ui/button";
 import toast from "react-hot-toast";
+import useCurrentLanguage from "@/hooks/useCurrentLanguage";
+import { useTranslation } from "@/app/i18n/client";
 
 const RemoveFromCartButton = ({
   item,
@@ -14,6 +16,8 @@ const RemoveFromCartButton = ({
   item: ItemWithPicThumbFav;
   params: { id: string };
 }) => {
+  const lng = useCurrentLanguage();
+  const { t } = useTranslation(lng, "cart");
   const dispatch = useDispatch<AppDispatch>();
 
   function handleRemoveFromCart() {
@@ -23,7 +27,11 @@ const RemoveFromCartButton = ({
     }
   }
 
-  return <Button onClick={handleRemoveFromCart}>REMOVE FROM CART</Button>;
+  return (
+    <Button onClick={handleRemoveFromCart}>
+      {t("itemCartInterface.removeFromCart")}
+    </Button>
+  );
 };
 
 export default RemoveFromCartButton;

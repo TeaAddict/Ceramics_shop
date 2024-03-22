@@ -11,5 +11,11 @@
 
   "orderTotal": "IŠ VISO",
   "clearCart": "Išvalyti krepšelį",
-  "submit": "Užsakyti"
+  "submit": "Užsakyti",
+
+  "itemCartInterface": {
+    "inStock": "prekyboje:",
+    "addToCart": "ĮDĖTI Į KREPŠELĮ",
+    "removeFromCart": "IŠIMTI IŠ KREPŠELIO"
+  }
 }

@@ -6,6 +6,8 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { Button } from "../ui/button";
 import toast from "react-hot-toast";
+import useCurrentLanguage from "@/hooks/useCurrentLanguage";
+import { useTranslation } from "@/app/i18n/client";
 
 const AddToCartButton = ({
   item,
@@ -14,6 +16,8 @@ const AddToCartButton = ({
   item: ItemWithPicThumbFav;
   quantity: number;
 }) => {
+  const lng = useCurrentLanguage();
+  const { t } = useTranslation(lng, "cart");
   const dispatch = useDispatch<AppDispatch>();
 
   function handleAddToCart() {
@@ -34,7 +38,11 @@ const AddToCartButton = ({
     }
   }
 
-  return <Button onClick={handleAddToCart}>ADD TO CART</Button>;
+  return (
+    <Button onClick={handleAddToCart}>
+      {t("itemCartInterface.addToCart")}
+    </Button>
+  );
 };
 
 export default AddToCartButton;

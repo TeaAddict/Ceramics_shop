@@ -1,14 +1,14 @@
 "use client";
 import React, { useState } from "react";
 import QuantityPicker from "../shared/QuantityPicker";
-import { Button } from "../ui/button";
 import { useDispatch } from "react-redux";
 import { AppDispatch, useAppSelector } from "@/redux/store";
-import { addItem, removeItem } from "@/redux/features/cartSlice";
 import { ItemWithPicThumbFav } from "@/prisma/prismaTypes";
 import { formatToEuroCurrency } from "@/utils/helper";
 import AddToCartButton from "./AddToCartButton";
 import RemoveFromCartButton from "./RemoveFromCartButton";
+import useCurrentLanguage from "@/hooks/useCurrentLanguage";
+import { useTranslation } from "@/app/i18n/client";
 
 const ItemCartInterface = ({
   item,
@@ -17,8 +17,9 @@ const ItemCartInterface = ({
   item: ItemWithPicThumbFav;
   params: { id: string };
 }) => {
+  const lng = useCurrentLanguage();
+  const { t } = useTranslation(lng, "cart");
   const [quantity, setQuantity] = useState(1);
-  const dispatch = useDispatch<AppDispatch>();
   const cart = useAppSelector((state) => state.cartReducer.cartItems);
 
   const cartItem = cart.find((item) => item.id === params.id);
@@ -53,7 +54,9 @@ const ItemCartInterface = ({
               decreaseFunc={handleDecrease}
               increaseFunc={handleIncrease}
             />
-            <p>in stock: {item?.stock}</p>
+            <p>
+              {t("itemCartInterface.inStock")} {item?.stock}
+            </p>
           </div>
         )}
       </div>
