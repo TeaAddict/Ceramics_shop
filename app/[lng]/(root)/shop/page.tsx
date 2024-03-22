@@ -8,7 +8,6 @@ const ShopPage = async ({
   searchParams,
   params: { lng },
 }: {
-  color?: "default" | "inverted";
   searchParams: { category: string; sortBy: string; tab: string; page: string };
   params: { lng: string };
 }) => {
