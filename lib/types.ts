@@ -36,7 +36,7 @@ export const pictureSchemaServer = z.object({
     width: z.number().min(1),
     height: z.number().min(1),
   }),
-  picture: z.instanceof(File),
+  picture: z.custom<File>(),
 });
 
 export const productSchemaServer = z.object({
