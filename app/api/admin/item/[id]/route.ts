@@ -25,7 +25,10 @@ export async function PUT(
   return NextResponse.json({ success: true });
 }
 
-export async function DELETE({ params }: { params: { id: string } }) {
+export async function DELETE(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
   try {
     deleteImages(params.id);
     await prisma.picture.deleteMany({ where: { itemId: params.id } });
