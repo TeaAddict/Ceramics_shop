@@ -5,7 +5,6 @@ import LoadPage from "@/components/shared/loadSpinner/LoadPage";
 import { useTranslation } from "@/app/i18n";
 
 const ShopPage = async ({
-  color = "default",
   searchParams,
   params: { lng },
 }: {
@@ -22,7 +21,7 @@ const ShopPage = async ({
     <section className="padding-container flex-col">
       <h1>{t("title")}</h1>
       <ShopWindow
-        color={color}
+        color="default"
         searchParams={searchParams}
         isAdmin={isAdmin}
         settings={settings}
