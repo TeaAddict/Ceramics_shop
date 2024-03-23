@@ -12,10 +12,6 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
 
 const endpointSecret = process.env.WEBHOOK_SECRET as string;
 
-export async function GET(request: NextRequest) {
-  return NextResponse.json({ status: "running" }, { status: 200 });
-}
-
 export async function POST(request: NextRequest) {
   try {
     const rawBody = await request.text();

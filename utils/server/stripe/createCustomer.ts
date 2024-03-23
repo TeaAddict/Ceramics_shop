@@ -12,14 +12,6 @@ export async function createCustomer(paymentData: PaymentData) {
         email: paymentData.customerDetails?.email!,
         phone: paymentData.customerDetails?.phone,
         address: {
-          // create: {
-          //   city: paymentData.customerDetails?.address?.city,
-          //   country: paymentData.customerDetails?.address?.country,
-          //   line1: paymentData.customerDetails?.address?.line1,
-          //   line2: paymentData.customerDetails?.address?.line2,
-          //   postal_code: paymentData.customerDetails?.address?.postal_code,
-          //   state: paymentData.customerDetails?.address?.state,
-          // },
           create: paymentData.customerDetails?.address!,
         },
         transactions: {
@@ -46,5 +38,6 @@ export async function createCustomer(paymentData: PaymentData) {
       `Problem creating customer: ${paymentData.customerDetails?.email}`,
       error
     );
+    throw new Error(`Problem creating customer: ${error}`);
   }
 }

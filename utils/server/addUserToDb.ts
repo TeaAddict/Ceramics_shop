@@ -21,6 +21,7 @@ export async function addUserToDb(userData: User) {
       return;
     }
   } catch (error) {
-    console.log("Problem adding user to db");
+    console.log(`Problem adding user to db: ${error}`);
+    throw new Error(`Problem adding user to db: ${error}`);
   }
 }

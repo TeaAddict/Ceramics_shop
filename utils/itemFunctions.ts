@@ -4,6 +4,7 @@ export async function deleteItem(id: string) {
   try {
     await fetch(`/api/admin/item/${id}`, { method: "DELETE" });
   } catch (error) {
+    console.error(`Problem deleting item: ${error}`);
     throw new Error(`Problem deleting item: ${error}`);
   }
 }
@@ -19,6 +20,7 @@ export async function addItem(data: FormData) {
     }
     return response.json();
   } catch (error) {
+    console.error(`Problem adding item: ${error}`);
     throw new Error(`Problem adding item: ${error}`);
   }
 }
@@ -31,6 +33,7 @@ export async function updateItem(data: { data: FormData; id: string }) {
     });
     return response.json();
   } catch (error) {
+    console.error(`Problem updating item: ${error}`);
     throw new Error(`Problem updating item: ${error}`);
   }
 }

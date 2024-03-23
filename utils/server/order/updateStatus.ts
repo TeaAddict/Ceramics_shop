@@ -11,7 +11,7 @@ export async function updateStatus(id: string, val: DeliveryStatus) {
     });
     revalidatePath("/admin/");
   } catch (error: any) {
-    console.error(`Problem updating order status: ${error.message}`);
+    console.error(`Problem updating order status: ${error}`);
     throw new Error(`Problem updating order status: ${error.message}`);
   }
 }

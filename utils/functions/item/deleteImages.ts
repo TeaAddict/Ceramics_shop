@@ -2,12 +2,17 @@ import prisma from "@/lib/prisma";
 import { deleteImageInStorage } from "./deleteImageInStorage";
 
 export async function deleteImages(id: string) {
-  const item = await prisma.item.findFirst({
-    where: { id: id },
-    include: { pictures: true },
-  });
+  try {
+    const item = await prisma.item.findFirst({
+      where: { id: id },
+      include: { pictures: true },
+    });
 
-  item?.pictures.map((val) => {
-    deleteImageInStorage(val.name);
-  });
+    item?.pictures.map((val) => {
+      deleteImageInStorage(val.name);
+    });
+  } catch (error) {
+    console.log(`Problem deleting images: ${error}`);
+    throw new Error(`Problem deleting images: ${error}`);
+  }
 }

@@ -36,6 +36,7 @@ export async function updateItem(
       where: { id: item.id },
     });
   } catch (e: any) {
+    console.log(`Problem updating item: ${e}`);
     let pictures: { pictures: string } = { pictures: "" };
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       console.log(e);
@@ -44,7 +45,6 @@ export async function updateItem(
           pictures: "Picture name is already in use, rename or change picture",
         };
       }
-      //   return NextResponse.json({ errors: pictures });
       return { errors: pictures };
     }
   }

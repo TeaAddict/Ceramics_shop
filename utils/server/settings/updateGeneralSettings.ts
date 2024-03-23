@@ -13,6 +13,7 @@ export async function updateGeneralSettings(data: GeneralSettings) {
     });
     revalidatePath("/admin");
   } catch (error: any) {
-    throw new Error(`Problem updating settings: ${error}`);
+    console.log(`Problem updating general settings: ${error}`);
+    throw new Error(`Problem updating general settings: ${error}`);
   }
 }

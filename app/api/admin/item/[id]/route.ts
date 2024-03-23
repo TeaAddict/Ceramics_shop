@@ -12,20 +12,25 @@ export async function PUT(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  const id = params.id;
-  const data: FormData = await request.formData();
+  try {
+    const id = params.id;
+    const data: FormData = await request.formData();
 
-  // formData is messy so we parse it into usable object
-  const parsed = parseFormData(data);
-  const pictureData = parsePictureData(parsed);
+    // formData is messy so we parse it into usable object
+    const parsed = parseFormData(data);
+    const pictureData = parsePictureData(parsed);
 
-  // update item and image data in db
-  updateItem(id, parsed, pictureData);
+    // update item and image data in db
+    updateItem(id, parsed, pictureData);
 
-  // delete old pictures and update new in local server
-  updatePictures(id, pictureData, parsed);
+    // delete old pictures and update new in local server
+    updatePictures(id, pictureData, parsed);
 
-  return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error(`Problem updating item: ${error}`);
+    return NextResponse.json({ error: error }, { status: 500 });
+  }
 }
 
 export async function DELETE(
@@ -39,6 +44,7 @@ export async function DELETE(
 
     return NextResponse.json({ success: true });
   } catch (error) {
+    console.log(`Problem deleting item: ${error}`);
     return NextResponse.json(
       { error: "Problem deleting item" },
       { status: 500 }

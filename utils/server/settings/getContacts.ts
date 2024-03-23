@@ -6,9 +6,7 @@ export async function getContacts() {
   try {
     return await prisma.contacts.findFirst({ where: { id: 1 } });
   } catch (error: any) {
-    console.error(
-      `Problem retrieving contacts from database: ${error.message}`
-    );
-    return null;
+    console.error(`Problem retrieving contacts from database: ${error}`);
+    throw new Error(`Problem retrieving contacts from database: ${error}`);
   }
 }

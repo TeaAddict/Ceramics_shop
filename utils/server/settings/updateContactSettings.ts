@@ -13,6 +13,7 @@ export async function updateContactSettings(data: Contacts) {
     });
     revalidatePath("/admin");
   } catch (error: any) {
+    console.log(`Problem updating settings: ${error}`);
     throw new Error(`Problem updating settings: ${error}`);
   }
 }

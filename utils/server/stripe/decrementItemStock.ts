@@ -16,5 +16,6 @@ export async function decrementItemStock(soldItems: SoldItem[]) {
     );
   } catch (error) {
     console.log("Problem when decrementing item stock", error);
+    throw new Error(`Problem when decrementing item stock: ${error}`);
   }
 }

@@ -7,8 +7,10 @@ import { createCustomer } from "./createCustomer";
 
 export async function updateDb(paymentData: PaymentData) {
   try {
-    if (!paymentData.customerDetails?.email)
+    if (!paymentData.customerDetails?.email) {
+      console.log("Need email to update db");
       throw new Error("Need email to update db.");
+    }
 
     const customer = await prisma.customer.findFirst({
       where: { email: paymentData.customerDetails?.email },
@@ -22,6 +24,7 @@ export async function updateDb(paymentData: PaymentData) {
 
     await decrementItemStock(paymentData.soldItems);
   } catch (error) {
-    console.log("Error in database", error);
+    console.log("Problem updating/creating customer in database", error);
+    throw new Error(`Problem updating/creating customer in database: ${error}`);
   }
 }

@@ -22,8 +22,13 @@ export const authOptions: AuthOptions = {
       account: Account | null;
       profile?: Profile | undefined;
     }): Promise<boolean> {
-      addUserToDb(user);
-      return true;
+      try {
+        await addUserToDb(user);
+        return true;
+      } catch (error) {
+        console.error(`Problem signing in: ${error}`);
+        throw new Error(`Problem signing in: ${error}`);
+      }
     },
   },
 };

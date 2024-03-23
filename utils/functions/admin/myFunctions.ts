@@ -39,41 +39,49 @@ export function parseFormData(data: FormData) {
 }
 
 export function writeFiles(files: File[], location: string) {
-  files.map(async (file) => {
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-    const projPath = process.cwd();
-    const path = join(projPath, location, file.name);
-    await writeFile(path, buffer);
-  });
+  try {
+    files.map(async (file) => {
+      const bytes = await file.arrayBuffer();
+      const buffer = Buffer.from(bytes);
+      const projPath = process.cwd();
+      const path = join(projPath, location, file.name);
+      await writeFile(path, buffer);
+    });
+  } catch (error) {
+    console.error(`Problem writing files: ${error}`);
+    throw new Error(`Problem writing files: ${error}`);
+  }
 }
 
 export function readFile(filePath: string) {
-  const path = join(process.cwd(), "public", "uploads", "ceramics7.jpg");
   try {
+    const path = join(process.cwd(), "public", "uploads", "ceramics7.jpg");
     const fileData = fs.readFileSync(path);
     return fileData;
   } catch (error) {
-    console.error(error);
+    console.error(`Problem reading file: ${error}`);
+    throw new Error(`Problem reading file: ${error}`);
   }
 }
 
 export function deleteFile(fileName: string) {
-  const filePath = path.join(process.cwd(), "public", "uploads", fileName);
   try {
+    const filePath = path.join(process.cwd(), "public", "uploads", fileName);
     fs.unlinkSync(filePath);
   } catch (error) {
-    console.error(error);
+    console.error(`Problem deleting file: ${error}`);
+    throw new Error(`Problem deleting file: ${error}`);
   }
 }
 
 export function readDir() {
-  const directoryPath = path.join(process.cwd(), "public", "uploads");
   try {
+    const directoryPath = path.join(process.cwd(), "public", "uploads");
     const directoryContents = fs.readdirSync(directoryPath);
     return directoryContents;
   } catch (error) {
-    console.error(error);
+    console.error(`Problem reading dir: ${error}`);
+    throw new Error(`Problem reading dir: ${error}`);
   }
 }
 
@@ -82,22 +90,30 @@ export async function updatePictures(
   pictureData: PictureData,
   item: ParsedItem
 ) {
-  // check which images need uploading which deleting
-  const oldPictures = await prisma.picture.findMany({ where: { itemId: id } });
-  const oldPictureNames = oldPictures.map((pic) => pic.name);
-  const newPictureNames = pictureData.map((pic) => pic.name);
-  const picturesNeedDeleting = oldPictureNames.filter(
-    (str) => !newPictureNames.includes(str)
-  );
-  const picturesNeedUploading = newPictureNames.filter(
-    (str) => !oldPictureNames.includes(str)
-  );
+  try {
+    // check which images need uploading which deleting
+    const oldPictures = await prisma.picture.findMany({
+      where: { itemId: id },
+    });
+    const oldPictureNames = oldPictures.map((pic) => pic.name);
+    const newPictureNames = pictureData.map((pic) => pic.name);
+    const picturesNeedDeleting = oldPictureNames.filter(
+      (str) => !newPictureNames.includes(str)
+    );
+    const picturesNeedUploading = newPictureNames.filter(
+      (str) => !oldPictureNames.includes(str)
+    );
 
-  picturesNeedDeleting.forEach((picture) => deleteFile(picture));
-  const filesToSave = item.pictures
-    .filter((picture) => {
-      if (picturesNeedUploading.includes(picture.picture.name)) return picture;
-    })
-    .map((el) => el.picture);
-  if (filesToSave !== undefined) writeFiles(filesToSave, "/public/uploads");
+    picturesNeedDeleting.forEach((picture) => deleteFile(picture));
+    const filesToSave = item.pictures
+      .filter((picture) => {
+        if (picturesNeedUploading.includes(picture.picture.name))
+          return picture;
+      })
+      .map((el) => el.picture);
+    if (filesToSave !== undefined) writeFiles(filesToSave, "/public/uploads");
+  } catch (error) {
+    console.log(`Problem updating pictures: ${error}`);
+    throw new Error(`Problem updating pictures: ${error}`);
+  }
 }

@@ -12,6 +12,6 @@ export async function getItem(id: string): Promise<ItemWithPicThumb | null> {
     return data;
   } catch (error: any) {
     console.error(`Problem getting item data: ${error.message}`);
-    return null;
+    throw new Error(`Problem getting item: ${error}`);
   }
 }

@@ -14,6 +14,7 @@ export async function getOrder(id: string) {
     });
     return transaction;
   } catch (error: any) {
-    console.error("Problem getting order details", error.message);
+    console.error("Problem getting order details", error);
+    throw new Error(`Problem getting order details: ${error}`);
   }
 }

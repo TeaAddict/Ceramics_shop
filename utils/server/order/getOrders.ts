@@ -16,6 +16,7 @@ export async function getOrders(): Promise<OrdersType[]> {
 
     return res;
   } catch (error) {
+    console.log(`Problem getting orders: ${error}`);
     throw new Error(`Problem getting orders: ${error}`);
   }
 }

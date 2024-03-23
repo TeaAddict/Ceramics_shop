@@ -13,6 +13,7 @@ export function saveImg(parsed: ParsedItem) {
       await writeFile(path, buffer);
     });
   } catch (error: any) {
-    console.error(`Problem saving images: ${error.message}`);
+    console.error(`Problem saving images: ${error}`);
+    throw new Error(`Problem saving images: ${error}`);
   }
 }
