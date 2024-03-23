@@ -51,7 +51,7 @@ model Picture {
   width       Int
   height      Int
   itemId      String
-  item        Item  @relation("itemPictures", fields: [itemId], references: [id])
+  item        Item  @relation("itemPictures", fields: [itemId], references: [id], onDelete: Cascade)
   itemThumbnailId Item? @relation("thumbnail")
 }
 
