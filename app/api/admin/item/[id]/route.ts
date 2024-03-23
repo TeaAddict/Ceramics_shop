@@ -1,7 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { parsePictureData } from "@/utils/myFunctions";
-import { parseFormData, updatePictures } from "../myFunctions";
+import {
+  parseFormData,
+  updatePictures,
+} from "../../../../../utils/functions/admin/myFunctions";
 import { deleteImages } from "@/utils/functions/item/deleteImages";
 import { updateItem } from "@/utils/server/item/updateItem";
 

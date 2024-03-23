@@ -1,7 +1,7 @@
 import { productSchemaServer } from "@/lib/types";
 import { NextRequest, NextResponse } from "next/server";
 import { parsePictureData } from "@/utils/myFunctions";
-import { parseFormData } from "./myFunctions";
+import { parseFormData } from "../../../../utils/functions/admin/myFunctions";
 import { createItemInDb } from "@/utils/server/item/createItemInDb";
 import { saveImg } from "@/utils/server/item/saveImg";
 
