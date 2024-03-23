@@ -3,6 +3,7 @@ import { isAdminRole } from "@/utils/server/isAdminRole";
 import { getGeneralSettings } from "@/utils/server/settings/getGeneralSettings";
 import LoadPage from "@/components/shared/loadSpinner/LoadPage";
 import { useTranslation } from "@/app/i18n";
+import CustomReturnMessage from "@/components/shared/CustomReturnMessage";
 
 const ShopPage = async ({
   searchParams,
@@ -15,7 +16,7 @@ const ShopPage = async ({
   const isAdmin = await isAdminRole();
   const { t } = await useTranslation(lng, "shop");
 
-  if (!settings) return <LoadPage />;
+  if (!settings) return;
   return (
     <section className="padding-container flex-col">
       <h1>{t("title")}</h1>
