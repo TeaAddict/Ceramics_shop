@@ -1,9 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import QuantityPicker from "../shared/QuantityPicker";
-import { useDispatch } from "react-redux";
-import { AppDispatch, useAppSelector } from "@/redux/store";
-import { ItemWithPicThumbFav } from "@/prisma/prismaTypes";
+import { useAppSelector } from "@/redux/store";
+import { ItemWithPicThumb } from "@/prisma/prismaTypes";
 import { formatToEuroCurrency } from "@/utils/helper";
 import AddToCartButton from "./AddToCartButton";
 import RemoveFromCartButton from "./RemoveFromCartButton";
@@ -14,7 +13,7 @@ const ItemCartInterface = ({
   item,
   params,
 }: {
-  item: ItemWithPicThumbFav;
+  item: ItemWithPicThumb;
   params: { id: string };
 }) => {
   const lng = useCurrentLanguage();

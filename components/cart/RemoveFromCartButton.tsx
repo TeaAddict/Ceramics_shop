@@ -1,5 +1,5 @@
 "use client";
-import { ItemWithPicThumbFav } from "@/prisma/prismaTypes";
+import { ItemWithPicThumb } from "@/prisma/prismaTypes";
 import { removeItem } from "@/redux/features/cartSlice";
 import { AppDispatch } from "@/redux/store";
 import React from "react";
@@ -13,7 +13,7 @@ const RemoveFromCartButton = ({
   item,
   params,
 }: {
-  item: ItemWithPicThumbFav;
+  item: ItemWithPicThumb;
   params: { id: string };
 }) => {
   const lng = useCurrentLanguage();

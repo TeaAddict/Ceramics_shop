@@ -1,5 +1,5 @@
 "use client";
-import { ItemWithPicThumbFav } from "@/prisma/prismaTypes";
+import { ItemWithPicThumb } from "@/prisma/prismaTypes";
 import { addItem } from "@/redux/features/cartSlice";
 import { AppDispatch } from "@/redux/store";
 import React from "react";
@@ -13,7 +13,7 @@ const AddToCartButton = ({
   item,
   quantity,
 }: {
-  item: ItemWithPicThumbFav;
+  item: ItemWithPicThumb;
   quantity: number;
 }) => {
   const lng = useCurrentLanguage();

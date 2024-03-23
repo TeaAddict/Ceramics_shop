@@ -1,16 +1,9 @@
 import { Prisma } from "@prisma/client";
 
-const itemWithPicThumbFav = Prisma.validator<Prisma.ItemDefaultArgs>()({
-  include: { thumbnail: true, favouritedByUsers: true, pictures: true },
+const itemWithPicThumb = Prisma.validator<Prisma.ItemDefaultArgs>()({
+  include: { thumbnail: true, pictures: true },
 });
-export type ItemWithPicThumbFav = Prisma.ItemGetPayload<
-  typeof itemWithPicThumbFav
->;
-
-// const itemWithPic = Prisma.validator<Prisma.ItemDefaultArgs>()({
-//   include: { pictures: false },
-// });
-// export type ItemWithPic = Prisma.ItemGetPayload<typeof itemWithPic>;
+export type ItemWithPicThumb = Prisma.ItemGetPayload<typeof itemWithPicThumb>;
 
 const transactionFull = Prisma.validator<Prisma.TransactionDefaultArgs>()({
   include: {
@@ -39,5 +32,3 @@ const soldItemType = Prisma.validator<Prisma.SoldItemDefaultArgs>()({
   include: { item: { include: { thumbnail: true } } },
 });
 export type SoldItemType = Prisma.SoldItemGetPayload<typeof soldItemType>;
-
-// export type DeliveryStatus = "SHIPPING" | "SHIPPED" | "ARRIVED" | "COLLECTED";

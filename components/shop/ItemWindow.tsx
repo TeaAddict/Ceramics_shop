@@ -2,7 +2,6 @@
 
 import BackButton from "@/components/shared/BackButton";
 import { Session } from "next-auth";
-import FavStar from "../shared/star/FavStar";
 import ItemCartInterface from "../cart/ItemCartInterface";
 import CustomReturnMessage from "../shared/CustomReturnMessage";
 import { getItem } from "@/utils/server/getItem";
@@ -32,7 +31,6 @@ const ItemWindow = async ({
       <div className="flex flex-col md:flex-row md:justify-center gap-5  lg:justify-evenly">
         <div className="flex gap-3 md:hidden">
           <h3 className="font-semibold text-3xl capitalize">{item.title}</h3>
-          {session && <FavStar itemId={item.id} />}
         </div>
         <div className="flex flex-col justify-center md:justify-start items-center md:items-start">
           <ImageShowcase
@@ -44,7 +42,6 @@ const ItemWindow = async ({
         <div className="flex flex-col gap-10 min-w-44">
           <div className="hidden md:flex gap-3">
             <h3 className="font-semibold text-3xl capitalize">{item.title}</h3>
-            {session && <FavStar itemId={item.id} />}
           </div>
 
           {settings?.paymentOnline && item.stock > 0 && (

@@ -41,7 +41,6 @@ model Item {
   thumbnailId String?  @unique
   thumbnail   Picture?  @relation("thumbnail", fields: [thumbnailId], references: [id])
   createdAt DateTime @default(now())
-  favouritedByUsers  Favourites[]
   soldItems SoldItem[]
 }
 
@@ -55,20 +54,13 @@ model Picture {
   itemThumbnailId Item? @relation("thumbnail")
 }
 
-model Favourites{
-  id String @id @default(uuid())
-  itemId String?
-  item  Item?  @relation(fields: [itemId], references: [id])
-  userId String?
-  user User? @relation(fields: [userId], references: [id])
-}
+
 
 model User {
   id  String @id @default(uuid())
   name  String
   email String  @unique
   image String?
-  favouriteItems  Favourites[]
   role  Role  @default(USER)
 }
 
