@@ -8,6 +8,7 @@ const ItemPage = async ({
   params: { id: string; lng: string };
 }) => {
   const session = await getServerSession();
+
   return (
     <div className="padding-container flex-col">
       <ItemWindow params={params} session={session} />

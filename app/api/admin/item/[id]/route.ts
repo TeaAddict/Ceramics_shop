@@ -4,7 +4,7 @@ import { parsePictureData } from "@/utils/myFunctions";
 import {
   parseFormData,
   updatePictures,
-} from "../../../../../utils/functions/admin/myFunctions";
+} from "@/utils/functions/admin/myFunctions";
 import { deleteImages } from "@/utils/functions/item/deleteImages";
 import { updateItem } from "@/utils/server/item/updateItem";
 

@@ -4,7 +4,7 @@ import {
 } from "@/components/shared/header/LanguageButton";
 import { usePathname } from "next/navigation";
 
-const useCurrentLanguage = (languages: Languages[] = LANGUAGES) => {
+const useCurrentLanguage = (languages: Languages[] = LANGUAGES): string => {
   const path = usePathname();
   const { countryCode } =
     languages.find((val) => path.includes(val.countryCode)) ?? languages[0];
