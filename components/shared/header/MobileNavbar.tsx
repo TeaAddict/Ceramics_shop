@@ -26,7 +26,7 @@ const MobileNavbar = ({
 
   function onAccountClick() {
     if (!session) {
-      signIn("undefined", { callbackUrl: "/" });
+      signIn();
     } else {
       router.replace(`/${lng}/admin`);
     }
@@ -47,7 +47,7 @@ const MobileNavbar = ({
               return (
                 <li key={nav.label}>
                   <Link
-                    href={nav.route}
+                    href={`/${lng}/${nav.route}`}
                     className={`flex gap-3 ${isActive && "text-white"}`}
                     onClick={() =>
                       setIsMobileMenuActive(
@@ -77,7 +77,7 @@ const MobileNavbar = ({
             <div className="flex items-end pb-7">
               <button
                 className="flex items-center gap-2 text-2xl"
-                onClick={() => signOut({ callbackUrl: "/" })}
+                onClick={() => signOut}
               >
                 <IoLogOutOutline />
                 <p>{t("logout")}</p>

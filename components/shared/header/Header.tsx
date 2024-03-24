@@ -44,7 +44,6 @@ const Header = async ({ lng }: { lng: string }) => {
           <div className="hidden md:flex md:gap-5 md:items-center">
             {session?.user?.image && session.user.name && (
               <ProfileButton
-                // route={`/profile/${session.user.name}`}
                 route={`/admin`}
                 name={session.user.name}
                 image={session.user.image}

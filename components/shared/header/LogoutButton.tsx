@@ -14,7 +14,7 @@ const LogoutButton = () => {
     <div>
       <Button
         onClick={() => {
-          toast.promise(signOut({ callbackUrl: "/" }), {
+          toast.promise(signOut(), {
             loading: t("loggingOut"),
             success: t("logoutSuccess"),
             error: t("logoutError"),
