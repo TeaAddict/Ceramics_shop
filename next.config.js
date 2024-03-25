@@ -1,4 +1,10 @@
 /** @type {import('next').NextConfig} */
+
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+  // Optional configuration options (see below)
+  enabled: process.env.ANALYZE === "true",
+});
+
 const nextConfig = {
   output: "standalone", // reduces serverless function size
   images: {
@@ -13,4 +19,5 @@ const nextConfig = {
   },
 };
 
+// module.exports = withBundleAnalyzer(nextConfig);
 module.exports = nextConfig;

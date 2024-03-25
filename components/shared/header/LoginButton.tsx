@@ -8,6 +8,7 @@ import { LANGUAGES } from "./LanguageButton";
 const LoginButton = () => {
   const lng = useCurrentLanguage(LANGUAGES);
   const { t } = useTranslation(lng, "shared");
+
   return (
     <div>
       <Button onClick={() => signIn()}>{t("login")}</Button>
