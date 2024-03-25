@@ -20,12 +20,10 @@ const LanguageButton = ({ lng }: { lng: string }) => {
   const pathname = usePathname();
 
   function handleChangeLanguage(lang: Languages) {
+    const resultPath = "/" + lang.countryCode + pathname.substring(3);
+    router.replace(resultPath);
     setLanguage(lang);
-    const langObj =
-      LANGUAGES.find((val) => pathname.includes(val.countryCode)) ??
-      LANGUAGES[0];
-    const newPath = pathname.replace(langObj?.countryCode, lang.countryCode);
-    router.replace(newPath);
+    router.refresh();
   }
 
   return (

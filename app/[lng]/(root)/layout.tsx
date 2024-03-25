@@ -6,6 +6,7 @@ import Header from "@/components/shared/header/Header";
 import { ReduxProvider } from "@/redux/provider";
 import QueryProvider from "@/lib/QueryProvider";
 import { Toaster } from "react-hot-toast";
+import { languages } from "@/app/i18n/settings";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,6 +14,10 @@ export const metadata: Metadata = {
   title: "Ceramics shop",
   description: "Unique ceramic works shop",
 };
+
+export async function generateStaticParams() {
+  return languages.map((lng) => ({ lng }));
+}
 
 export default function RootLayout({
   children,

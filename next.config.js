@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: "standalone",
+  output: "standalone", // reduces serverless function size
   images: {
     remotePatterns: [
       {
