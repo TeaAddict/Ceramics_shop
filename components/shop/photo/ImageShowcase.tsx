@@ -9,6 +9,8 @@ export type Pictures = {
   name: string;
   width: number;
   height: number;
+  key: string | null;
+  url: string | null;
 };
 
 type Props = {

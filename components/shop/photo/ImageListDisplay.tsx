@@ -8,12 +8,7 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import Image from "next/image";
-
-export type Pictures = {
-  name: string;
-  width: number;
-  height: number;
-};
+import { Pictures } from "./ImageShowcase";
 
 type Props = {
   images: Pictures[];
@@ -71,7 +66,7 @@ export function ImageListDisplay({
                   <CardContent className="flex aspect-square items-center justify-center p-6 relative">
                     <Image
                       alt="carouselImg"
-                      src={`/uploads/${item.name}`}
+                      src={item.url ?? ""}
                       fill
                       className="object-cover"
                       sizes="(max-width: 500px) 100px"

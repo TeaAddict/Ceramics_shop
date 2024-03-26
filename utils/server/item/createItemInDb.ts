@@ -1,6 +1,7 @@
 import prisma from "@/lib/prisma";
 import { ParsedItem } from "@/lib/types";
 import { Prisma } from "@prisma/client";
+import { createErrorList } from "./createErrorList";
 
 type PictureData = {
   name: string;
@@ -32,17 +33,9 @@ export async function createItemInDb(
       });
     } catch (error: any) {
       console.error(`Error with title of picture: ${error}`);
-      if (error.meta.target === "Item_title_key")
-        backendErrors = {
-          ...backendErrors,
-          title: "Title already exists",
-        };
-      if (error.meta.target === "Picture_name_key")
-        backendErrors = {
-          ...backendErrors,
-          pictures: "Image with this name already exists",
-        };
-      return backendErrors;
+      const errors = createErrorList(error, backendErrors);
+      backendErrors = { ...errors, ...backendErrors };
+      return { backendErrors };
     }
 
     const thumbnailInDb = await prisma.picture.findFirst({
@@ -59,7 +52,7 @@ export async function createItemInDb(
         pictures: "Did not found thumbnail image",
       };
     }
-    return backendErrors;
+    return { id: item.id, backendErrors };
   } catch (e: any) {
     console.log(`Problem creating item: ${e}`);
     let pictures = "";
@@ -69,6 +62,6 @@ export async function createItemInDb(
 
       return { ...backendErrors, pictures: pictures };
     }
-    return backendErrors;
+    return { backendErrors };
   }
 }

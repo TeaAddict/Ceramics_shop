@@ -54,6 +54,8 @@ export type pictureSchema = {
   id: string;
   itemId: string;
   name: string;
+  key: string;
+  url: string;
   width: number;
   height: number;
 };

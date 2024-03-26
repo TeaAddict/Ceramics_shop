@@ -8,12 +8,11 @@ import { getImagesWithDimensions } from "@/utils/helper";
 import ImageDrop from "./imageFeature/ImageDrop";
 import { getPictures } from "./imageFeature/getPictures";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { addItem, updateItem } from "@/utils/itemFunctions";
-import { setFormError } from "./setFormError";
-import toast from "react-hot-toast";
+import { useQueryClient } from "@tanstack/react-query";
 import useCurrentLanguage from "@/hooks/useCurrentLanguage";
 import { useTranslation } from "@/app/i18n/client";
+import { useAddItemMutation } from "@/hooks/admin/useAddItemMutation";
+import { useEditItemMutation } from "@/hooks/admin/useEditItemMutation";
 
 const ItemForm = ({
   item,
@@ -52,10 +51,10 @@ const ItemForm = ({
         };
       } else {
         return {
-          title: "",
+          title: "qwe",
           price: 1,
           stock: 1,
-          category: "",
+          category: "asd",
           description: "",
           thumbnailPicture: "",
           pictures: undefined,
@@ -64,36 +63,20 @@ const ItemForm = ({
     },
   });
   const isLoading = isSubmitting || isMutating;
-  const mutationAddItem = useMutation({
-    mutationFn: (data: FormData) => addItem(data),
-    onSuccess: (data) => {
-      if (data.errors) {
-        setFormError(setError, data.errors);
-        toast.error("Problem adding item");
-      }
-      if (data.success) {
-        setOpen(false);
-        reset();
-        queryClient.invalidateQueries({ queryKey: ["items"] });
-        toast.success("Successfully added item!");
-      }
-    },
-  });
-  const mutationUpdateItem = useMutation({
-    mutationFn: (data: { data: FormData; id: string }) => updateItem(data),
-    onSuccess: (data) => {
-      if (data.errors) {
-        setFormError(setError, data.errors);
-        toast.error("Problem updating item");
-      }
-      if (data.success) {
-        setOpen(false);
-        reset();
-        queryClient.invalidateQueries({ queryKey: ["items"] });
-        toast.success("Successfully updated item!");
-      }
-    },
-  });
+
+  const mutationAddItem = useAddItemMutation(
+    queryClient,
+    reset,
+    setError,
+    setOpen
+  );
+
+  const mutationUpdateItem = useEditItemMutation(
+    queryClient,
+    reset,
+    setError,
+    setOpen
+  );
   const watchValues = watch(["thumbnailPicture", "pictures"]);
   const initPictures = getValues("pictures");
 
@@ -114,7 +97,8 @@ const ItemForm = ({
     if (isEdit && item) {
       mutationUpdateItem.mutate({ data: data, id: item.id });
     } else {
-      mutationAddItem.mutate(data);
+      // console.log(formData.pictures, "PICTURES");
+      mutationAddItem.mutate({ data: data, images: formData.pictures });
     }
   }
 

@@ -7,61 +7,62 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
-  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  url      = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  // directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
+
 // datasource db {
 //   provider = "mysql"
 //   url      = env("DATABASE_URL")
 // }
 
-model Contacts{
-  id Int @id @default(autoincrement())
-  phone String  @default("866666666")
-  email String  @default("placeholder@email.com")
-  physicalLocation String  @default("placeholder st.")
+model Contacts {
+  id               Int    @id @default(autoincrement())
+  phone            String @default("866666666")
+  email            String @default("placeholder@email.com")
+  physicalLocation String @default("placeholder st.")
 }
 
-model GeneralSettings{
-  id Int @id @default(autoincrement())
-  itemsPerPage Int  @default(8)
-  featuredSort String
-  displaySold Boolean @default(false)
+model GeneralSettings {
+  id            Int     @id @default(autoincrement())
+  itemsPerPage  Int     @default(8)
+  featuredSort  String
+  displaySold   Boolean @default(false)
   paymentOnline Boolean @default(false)
 }
 
 model Item {
-  id          String    @id @default(uuid())
-  title       String    @unique
+  id          String     @id @default(uuid())
+  title       String     @unique
   price       Float
   stock       Int
   category    String
-  description String? @db.Text
-  pictures    Picture[] @relation("itemPictures")
-  thumbnailId String?  @unique
-  thumbnail   Picture?  @relation("thumbnail", fields: [thumbnailId], references: [id])
-  createdAt DateTime @default(now())
-  soldItems SoldItem[]
+  description String?    @db.Text
+  pictures    Picture[]  @relation("itemPictures")
+  thumbnailId String?    @unique
+  thumbnail   Picture?   @relation("thumbnail", fields: [thumbnailId], references: [id])
+  createdAt   DateTime   @default(now())
+  soldItems   SoldItem[]
 }
 
 model Picture {
-  id          String @id @default(uuid())
-  name        String @unique
-  width       Int
-  height      Int
-  itemId      String
-  item        Item  @relation("itemPictures", fields: [itemId], references: [id], onDelete: Cascade)
-  itemThumbnailId Item? @relation("thumbnail")
+  id              String  @id @default(uuid())
+  name            String  @unique
+  width           Int
+  height          Int
+  key             String?
+  url             String?
+  itemId          String?
+  item            Item?   @relation("itemPictures", fields: [itemId], references: [id], onDelete: Cascade)
+  itemThumbnailId Item?   @relation("thumbnail")
 }
 
-
-
 model User {
-  id  String @id @default(uuid())
+  id    String  @id @default(uuid())
   name  String
   email String  @unique
   image String?
-  role  Role  @default(USER)
+  role  Role    @default(USER)
 }
 
 enum Role {
@@ -69,44 +70,44 @@ enum Role {
   ADMIN
 }
 
-model SoldItem{
-  id String @id @default(uuid())
-  name String
-  quantity Int?
+model SoldItem {
+  id             String      @id @default(uuid())
+  name           String
+  quantity       Int?
   amountSubtotal Float
-  amountTotal Float
+  amountTotal    Float
   amountDiscount Float
-  amountTax Float
-  unitAmount Float
-  createdAt DateTime @default(now())
-  transactionId String
-  transaction Transaction @relation(fields: [transactionId], references: [id])
-  itemId String?
-  item Item? @relation(fields: [itemId], references: [id])
+  amountTax      Float
+  unitAmount     Float
+  createdAt      DateTime    @default(now())
+  transactionId  String
+  transaction    Transaction @relation(fields: [transactionId], references: [id])
+  itemId         String?
+  item           Item?       @relation(fields: [itemId], references: [id])
 }
 
-model Transaction{
-  id String @id @default(uuid())
-  paymentStatus String
-  status String?
-  currency String?
-  amountSubtotal Float?
-  amountTotal Float?
-  sessionId String
-  createdAt DateTime @default(now())
-  soldItems SoldItem[]
-  customerId String
-  customerDetails Customer @relation(fields: [customerId], references: [id])
-  orderId String @unique
-  order Order @relation(fields: [orderId], references: [id])
+model Transaction {
+  id              String     @id @default(uuid())
+  paymentStatus   String
+  status          String?
+  currency        String?
+  amountSubtotal  Float?
+  amountTotal     Float?
+  sessionId       String
+  createdAt       DateTime   @default(now())
+  soldItems       SoldItem[]
+  customerId      String
+  customerDetails Customer   @relation(fields: [customerId], references: [id])
+  orderId         String     @unique
+  order           Order      @relation(fields: [orderId], references: [id])
 }
 
-model Order{
-  id String @id @default(cuid())
-  createdAt DateTime @default(now())
-  expiresAt  DateTime
-  status DeliveryStatus
-  transaction Transaction? 
+model Order {
+  id          String         @id @default(cuid())
+  createdAt   DateTime       @default(now())
+  expiresAt   DateTime
+  status      DeliveryStatus
+  transaction Transaction?
 }
 
 enum DeliveryStatus {
@@ -116,27 +117,27 @@ enum DeliveryStatus {
   COLLECTED
 }
 
-model Address{
-  id String @id @default(uuid())
-  city String?
-  country String?
-  line1 String?
-  line2 String?
+model Address {
+  id          String    @id @default(uuid())
+  city        String?
+  country     String?
+  line1       String?
+  line2       String?
   postal_code String?
-  state String?
-  customer Customer?
+  state       String?
+  customer    Customer?
 }
 
 model Customer {
-  id String @id @default(uuid())
+  id           String        @id @default(uuid())
   // name String
-  firstname String
-  lastname String
-  email String @unique
-  phone String?
-  taxExempt String?
-  createdAt DateTime @default(now())
+  firstname    String
+  lastname     String
+  email        String        @unique
+  phone        String?
+  taxExempt    String?
+  createdAt    DateTime      @default(now())
   transactions Transaction[]
-  addressId String @unique
-  address Address @relation(fields: [addressId],references: [id])
+  addressId    String        @unique
+  address      Address       @relation(fields: [addressId], references: [id])
 }

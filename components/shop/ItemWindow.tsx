@@ -19,7 +19,6 @@ const ItemWindow = async ({
   const { t } = await useTranslation(params.lng, "shop");
   const item = await getItem(params.id);
   const settings = await getGeneralSettings();
-  type TItem = typeof item;
 
   if (!item || Object.keys(item).length === 0)
     return <CustomReturnMessage text="Product does not exist" />;

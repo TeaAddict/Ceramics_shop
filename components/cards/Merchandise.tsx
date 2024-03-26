@@ -16,6 +16,7 @@ interface Props {
     name: string;
     width: number;
     height: number;
+    url: string;
   };
 
   title: string;
@@ -43,7 +44,7 @@ const Merchandise = ({
           {thumbnail ? (
             <Link className="absolute w-full h-full" href={href}>
               <Image
-                src={`/uploads/${thumbnail.name}`}
+                src={thumbnail.url}
                 alt={title}
                 fill
                 sizes="(max-width: 500px) 100px"
@@ -86,7 +87,7 @@ const Merchandise = ({
             <div className="absolute w-full h-full">
               {thumbnail ? (
                 <Image
-                  src={`/uploads/${thumbnail.name}`}
+                  src={thumbnail.url}
                   alt={title}
                   fill
                   sizes="(max-width: 500px) 100px"

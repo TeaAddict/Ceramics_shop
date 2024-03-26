@@ -60,7 +60,7 @@ const MainDisplay = ({ images, galleryID, setMainApi, autoplay }: Props) => {
                     <CardContent className="flex aspect-square items-center justify-center p-6 relative">
                       <Image
                         className="object-cover rounded-md"
-                        src={`/uploads/${image.name}`}
+                        src={image.url ?? ""}
                         alt="carouselImg"
                         fill
                         sizes="(max-width: 500px) 100px"

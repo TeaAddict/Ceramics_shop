@@ -3,7 +3,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { parsePictureData } from "@/utils/myFunctions";
 import { parseFormData } from "../../../../utils/functions/admin/myFunctions";
 import { createItemInDb } from "@/utils/server/item/createItemInDb";
-import { saveImg } from "@/utils/server/item/saveImg";
+import { uploadImagesToUploadthing } from "@/utils/functions/admin/uploadImagesToUploadthing";
+import { deleteItem } from "@/utils/itemFunctions";
 
 export async function POST(request: NextRequest) {
   try {
@@ -22,14 +23,28 @@ export async function POST(request: NextRequest) {
     }
 
     const pictureData = parsePictureData(parsed);
+    const { id, backendErrors: createErrors } = await createItemInDb(
+      parsed,
+      pictureData,
+      backendErrors
+    );
+    backendErrors = { ...backendErrors, ...createErrors };
 
-    backendErrors = await createItemInDb(parsed, pictureData, backendErrors);
-    if (!Object.keys(backendErrors).length) saveImg(parsed);
+    const imagesToUpload = parsed.pictures.map((val) => val.picture);
+    if (!Object.keys(backendErrors).length) {
+      const result = await uploadImagesToUploadthing(imagesToUpload);
+      if (result?.error && id) await deleteItem(id);
+    }
+
+    //   uploadImages(imagesToUpload);
+    // saveImg(parsed);
+    // }
 
     return NextResponse.json(
       Object.keys(backendErrors).length > 0
         ? { errors: backendErrors }
-        : { success: true }
+        : { id, success: true },
+      Object.keys(backendErrors).length > 0 ? { status: 500 } : { status: 200 }
     );
   } catch (error: any) {
     console.error(`Problem in db creating item: ${error}`);

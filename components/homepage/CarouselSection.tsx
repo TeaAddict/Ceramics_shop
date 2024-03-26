@@ -70,6 +70,7 @@ const CarouselSection = ({
                         name: item.thumbnail.name,
                         width: item.thumbnail.width,
                         height: item.thumbnail.height,
+                        url: item.thumbnail.url,
                       }}
                     />
                   </div>
