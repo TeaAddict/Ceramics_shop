@@ -17,13 +17,17 @@ export const itemSchema = z.object({
   thumbnailPicture: z.string().min(1, "Thumbnail is required, select image"),
   pictures: z
     .any()
-    .refine((files) => Array.from(files).length > 0, "Image is required.")
-    .refine(
-      (files: FileList) =>
-        Array.from(files).some((file) => file.size <= MAX_FILE_SIZE),
-      `Max file size is 5MB.`
-    )
-    .refine((files: FileList) => {
+    .refine((files) => {
+      if (Array.isArray(files)) return true;
+      if (Array.from(files).length > 0) return true;
+    }, "Image is required.")
+    .refine((files: FileList | string[]) => {
+      if (Array.isArray(files)) return true;
+      if (Array.from(files).some((file) => file.size <= MAX_FILE_SIZE))
+        return true;
+    }, `Max file size is 5MB.`)
+    .refine((files: FileList | string[]) => {
+      if (Array.isArray(files)) return true;
       const result = Array.from(files).some((file: File) =>
         ACCEPTED_IMAGE_TYPES.includes(file.type)
       );

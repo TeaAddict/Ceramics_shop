@@ -3,9 +3,9 @@ import { ParsedItem } from "@/lib/types";
 import { Prisma } from "@prisma/client";
 
 type pictureData = {
-  name: string;
-  width: number;
-  height: number;
+  name: string | undefined;
+  width: number | undefined;
+  height: number | undefined;
 }[];
 
 export async function updateItem(
@@ -24,17 +24,36 @@ export async function updateItem(
         category: parsed.category,
         description: parsed.description,
 
-        pictures: {
-          deleteMany: {},
-          createMany: { data },
-        },
+        pictures: data[0].name
+          ? {
+              deleteMany: {},
+              createMany: {
+                data: data.map(({ name, width, height }) => ({
+                  name: name!,
+                  width: width!,
+                  height: height!,
+                })),
+              },
+            }
+          : {},
       },
     });
 
-    await prisma.item.update({
-      data: { thumbnail: { connect: { name: parsed.thumbnailPicture } } },
-      where: { id: item.id },
-    });
+    if (data[0].name) {
+      await prisma.item.update({
+        data: { thumbnail: { connect: { name: parsed.thumbnailPicture } } },
+        where: { id: item.id },
+      });
+    } else {
+      const pic = await prisma.picture.findFirst({
+        where: { url: parsed.thumbnailPicture },
+      });
+      if (pic)
+        await prisma.item.update({
+          data: { thumbnail: { connect: { name: pic.name } } },
+          where: { id: item.id },
+        });
+    }
   } catch (e: any) {
     console.log(`Problem updating item: ${e}`);
     let pictures: { pictures: string } = { pictures: "" };

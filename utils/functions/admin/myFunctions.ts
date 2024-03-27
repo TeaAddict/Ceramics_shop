@@ -85,7 +85,7 @@ export function readDir() {
   }
 }
 
-export async function updatePictures(
+export async function whatToSaveDelete(
   id: string,
   pictureData: PictureData,
   item: ParsedItem
@@ -97,21 +97,34 @@ export async function updatePictures(
     });
     const oldPictureNames = oldPictures.map((pic) => pic.name);
     const newPictureNames = pictureData.map((pic) => pic.name);
-    const picturesNeedDeleting = oldPictureNames.filter(
+    const deletePicNames = oldPictureNames.filter(
       (str) => !newPictureNames.includes(str)
     );
     const picturesNeedUploading = newPictureNames.filter(
       (str) => !oldPictureNames.includes(str)
     );
 
-    picturesNeedDeleting.forEach((picture) => deleteFile(picture));
-    const filesToSave = item.pictures
+    const picturesToSave = item.pictures
       .filter((picture) => {
         if (picturesNeedUploading.includes(picture.picture.name))
           return picture;
       })
       .map((el) => el.picture);
-    if (filesToSave !== undefined) writeFiles(filesToSave, "/public/uploads");
+
+    const deleteListWithNull = await Promise.all(
+      deletePicNames.map(async (name) => {
+        const key = await prisma.picture.findFirst({
+          where: { name: name },
+          select: { key: true },
+        });
+        return key?.key;
+      })
+    );
+    const picturesToDelete = deleteListWithNull.filter(
+      (value) => value !== null && value !== undefined
+    );
+
+    return { picturesToSave, picturesToDelete };
   } catch (error) {
     console.log(`Problem updating pictures: ${error}`);
     throw new Error(`Problem updating pictures: ${error}`);

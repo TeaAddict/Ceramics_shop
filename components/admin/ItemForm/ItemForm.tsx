@@ -13,6 +13,7 @@ import useCurrentLanguage from "@/hooks/useCurrentLanguage";
 import { useTranslation } from "@/app/i18n/client";
 import { useAddItemMutation } from "@/hooks/admin/useAddItemMutation";
 import { useEditItemMutation } from "@/hooks/admin/useEditItemMutation";
+import { createPicObj } from "./createPicObj";
 
 const ItemForm = ({
   item,
@@ -82,7 +83,8 @@ const ItemForm = ({
   const initPictures = getValues("pictures");
 
   async function onSubmit(formData: TItemSchema) {
-    const pictureArray = await getImagesWithDimensions(formData.pictures);
+    const pictureArray = await createPicObj(formData);
+
     let data = new FormData();
     data.append("title", formData.title);
     data.append("price", formData.price.toString());
@@ -98,7 +100,6 @@ const ItemForm = ({
     if (isEdit && item) {
       mutationUpdateItem.mutate({ data: data, id: item.id });
     } else {
-      // console.log(formData.pictures, "PICTURES");
       mutationAddItem.mutate({ data: data, images: formData.pictures });
     }
   }
