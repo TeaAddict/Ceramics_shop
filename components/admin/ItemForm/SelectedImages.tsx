@@ -2,7 +2,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { TItemSchema } from "@/lib/types";
 import Image from "next/image";
 import React from "react";
-import { FieldValues, UseFormSetValue } from "react-hook-form";
+import { UseFormSetValue } from "react-hook-form";
 
 const SelectedImages = ({
   imgBlobUrl,
@@ -13,13 +13,19 @@ const SelectedImages = ({
 }: {
   imgBlobUrl: string[];
   thumbnailPicture: string;
-  images: FileList | File[];
+  images: FileList | File[] | string[];
   setValue: UseFormSetValue<TItemSchema>;
   isLoading?: boolean;
 }) => {
+  const isStringArray =
+    Array.isArray(images) && images.every((img) => typeof img === "string");
+
   function handleClick(index: number) {
     if (isLoading) return;
-    setValue("thumbnailPicture", images[index].name);
+    setValue(
+      "thumbnailPicture",
+      isStringArray ? images[index] : images[index].name
+    );
   }
 
   return (
@@ -30,14 +36,15 @@ const SelectedImages = ({
     >
       <div className="grid grid-cols-2">
         {imgBlobUrl.map((image, index) => {
+          const isThumbnail =
+            (isStringArray && thumbnailPicture === images[index]) ||
+            (!isStringArray && thumbnailPicture === images[index]?.name);
           return (
             <div
               key={image}
-              // onClick={() => setValue("thumbnailPicture", images[index].name)}
               onClick={() => handleClick(index)}
               className={`w-auto aspect-square relative hover:brightness-50 ${
-                thumbnailPicture === images[index]?.name &&
-                "border-4 border-primary"
+                isThumbnail && "border-4 border-primary"
               }`}
             >
               <Image

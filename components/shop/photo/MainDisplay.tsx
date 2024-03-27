@@ -50,7 +50,7 @@ const MainDisplay = ({ images, galleryID, setMainApi, autoplay }: Props) => {
               <div className="p-1">
                 <Card className="cursor-pointer">
                   <a
-                    href={`/uploads/${image.name}`}
+                    href={image.url ?? ""}
                     data-pswp-width={image.width}
                     data-pswp-height={image.height}
                     key={galleryID + "-" + index}

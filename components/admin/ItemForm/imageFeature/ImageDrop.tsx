@@ -11,7 +11,7 @@ import { TItemSchema } from "@/lib/types";
 import { useImgBlobUrl } from "@/hooks/admin/useImgBlobUrl";
 
 type Props = {
-  initPictures: FileList | File[] | undefined | null;
+  initPictures: string[] | undefined | null;
   register: UseFormRegister<TItemSchema>;
   errors: FieldErrors<FieldValues>;
   setValue: UseFormSetValue<TItemSchema>;
@@ -23,9 +23,9 @@ const ImageDrop = (props: Props) => {
   const { initPictures, register, errors, setValue, watchValues, isLoading } =
     props;
 
-  const [images, setImages] = useState<FileList | File[] | undefined | null>(
-    initPictures
-  );
+  const [images, setImages] = useState<
+    FileList | File[] | string[] | undefined | null
+  >(initPictures);
 
   const imgBlobUrl = useImgBlobUrl(images);
 

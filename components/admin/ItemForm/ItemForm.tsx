@@ -39,15 +39,16 @@ const ItemForm = ({
     resolver: zodResolver(itemSchema),
     defaultValues: async () => {
       if (isEdit) {
-        const res = await getPictures(item);
+        const imagesUrlList = item?.pictures.map((val) => val.url);
         return {
           title: item?.title ?? "",
           price: item?.price ?? 1,
           stock: item?.stock ?? 1,
           category: item?.category ?? "",
           description: item?.description ?? "",
-          thumbnailPicture: item?.thumbnail.name ?? "",
-          pictures: res,
+          // thumbnailPicture: item?.thumbnail.name ?? "",
+          thumbnailPicture: item?.thumbnail.url ?? "",
+          pictures: imagesUrlList,
         };
       } else {
         return {
