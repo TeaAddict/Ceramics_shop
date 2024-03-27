@@ -9,7 +9,8 @@ import { deleteImages } from "@/utils/functions/item/deleteImages";
 import { updateItem } from "@/utils/server/item/updateItem";
 import { isPicUrl } from "@/utils/server/item/isPicUrl";
 import { uploadImagesToUploadthing } from "@/utils/functions/admin/uploadImagesToUploadthing";
-import { deleteFromUT } from "@/utils/functions/admin/deleteFromUT";
+import { utapi } from "@/utils/uploadthing";
+import { getPicKeys } from "@/utils/functions/item/getPicKeys";
 
 export async function PUT(
   request: NextRequest,
@@ -38,11 +39,11 @@ export async function PUT(
     }
 
     // update item and image data in db
-    updateItem(id, parsed, pictureData);
+    await updateItem(id, parsed, pictureData);
 
     if (!isUrl) {
       await uploadImagesToUploadthing(picturesToSaveMain);
-      await deleteFromUT(picturesToDeleteMain);
+      await utapi.deleteFiles(picturesToDeleteMain);
     }
 
     return NextResponse.json({ success: true });
@@ -57,7 +58,10 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
-    deleteImages(params.id);
+    // delete old files from uploadthing
+    const keys = await getPicKeys(params.id);
+    utapi.deleteFiles(keys);
+
     await prisma.picture.deleteMany({ where: { itemId: params.id } });
     await prisma.item.delete({ where: { id: params.id } });
 
