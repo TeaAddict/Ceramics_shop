@@ -15,12 +15,14 @@ export function useImgBlobUrl(
       Array.isArray(images) &&
       images.every((item) => typeof item === "string")
     ) {
-      return setImgBlobUrl(images);
+      return setImgBlobUrl(images as string[]);
     }
 
-    const urls: string[] = Array.from(images).map((image) => {
-      return URL.createObjectURL(image);
-    });
+    const urls: string[] = Array.from(images as FileList | File[]).map(
+      (image) => {
+        return URL.createObjectURL(image);
+      }
+    );
     setImgBlobUrl(urls);
     return () => {
       // urls.forEach((url) => URL.revokeObjectURL(url));

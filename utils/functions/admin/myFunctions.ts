@@ -120,8 +120,8 @@ export async function whatToSaveDelete(
         return key?.key;
       })
     );
-    const picturesToDelete = deleteListWithNull.filter(
-      (value) => value !== null && value !== undefined
+    const picturesToDelete: string[] = deleteListWithNull.filter(
+      (value): value is string => value !== null && value !== undefined
     );
 
     return { picturesToSave, picturesToDelete };

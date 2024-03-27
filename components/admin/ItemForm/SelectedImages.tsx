@@ -24,7 +24,7 @@ const SelectedImages = ({
     if (isLoading) return;
     setValue(
       "thumbnailPicture",
-      isStringArray ? images[index] : images[index].name
+      isStringArray ? (images[index] as string) : (images[index] as File).name
     );
   }
 
@@ -37,8 +37,9 @@ const SelectedImages = ({
       <div className="grid grid-cols-2">
         {imgBlobUrl.map((image, index) => {
           const isThumbnail =
-            (isStringArray && thumbnailPicture === images[index]) ||
-            (!isStringArray && thumbnailPicture === images[index]?.name);
+            (isStringArray && thumbnailPicture === (images[index] as string)) ||
+            (!isStringArray &&
+              thumbnailPicture === (images[index] as File)?.name);
           return (
             <div
               key={image}
