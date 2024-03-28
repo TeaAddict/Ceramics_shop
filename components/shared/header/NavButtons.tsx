@@ -14,9 +14,7 @@ const NavButtons = ({ lng }: { lng: string }) => {
     <ul className="flex gap-5 xl:gap-7 text-2xl">
       {NAV_BAR_LINKS.map((link) => {
         const isActive =
-          (pathname.includes(link.route) && link.route.length > 1) ||
-          pathname === link.route;
-
+          pathname === `/${lng}${link.route === "/" ? "" : link.route}`;
         return (
           <Link
             href={`${link.route}`}
