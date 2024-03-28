@@ -5,7 +5,6 @@ import {
   parseFormData,
   whatToSaveDelete,
 } from "@/utils/functions/admin/myFunctions";
-import { deleteImages } from "@/utils/functions/item/deleteImages";
 import { updateItem } from "@/utils/server/item/updateItem";
 import { isPicUrl } from "@/utils/server/item/isPicUrl";
 import { uploadImagesToUploadthing } from "@/utils/functions/admin/uploadImagesToUploadthing";
