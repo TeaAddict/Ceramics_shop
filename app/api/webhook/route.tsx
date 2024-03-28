@@ -25,7 +25,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ received: false }, { status: 400 });
     }
 
-    if (event.type === "checkout.session.completed") {
+    if (
+      event.type === "checkout.session.completed" ||
+      event.type === "checkout.session.async_payment_succeeded"
+    ) {
       const sessionWithLineItems = await stripe.checkout.sessions.retrieve(
         event.data.object.id,
         { expand: ["line_items", "line_items.data.price.product"] }

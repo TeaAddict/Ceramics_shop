@@ -1,7 +1,11 @@
 import { Transaction } from "@/utils/types/stripe";
 import Stripe from "stripe";
 
-export function createTransaction(event: Stripe.CheckoutSessionCompletedEvent) {
+export function createTransaction(
+  event:
+    | Stripe.CheckoutSessionCompletedEvent
+    | Stripe.CheckoutSessionAsyncPaymentSucceededEvent
+) {
   const sessionInfo = event.data.object;
   const transaction: Transaction = {
     paymentStatus: sessionInfo.payment_status,
