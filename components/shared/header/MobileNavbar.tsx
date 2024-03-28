@@ -42,7 +42,6 @@ const MobileNavbar = ({
         <div className="flex flex-col h-full justify-between items-center">
           <ul className=" flex flex-col gap-8 text-white/70 text-3xl h-full justify-center">
             {translatedNavbar.map((nav) => {
-              console.log(nav, "nav");
               const isActive =
                 pathname === `/${lng}${nav.route === "/" ? "" : nav.route}`;
               return (
