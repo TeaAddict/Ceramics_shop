@@ -12,9 +12,11 @@ import { useTranslation } from "@/app/i18n/client";
 const ItemCartInterface = ({
   item,
   params,
+  isOnline,
 }: {
   item: ItemWithPicThumb;
   params: { id: string };
+  isOnline: boolean;
 }) => {
   const lng = useCurrentLanguage();
   const { t } = useTranslation(lng, "cart");
@@ -46,7 +48,7 @@ const ItemCartInterface = ({
         <p className="text-2xl uppercase font-semibold">
           EUR {formatToEuroCurrency(item.price)}
         </p>
-        {item.stock > 1 && (
+        {item.stock > 1 && isOnline && (
           <div>
             <QuantityPicker
               currentQuantity={quantity}
@@ -59,7 +61,7 @@ const ItemCartInterface = ({
           </div>
         )}
       </div>
-      <AddToCartButton item={item} quantity={quantity} />
+      {isOnline && <AddToCartButton item={item} quantity={quantity} />}
     </div>
   );
 };

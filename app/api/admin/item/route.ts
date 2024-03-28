@@ -9,7 +9,6 @@ import { deleteItem } from "@/utils/itemFunctions";
 export async function POST(request: NextRequest) {
   try {
     const data: FormData = await request.formData();
-
     const parsed = parseFormData(data);
 
     const schemaResult = productSchemaServer.safeParse(parsed);
@@ -35,10 +34,6 @@ export async function POST(request: NextRequest) {
       const result = await uploadImagesToUploadthing(imagesToUpload);
       if (result?.error && id) await deleteItem(id);
     }
-
-    //   uploadImages(imagesToUpload);
-    // saveImg(parsed);
-    // }
 
     return NextResponse.json(
       Object.keys(backendErrors).length > 0

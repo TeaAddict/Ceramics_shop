@@ -22,7 +22,8 @@ const ItemWindow = async ({
 
   if (!item || Object.keys(item).length === 0)
     return <CustomReturnMessage text="Product does not exist" />;
-
+  if (!settings)
+    return <CustomReturnMessage text="Missing settings" backButton={false} />;
   return (
     <section className="flex flex-col gap-5">
       <BackButton />
@@ -43,9 +44,17 @@ const ItemWindow = async ({
             <h3 className="font-semibold text-3xl capitalize">{item.title}</h3>
           </div>
 
-          {settings?.paymentOnline && item.stock > 0 && (
-            <ItemCartInterface item={item} params={params} />
-          )}
+          <div>
+            <ItemCartInterface
+              item={item}
+              params={params}
+              isOnline={settings.paymentOnline}
+            />
+            {!settings.paymentOnline && item.stock > 1 && (
+              <p>Currently in stock: {item.stock}</p>
+            )}
+          </div>
+
           {item.stock < 1 && (
             <p className="text-2xl text-destructive">{t("itemIsSoldOut")}</p>
           )}
@@ -53,7 +62,9 @@ const ItemWindow = async ({
           {item.description && (
             <div>
               <h3>{t("description")}</h3>
-              <p className="md:max-w-72 capitalize">{item.description}</p>
+              <p className="md:max-w-72 whitespace-pre-wrap">
+                {item.description}
+              </p>
             </div>
           )}
         </div>

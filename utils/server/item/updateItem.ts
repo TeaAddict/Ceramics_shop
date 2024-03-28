@@ -23,7 +23,6 @@ export async function updateItem(
         stock: parsed.stock,
         category: parsed.category,
         description: parsed.description,
-
         pictures: data[0].name
           ? {
               deleteMany: {},
