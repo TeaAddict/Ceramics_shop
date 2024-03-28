@@ -4,6 +4,7 @@ import "photoswipe/style.css";
 import { CarouselApi } from "@/components/ui/carousel";
 import MainDisplay from "./MainDisplay";
 import { ImageListDisplay } from "./ImageListDisplay";
+import { sortThumbFirst } from "@/utils/item/sortThumbFirst";
 
 export type Pictures = {
   name: string;
@@ -14,12 +15,14 @@ export type Pictures = {
 };
 
 type Props = {
+  thumbnailName: string;
   images: Pictures[];
   autoplay?: boolean;
   galleryID?: string;
 };
 
 export function ImageShowcase({
+  thumbnailName,
   images,
   autoplay = false,
   galleryID = "image-showcase",
@@ -27,6 +30,7 @@ export function ImageShowcase({
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [mainApi, setMainApi] = useState<CarouselApi>();
   const [thumbApi, setThumbApi] = useState<CarouselApi>();
+  const thumbnailFirstImgList = sortThumbFirst(images, thumbnailName);
 
   const onSelect = useCallback(() => {
     if (!mainApi || !thumbApi) return;
@@ -45,14 +49,14 @@ export function ImageShowcase({
     <div className="w-[15rem] xs:w-[20rem] md:w-[30rem]">
       <MainDisplay
         galleryID={galleryID}
-        images={images}
+        images={thumbnailFirstImgList}
         setMainApi={setMainApi}
         autoplay={autoplay}
       />
 
-      {images.length > 1 && (
+      {thumbnailFirstImgList.length > 1 && (
         <ImageListDisplay
-          images={images}
+          images={thumbnailFirstImgList}
           mainApi={mainApi}
           selectedIndex={selectedIndex}
           setSelectedIndex={setSelectedIndex}

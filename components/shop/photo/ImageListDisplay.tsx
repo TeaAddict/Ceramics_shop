@@ -59,9 +59,10 @@ export function ImageListDisplay({
               >
                 <Card
                   className={`${
-                    selectedIndex === index &&
-                    "outline outline-primary outline-4 -outline-offset-1 rounded-sm"
-                  } cursor-pointer m-1`}
+                    selectedIndex === index
+                      ? "outline outline-primary"
+                      : "hover:outline hover:outline-gray-300"
+                  } cursor-pointer m-1 outline-4 -outline-offset-1 rounded-sm`}
                 >
                   <CardContent className="flex aspect-square items-center justify-center p-6 relative">
                     <Image

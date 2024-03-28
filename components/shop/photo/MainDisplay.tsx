@@ -48,7 +48,7 @@ const MainDisplay = ({ images, galleryID, setMainApi, autoplay }: Props) => {
           {images.map((image, index) => (
             <CarouselItem key={image.name} className="pl-4">
               <div className="p-1">
-                <Card className="cursor-pointer">
+                <Card>
                   <a
                     href={image.url ?? ""}
                     data-pswp-width={image.width}
@@ -59,7 +59,7 @@ const MainDisplay = ({ images, galleryID, setMainApi, autoplay }: Props) => {
                   >
                     <CardContent className="flex aspect-square items-center justify-center p-6 relative">
                       <Image
-                        className="object-cover rounded-md"
+                        className="object-cover rounded-md hover:opacity-90 cursor-zoom-in"
                         src={image.url ?? ""}
                         alt="carouselImg"
                         fill

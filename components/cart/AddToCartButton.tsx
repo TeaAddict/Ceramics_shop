@@ -29,7 +29,7 @@ const AddToCartButton = ({
           stock: item.stock,
           unitPrice: item.price,
           totalPrice: quantity * item.price,
-          picture: item.thumbnail!.name,
+          picture: item.thumbnail!.url ?? "",
           title: item.title,
         })
       );

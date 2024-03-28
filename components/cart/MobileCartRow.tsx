@@ -45,7 +45,7 @@ const MobileCartRow = ({
         <div className="relative aspect-square w-28">
           <Image
             alt="cart_image"
-            src={`/uploads/${thumbnailImage}`}
+            src={thumbnailImage}
             fill
             sizes="(max-width: 500px) 100px"
             className="object-cover"

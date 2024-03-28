@@ -2,7 +2,7 @@ import LoadPage from "@/components/shared/loadSpinner/LoadPage";
 
 const Loading = () => {
   return (
-    <div>
+    <div className="min-h-[60vh] flex items-center">
       <LoadPage />
     </div>
   );

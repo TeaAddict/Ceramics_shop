@@ -20,7 +20,7 @@ const ContactPage = async ({
     <div className="padding-container flex-col">
       <h1>{t("title")}</h1>
 
-      <div className="flex justify-around">
+      <div className="flex flex-col sm:flex-row gap-10 sm:gap-0 justify-around">
         <div className="flex flex-col gap-10">
           <div className="flex flex-col gap-5">
             <div className="flex items-center gap-5">
@@ -53,7 +53,7 @@ const ContactPage = async ({
             </div>
           </div>
         </div>
-        <div className="max-w-[40vw] flex flex-col gap-5">
+        <div className="max-w-96 flex flex-col gap-5">
           <p>{t("p1")}</p>
 
           <div className="flex gap-3 items-center">

@@ -43,7 +43,7 @@ const PcCartTable = ({
             <td className="aspect-square max-w-32 my-2 relative">
               <Image
                 alt=""
-                src={`/uploads/${row.picture}`}
+                src={row.picture}
                 className="object-cover"
                 fill
                 sizes="(max-width: 500px) 100px"

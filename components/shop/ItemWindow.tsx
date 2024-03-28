@@ -34,6 +34,7 @@ const ItemWindow = async ({
         </div>
         <div className="flex flex-col justify-center md:justify-start items-center md:items-start">
           <ImageShowcase
+            thumbnailName={item.thumbnail?.name ?? ""}
             images={item.pictures}
             galleryID="image-showcase"
             autoplay={true}

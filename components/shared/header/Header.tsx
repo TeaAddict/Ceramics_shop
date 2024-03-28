@@ -11,26 +11,27 @@ import ProfileButton from "@/components/profile/ProfileButton";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import LanguageButton from "./LanguageButton";
 import { getGeneralSettings } from "@/utils/server/settings/getGeneralSettings";
+import skLogo from "@/public/assets/sk_logo.png";
 
 const Header = async ({ lng }: { lng: string }) => {
   const session = await getServerSession(authOptions);
   const settings = await getGeneralSettings();
 
   return (
-    <section className="sticky top-0 z-10 px-6 py-3 lg:px-20 3xl:px-24 flex items-center justify-between bg-white/90">
-      <Link href={"/"} className="lg:pr-3 xl:pr-0">
-        <Image
-          src={"/assets/sk_logo.png"}
-          alt="logo"
-          width={35}
-          height={35}
-          style={{ width: "auto", height: "auto" }}
-        />
-      </Link>
+    <section className="sticky top-0 z-10 px-6 py-3 lg:px-20 3xl:px-24 gap-3 xl:gap-0 flex items-center justify-between bg-white/90">
+      <div className="flex flex-none">
+        <Link href={"/"}>
+          <Image
+            src={skLogo}
+            alt="logo"
+            style={{ width: "40px", height: "auto" }}
+          />
+        </Link>
+      </div>
       <div className="hidden md:flex">
         <NavButtons lng={lng} />
       </div>
-      <div className="flex items-center gap-5">
+      <div className="flex items-center gap-3">
         {settings?.paymentOnline && (
           <div>
             <CartBadge />
