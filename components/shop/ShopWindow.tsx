@@ -12,7 +12,7 @@ import LoadPage from "../shared/loadSpinner/LoadPage";
 import { sortItems } from "@/utils/item/sortItems";
 import { GeneralSettings } from "@prisma/client";
 import { getUniquePropertyNames } from "@/utils/functions/getUniquePropertyNames";
-import HideSoldOutCheckBox from "./HideSoldOutCheckBox";
+import CheckBox from "./CheckBox";
 import CustomReturnMessage from "../shared/CustomReturnMessage";
 import { translateSortOptions } from "@/utils/functions/translate/translateSortOptions";
 import { useTranslation } from "@/app/i18n/client";
@@ -91,8 +91,10 @@ const ShopWindow = ({
   return (
     <div className="sm:p-1">
       <div className="sm:flex justify-end items-center gap-5 mb-5 hidden">
-        <HideSoldOutCheckBox
-          setHideSoldOut={setHideSoldOut}
+        <CheckBox
+          initialState={hideSoldOut}
+          setState={setHideSoldOut}
+          paramName="hideSold"
           label={t("hideSoldOut")}
         />
         <SelectCn

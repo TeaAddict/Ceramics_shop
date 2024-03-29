@@ -50,11 +50,11 @@ const Footer = async ({ lng }: { lng: string }) => {
         </div>
       </div>
 
-      <div className="mt-8 text-center">
+      {/* <div className="mt-8 text-center">
         <p>
           &copy; {new Date().getFullYear()} {t("reserved")}
         </p>
-      </div>
+      </div> */}
     </footer>
   );
 };

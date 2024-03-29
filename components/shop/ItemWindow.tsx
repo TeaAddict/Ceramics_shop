@@ -24,10 +24,10 @@ const ItemWindow = async ({
     return <CustomReturnMessage text="Product does not exist" />;
   if (!settings)
     return <CustomReturnMessage text="Missing settings" backButton={false} />;
+
   return (
     <section className="flex flex-col gap-5">
       <BackButton />
-
       <div className="flex flex-col md:flex-row md:justify-center gap-5  lg:justify-evenly">
         <div className="flex gap-3 md:hidden">
           <h3 className="font-semibold text-3xl capitalize">{item.title}</h3>
@@ -40,17 +40,19 @@ const ItemWindow = async ({
             autoplay={true}
           />
         </div>
-        <div className="flex flex-col gap-10 min-w-44">
+        <div className="flex flex-col gap-5 min-w-44">
           <div className="hidden md:flex gap-3">
             <h3 className="font-semibold text-3xl capitalize">{item.title}</h3>
           </div>
 
           <div>
-            <ItemCartInterface
-              item={item}
-              params={params}
-              isOnline={settings.paymentOnline}
-            />
+            {item.stock > 1 && (
+              <ItemCartInterface
+                item={item}
+                params={params}
+                isOnline={settings.paymentOnline}
+              />
+            )}
             {!settings.paymentOnline && item.stock > 1 && (
               <p>Currently in stock: {item.stock}</p>
             )}

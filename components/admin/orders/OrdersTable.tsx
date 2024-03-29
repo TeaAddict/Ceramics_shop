@@ -14,6 +14,8 @@ import { transformToTableBody } from "@/utils/orderFunctions/transformToTableBod
 import { DeliveryStatus } from "@prisma/client";
 import { useTranslation } from "@/app/i18n/client";
 import { translateOrderTableHead } from "@/utils/functions/translate/translateOrderTableHead";
+import { useSearchParams } from "next/navigation";
+import CheckBox from "@/components/shop/CheckBox";
 
 export type TableOrder = {
   id: string;
@@ -40,6 +42,28 @@ const OrdersTable = ({ data, lng }: { data: TableOrder[]; lng: string }) => {
   const [rowData, setRowData] = useState(data[0]);
   const { t } = useTranslation(lng, "admin");
   const transaltedHead = translateOrderTableHead(t);
+  const searchParams = useSearchParams();
+
+  const [hideStates, setHideStates] = useState({
+    hideShipping: searchParams.get("hideShipping") === "true",
+    hideShipped: searchParams.get("hideShipped") === "true",
+    hideArrived: searchParams.get("hideArrived") === "true",
+    hideCollected: searchParams.get("hideCollected") === "true",
+  });
+
+  const filteredBody = tableBody.filter((row) => {
+    if (!hideStates.hideShipping && row.status === "SHIPPING") return row;
+    if (!hideStates.hideShipped && row.status === "SHIPPED") return row;
+    if (!hideStates.hideArrived && row.status === "ARRIVED") return row;
+    if (!hideStates.hideCollected && row.status === "COLLECTED") return row;
+  });
+
+  function handleCheckboxChange(checkboxName: string) {
+    setHideStates((prevState) => ({
+      ...prevState,
+      [checkboxName]: !prevState[checkboxName as keyof typeof hideStates],
+    }));
+  }
 
   function handleClick(row: TableOrder) {
     setOpen(true);
@@ -49,10 +73,25 @@ const OrdersTable = ({ data, lng }: { data: TableOrder[]; lng: string }) => {
 
   return (
     <div>
+      <div className="flex flex-col sm:flex-row gap-7 sm:gap-10 mb-5">
+        {Object.entries(hideStates).map(([checkboxName, isChecked]) => {
+          const name = checkboxName.toLowerCase().replace("hide", "");
+          return (
+            <CheckBox
+              key={checkboxName}
+              label={`${t("hide")} "${t(name)}"`}
+              paramName={checkboxName}
+              initialState={isChecked}
+              setState={() => handleCheckboxChange(checkboxName)}
+            />
+          );
+        })}
+      </div>
+
       <Dialog open={open} onOpenChange={setOpen}>
         <OrderTableDynamic
           head={transaltedHead}
-          body={tableBody}
+          body={filteredBody}
           onClickBody={handleClick}
         />
         <DialogContent>

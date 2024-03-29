@@ -31,6 +31,9 @@
   "arrived": "ARRIVED",
   "collected": "COLLECTED",
 
+  "update": "Update",
+  "hide": "Hide",
+
   "general": {
     "h2": "General",
     "itemsPerPage": "Items Per Page",
@@ -65,7 +68,5 @@
     "loading": "Saving...",
     "success": "Settings saved!",
     "error": "Could not save."
-  },
-
-  "update": "Update"
+  }
 }
