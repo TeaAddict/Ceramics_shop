@@ -16,12 +16,12 @@ const VerticalMenu = ({
   color?: "default" | "inverted";
 }) => {
   const searchParams = useSearchParams();
-  const current = searchParams.get(paramName);
-  const paramExists = menuList.find((val) => val.label === current);
+  const current = searchParams.get(paramName) ?? menuList[0].label;
+
+  const [active, setActive] = useState(current);
   const { setLastParams } = useUpdateSearchParams([
-    { name: paramName, value: menuList[0].label },
+    { name: paramName, value: current },
   ]);
-  const [active, setActive] = useState(current ?? menuList[0].label);
 
   const handleClick = useCallback(
     (key: string) => {
@@ -32,11 +32,11 @@ const VerticalMenu = ({
   );
 
   useEffect(() => {
-    if (!paramExists) {
+    if (!menuList.find((val) => val.label === current)) {
       setActive(menuList[0].label);
       setLastParams([{ name: paramName, value: menuList[0].label }]);
     }
-  }, [paramExists, menuList, paramName, setLastParams]);
+  }, [menuList, paramName, setLastParams, current]);
 
   return (
     <ul className="space-y-1">
