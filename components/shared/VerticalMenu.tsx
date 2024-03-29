@@ -1,6 +1,7 @@
 "use client";
 
 import { useUpdateSearchParams } from "@/hooks/useUpdateSearchParams";
+import { capitalizeFirstLetter } from "@/utils/helper";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
@@ -58,8 +59,8 @@ const VerticalMenu = ({
                   }`
             }
           >
-            <span className="text-sm font-medium capitalize text-start">
-              {item.label}
+            <span className="text-sm font-medium text-start">
+              {capitalizeFirstLetter(item.label)}
             </span>
             {item.value && item.value > 0 && (
               <span
