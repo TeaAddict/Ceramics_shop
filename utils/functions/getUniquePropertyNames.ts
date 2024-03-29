@@ -3,7 +3,8 @@ export function getUniquePropertyNames(
   name: string
 ): any[] {
   const uniqueNames = arr
-    .map((el) => el[name])
-    .filter((val, index, arr) => arr.indexOf(val) === index);
+    .map((el) => el[name].toLowerCase())
+    .filter((val: string, index, arr) => arr.indexOf(val) === index);
+
   return uniqueNames;
 }

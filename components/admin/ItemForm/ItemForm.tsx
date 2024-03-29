@@ -84,10 +84,10 @@ const ItemForm = ({
     const pictureArray = await createPicObj(formData);
 
     let data = new FormData();
-    data.append("title", formData.title);
+    data.append("title", formData.title.toLowerCase());
     data.append("price", formData.price.toString());
     data.append("stock", formData.stock.toString());
-    data.append("category", formData.category);
+    data.append("category", formData.category.toLowerCase());
     data.append("description", formData.description ?? "");
     data.append("thumbnailPicture", formData.thumbnailPicture);
     pictureArray.map((picture, index) => {
