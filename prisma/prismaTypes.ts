@@ -5,6 +5,9 @@ const itemWithPicThumb = Prisma.validator<Prisma.ItemDefaultArgs>()({
 });
 export type ItemWithPicThumb = Prisma.ItemGetPayload<typeof itemWithPicThumb>;
 
+const item = Prisma.validator<Prisma.ItemDefaultArgs>()({});
+export type ItemSimple = Prisma.ItemGetPayload<typeof item>;
+
 const transactionFull = Prisma.validator<Prisma.TransactionDefaultArgs>()({
   include: {
     soldItems: { include: { item: { include: { thumbnail: true } } } },

@@ -4,6 +4,7 @@ import { Cart } from "@/lib/types";
 import { convertDbItemToMap } from "../../functions/convertDbItemToMap";
 import { convertToCartItem } from "../../functions/convertToCartItem";
 import { getItems } from "../getItems";
+import { ItemSimple } from "@/prisma/prismaTypes";
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
@@ -16,7 +17,7 @@ export async function stripeAction(cart: Cart): Promise<string> {
     const itemsInDb = await getItems(itemsIds);
     if (!itemsInDb.every((val) => val !== null))
       throw new Error("Some of the items do not exist");
-    const storeItems = convertDbItemToMap(itemsInDb);
+    const storeItems = convertDbItemToMap(itemsInDb as ItemSimple[]);
     const cartItems: CartItems = convertToCartItem(cart);
 
     let session = await stripe.checkout.sessions.create({
