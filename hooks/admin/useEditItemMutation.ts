@@ -22,8 +22,9 @@ export function useEditItemMutation(
   setOpen: (value: SetStateAction<boolean>) => void
 ) {
   return useMutation({
-    mutationFn: (data: { data: FormData; id: string }) => updateItem(data),
-    onSuccess: (data) => {
+    mutationFn: async (data: { data: FormData; id: string }) =>
+      await updateItem(data),
+    onSuccess: async (data) => {
       if (data.errors) {
         setFormError(setError, data.errors);
         toast.error("Problem adding item");
@@ -31,7 +32,7 @@ export function useEditItemMutation(
       if (data.success) {
         setOpen(false);
         reset();
-        queryClient.invalidateQueries({ queryKey: ["items"] });
+        await queryClient.invalidateQueries({ queryKey: ["items"] });
         toast.success("Successfully added item!");
       }
     },

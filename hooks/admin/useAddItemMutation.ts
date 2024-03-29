@@ -22,18 +22,18 @@ export function useAddItemMutation(
   setOpen: (value: SetStateAction<boolean>) => void
 ) {
   return useMutation({
-    mutationFn: (data: { data: FormData; images: FileList }) =>
-      addItem(data.data),
-    onSuccess: (data) => {
+    mutationFn: async (data: { data: FormData; images: FileList }) =>
+      await addItem(data.data),
+    onSuccess: async (data) => {
       if (data.errors) {
         console.log(data.errors, "ERRORS OF FORM");
         setFormError(setError, data.errors);
         toast.error("Problem adding item");
       }
       if (data.success) {
+        await queryClient.invalidateQueries({ queryKey: ["items"] });
         setOpen(false);
         reset();
-        queryClient.invalidateQueries({ queryKey: ["items"] });
         toast.success("Successfully added item!");
       }
     },
