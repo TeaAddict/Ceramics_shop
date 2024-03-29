@@ -12,7 +12,10 @@ type CartItems = CartItem[];
 
 export async function stripeAction(cart: Cart): Promise<string> {
   try {
-    const itemsInDb = await getItems();
+    const itemsIds = cart.map((item) => item.id);
+    const itemsInDb = await getItems(itemsIds);
+    if (!itemsInDb.every((val) => val !== null))
+      throw new Error("Some of the items do not exist");
     const storeItems = convertDbItemToMap(itemsInDb);
     const cartItems: CartItems = convertToCartItem(cart);
 

@@ -10,7 +10,6 @@ export async function POST(request: NextRequest) {
   try {
     const data: FormData = await request.formData();
     const parsed = parseFormData(data);
-
     const schemaResult = productSchemaServer.safeParse(parsed);
     let backendErrors = {};
     if (!schemaResult.success) {

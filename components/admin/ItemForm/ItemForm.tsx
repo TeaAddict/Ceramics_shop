@@ -51,10 +51,10 @@ const ItemForm = ({
         };
       } else {
         return {
-          title: "qwe",
+          title: "",
           price: 1,
           stock: 1,
-          category: "asd",
+          category: "",
           description: "",
           thumbnailPicture: "",
           pictures: undefined,

@@ -19,7 +19,9 @@ const OrderSummary = ({
   const dispatch = useDispatch();
 
   async function onSubmit() {
+    console.log(cart, "CART");
     const paymentLink = await stripeAction(cart);
+    console.log(paymentLink, "paymentlink");
     router.replace(paymentLink);
   }
 
