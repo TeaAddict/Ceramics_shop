@@ -17,6 +17,7 @@ import CustomReturnMessage from "../shared/CustomReturnMessage";
 import { translateSortOptions } from "@/utils/functions/translate/translateSortOptions";
 import { useTranslation } from "@/app/i18n/client";
 import MobileFooter from "./MobileFooter";
+import { capitalizeFirstLetter } from "@/utils/helper";
 
 const ShopWindow = ({
   searchParams,
@@ -126,6 +127,7 @@ const ShopWindow = ({
             </div>
           )}
         </div>
+        <h3 className="sm:hidden mb-2">{capitalizeFirstLetter(category)}</h3>
         <ShopItems
           data={sorted}
           color={color}
