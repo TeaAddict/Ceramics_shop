@@ -11,6 +11,12 @@ import { uploadImagesToUploadthing } from "@/utils/functions/admin/uploadImagesT
 import { utapi } from "@/utils/uploadthing";
 import { getPicKeys } from "@/utils/functions/item/getPicKeys";
 
+type Pictures = {
+  name: string;
+  width: number;
+  height: number;
+}[];
+
 export async function PUT(
   request: NextRequest,
   { params }: { params: { id: string } }
@@ -42,7 +48,7 @@ export async function PUT(
         if (!picturesToLeaveMain.some((picName) => picName === picObj.name))
           return picObj;
       })
-      .filter((val) => typeof val !== "undefined");
+      .filter((val) => typeof val !== "undefined") as Pictures;
 
     const errors = await updateItem(
       id,

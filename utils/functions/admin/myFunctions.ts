@@ -138,7 +138,7 @@ export async function whatToSaveDeleteLeave(
           return;
         return picName;
       })
-      .filter((val) => val !== undefined);
+      .filter((val) => val !== undefined) as string[];
 
     return { picturesToSave, picturesToDeleteKeys, picturesToLeave };
   } catch (error) {
