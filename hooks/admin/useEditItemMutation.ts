@@ -28,13 +28,17 @@ export function useEditItemMutation(
       if (data.errors) {
         setFormError(setError, data.errors);
         toast.error("Problem adding item");
+        return false;
       }
       if (data.success) {
         setOpen(false);
         reset();
         await queryClient.invalidateQueries({ queryKey: ["items"] });
         toast.success("Successfully added item!");
+        return true;
       }
+      toast.error("Problem adding item");
+      return false;
     },
   });
 }

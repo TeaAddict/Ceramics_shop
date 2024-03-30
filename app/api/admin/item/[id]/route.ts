@@ -36,20 +36,18 @@ export async function PUT(
       picturesToSaveMain = picturesToSave;
       picturesToDeleteMain = picturesToDelete;
     }
-    console.log(picturesToDeleteMain, "Delete");
-    console.log(picturesToSaveMain, "Save");
 
     // update item and image data in db
     const errors = await updateItem(id, parsed, pictureData);
 
-    if (!isUrl) {
+    if (!isUrl && !errors) {
       await uploadImagesToUploadthing(picturesToSaveMain);
       await utapi.deleteFiles(picturesToDeleteMain);
     }
 
     return NextResponse.json(
-      Object.keys(errors ?? {}).length && { errors: errors },
-      Object.keys(errors ?? {}).length ? { status: 200 } : { status: 500 }
+      Object.keys(errors ?? {}).length ? { errors: errors } : { success: true },
+      Object.keys(errors ?? {}).length ? { status: 500 } : { status: 200 }
     );
 
     return NextResponse.json({ success: true });

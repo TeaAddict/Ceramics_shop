@@ -5,6 +5,10 @@ import OrderStatusBadge from "./OrderStatusBadge";
 import { sortTableBody } from "@/utils/orderFunctions/sortTableBody";
 import { useUpdateSearchParams } from "@/hooks/useUpdateSearchParams";
 import { addAscOrDesc } from "../../../utils/functions/addAscOrDesc";
+import {
+  ScrollAreaThumb,
+  ScrollAreaViewport,
+} from "@radix-ui/react-scroll-area";
 
 /**
  * Represents an order table with dynamic sorting functionality.
@@ -48,43 +52,45 @@ const OrderTableDynamic = ({
 
   return (
     <ScrollArea className="pb-5" type="always">
-      <table className="text-left w-full text-sm">
-        <thead className="uppercase">
-          <tr className="border-b-4">
-            {head.map((el) => (
-              <th
-                className="px-6 py-3 hover:bg-gray-200 cursor-pointer"
-                onClick={() => handleSort(el.value)}
-                key={el.value}
-              >
-                {el.label}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {sorted.map((row) => (
-            <tr
-              key={row.id}
-              className="border-t hover:bg-gray-200 cursor-pointer"
-              onClick={() => handleClick(row)}
-            >
+      <ScrollAreaViewport className="max-h-screen">
+        <table className="text-left w-full text-sm">
+          <thead className="uppercase">
+            <tr className="border-b-4">
               {head.map((el) => (
-                <td className="px-6 py-4" key={el.value}>
-                  {typeof row[el.value] === "object" ? (
-                    (row[el.value] as Date).toUTCString()
-                  ) : el.value !== "status" ? (
-                    row[el.value]
-                  ) : (
-                    <OrderStatusBadge status={row[el.value]} />
-                  )}
-                </td>
+                <th
+                  className="px-6 py-3 hover:bg-gray-200 cursor-pointer"
+                  onClick={() => handleSort(el.value)}
+                  key={el.value}
+                >
+                  {el.label}
+                </th>
               ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
-      <ScrollBar orientation="horizontal" className="h-4" />
+          </thead>
+          <tbody>
+            {sorted.map((row) => (
+              <tr
+                key={row.id}
+                className="border-t hover:bg-gray-200 cursor-pointer"
+                onClick={() => handleClick(row)}
+              >
+                {head.map((el) => (
+                  <td className="px-6 py-4" key={el.value}>
+                    {typeof row[el.value] === "object" ? (
+                      (row[el.value] as Date).toUTCString()
+                    ) : el.value !== "status" ? (
+                      row[el.value]
+                    ) : (
+                      <OrderStatusBadge status={row[el.value]} />
+                    )}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </ScrollAreaViewport>
+      <ScrollBar orientation="horizontal" />
     </ScrollArea>
   );
 };
