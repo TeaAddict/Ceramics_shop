@@ -1,6 +1,7 @@
 import prisma from "@/lib/prisma";
 import { ParsedItem } from "@/lib/types";
 import { Prisma } from "@prisma/client";
+import { createErrorList } from "./createErrorList";
 
 type pictureData = {
   name: string | undefined;
@@ -55,6 +56,7 @@ export async function updateItem(
     }
   } catch (e: any) {
     console.log(`Problem updating item: ${e}`);
+    const errors = createErrorList(e, {});
     let pictures: { pictures: string } = { pictures: "" };
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       console.log(e);
@@ -63,7 +65,8 @@ export async function updateItem(
           pictures: "Picture name is already in use, rename or change picture",
         };
       }
-      return { errors: pictures };
+      return { ...errors, ...pictures };
     }
+    return errors;
   }
 }

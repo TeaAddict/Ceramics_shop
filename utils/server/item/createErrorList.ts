@@ -1,4 +1,7 @@
-export function createErrorList(error: any, backendErrors: {}) {
+export function createErrorList(
+  error: any,
+  backendErrors: {}
+): { [key: string]: string } {
   error.meta.target.map((val: string) => {
     if (val === "title")
       backendErrors = {
