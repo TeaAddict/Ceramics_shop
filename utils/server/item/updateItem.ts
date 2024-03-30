@@ -12,7 +12,8 @@ type pictureData = {
 export async function updateItem(
   id: string,
   parsed: ParsedItem,
-  data: pictureData
+  data: pictureData,
+  picsToDelete: string[]
 ) {
   // update data in db
   try {
@@ -26,7 +27,7 @@ export async function updateItem(
         description: parsed.description,
         pictures: data[0].name
           ? {
-              deleteMany: {},
+              deleteMany: { key: { in: picsToDelete } },
               createMany: {
                 data: data.map(({ name, width, height }) => ({
                   name: name!,

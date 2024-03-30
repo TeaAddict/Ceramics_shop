@@ -90,7 +90,7 @@ const OrderTableDynamic = ({
           </tbody>
         </table>
       </ScrollAreaViewport>
-      <ScrollBar orientation="horizontal" />
+      <ScrollBar orientation="horizontal" className="h-4" />
     </ScrollArea>
   );
 };

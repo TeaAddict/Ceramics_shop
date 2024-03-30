@@ -34,6 +34,11 @@
   "update": "Update",
   "hide": "Hide",
 
+  "delete": "Delete",
+  "cancel": "Cancel",
+  "confirm": "Confirm",
+  "areSure": "Are you sure you want to delete item?",
+
   "general": {
     "h2": "General",
     "itemsPerPage": "Items Per Page",

@@ -3,7 +3,7 @@ import prisma from "@/lib/prisma";
 import { parsePictureData } from "@/utils/myFunctions";
 import {
   parseFormData,
-  whatToSaveDelete,
+  whatToSaveDeleteLeave,
 } from "@/utils/functions/admin/myFunctions";
 import { updateItem } from "@/utils/server/item/updateItem";
 import { isPicUrl } from "@/utils/server/item/isPicUrl";
@@ -24,21 +24,32 @@ export async function PUT(
     const parsed = parseFormData(data);
     const pictureData = parsePictureData(parsed);
 
-    // // delete old pictures and upload new in uploadthing
+    // delete old pictures and upload new in uploadthing
     let picturesToSaveMain: File[] = [];
     let picturesToDeleteMain: string[] = [];
+    let picturesToLeaveMain: string[] = [];
     if (!isUrl) {
-      const { picturesToSave, picturesToDelete } = await whatToSaveDelete(
-        id,
-        pictureData,
-        parsed
-      );
+      const { picturesToSave, picturesToDeleteKeys, picturesToLeave } =
+        await whatToSaveDeleteLeave(id, pictureData, parsed);
       picturesToSaveMain = picturesToSave;
-      picturesToDeleteMain = picturesToDelete;
+      picturesToDeleteMain = picturesToDeleteKeys;
+      picturesToLeaveMain = picturesToLeave;
     }
 
     // update item and image data in db
-    const errors = await updateItem(id, parsed, pictureData);
+    const picListToUpdate = pictureData
+      .map((picObj) => {
+        if (!picturesToLeaveMain.some((picName) => picName === picObj.name))
+          return picObj;
+      })
+      .filter((val) => typeof val !== "undefined");
+
+    const errors = await updateItem(
+      id,
+      parsed,
+      picListToUpdate,
+      picturesToDeleteMain
+    );
 
     if (!isUrl && !errors) {
       await uploadImagesToUploadthing(picturesToSaveMain);
@@ -49,8 +60,6 @@ export async function PUT(
       Object.keys(errors ?? {}).length ? { errors: errors } : { success: true },
       Object.keys(errors ?? {}).length ? { status: 500 } : { status: 200 }
     );
-
-    return NextResponse.json({ success: true });
   } catch (error) {
     console.error(`Problem updating item: ${error}`);
     return NextResponse.json({ error: error }, { status: 500 });

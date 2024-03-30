@@ -85,7 +85,7 @@ export function readDir() {
   }
 }
 
-export async function whatToSaveDelete(
+export async function whatToSaveDeleteLeave(
   id: string,
   pictureData: PictureData,
   item: ParsedItem
@@ -97,13 +97,13 @@ export async function whatToSaveDelete(
     });
     const oldPictureNames = oldPictures.map((pic) => pic.name);
     const newPictureNames = pictureData.map((pic) => pic.name);
+    console.log(newPictureNames, "NEW PIC NAMES");
     const deletePicNames = oldPictureNames.filter(
       (str) => !newPictureNames.includes(str)
     );
     const picturesNeedUploading = newPictureNames.filter(
       (str) => !oldPictureNames.includes(str)
     );
-
     const picturesToSave = item.pictures
       .filter((picture) => {
         if (picturesNeedUploading.includes(picture.picture.name))
@@ -120,11 +120,27 @@ export async function whatToSaveDelete(
         return key?.key;
       })
     );
-    const picturesToDelete: string[] = deleteListWithNull.filter(
+
+    const picturesToDeleteKeys: string[] = deleteListWithNull.filter(
       (value): value is string => value !== null && value !== undefined
     );
 
-    return { picturesToSave, picturesToDelete };
+    const picturesToDeleteNames = oldPictures.map((val) => {
+      if (picturesToDeleteKeys.some((delKey) => delKey === val.key))
+        return val.name;
+    });
+
+    const picturesToLeave: string[] = oldPictureNames
+      .map((picName) => {
+        if (picturesToDeleteNames.some((delName) => delName === picName))
+          return;
+        if (picturesToSave.some((saveFile) => saveFile.name === picName))
+          return;
+        return picName;
+      })
+      .filter((val) => val !== undefined);
+
+    return { picturesToSave, picturesToDeleteKeys, picturesToLeave };
   } catch (error) {
     console.log(`Problem updating pictures: ${error}`);
     throw new Error(`Problem updating pictures: ${error}`);

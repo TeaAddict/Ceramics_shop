@@ -34,6 +34,11 @@
   "update": "Atnaujinti",
   "hide": "Slėpti",
 
+  "delete": "Ištrinti",
+  "cancel": "Atšaukti",
+  "confirm": "Patvirtinti",
+  "areSure": "Ar tikrai norite ištrinti produktą?",
+
   "general": {
     "h2": "Pagrindiniai",
     "itemsPerPage": "Produktu per puslapį",

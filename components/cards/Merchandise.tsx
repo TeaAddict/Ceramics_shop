@@ -8,6 +8,8 @@ import DeleteItemButton from "../admin/DeleteItemButton";
 import LoadPage from "../shared/loadSpinner/LoadPage";
 import { useTranslation } from "@/app/i18n/client";
 import useCurrentLanguage from "@/hooks/useCurrentLanguage";
+import { ModalWindow } from "../shared/ModalWindow";
+import DeleteItemModal from "../admin/DeleteItemModal";
 
 interface Props {
   item: ProductSchema;
@@ -70,7 +72,7 @@ const Merchandise = ({
 
             <div className="flex flex-col sm:flex-row flex-wrap w-full justify-between gap-1">
               <EditItemModal item={item} />
-              <DeleteItemButton id={item.id} />
+              <DeleteItemModal id={item.id} />
             </div>
           </div>
         </div>
