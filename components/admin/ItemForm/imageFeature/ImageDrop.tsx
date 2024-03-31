@@ -49,7 +49,7 @@ const ImageDrop = (props: Props) => {
 
   return (
     // <div className="grid grid-cols-4 items-center gap-4">
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-1">
       <p>Pictures</p>
       <Input
         {...register("pictures", {

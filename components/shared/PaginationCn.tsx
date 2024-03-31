@@ -54,20 +54,20 @@ export function PaginationCn({
 
         {currentPage > 2 && (
           <PaginationItem>
-            <PaginationEllipsis />
+            <PaginationEllipsis className="cursor-default hidden xs:flex" />
           </PaginationItem>
         )}
 
         {currentPage > 1 && (
           <PaginationItem>
-            <PaginationLink className="cursor-default">
+            <PaginationLink className="cursor-default hidden xs:flex">
               {currentPage - 1}
             </PaginationLink>
           </PaginationItem>
         )}
         <PaginationItem>
           <PaginationLink
-            className="hover:bg-background cursor-default"
+            className="hover:bg-background cursor-default hidden xs:flex"
             isActive
           >
             {currentPage}
@@ -76,7 +76,7 @@ export function PaginationCn({
 
         {lastPage > currentPage && (
           <PaginationItem>
-            <PaginationLink className="cursor-default">
+            <PaginationLink className="cursor-default hidden xs:flex">
               {currentPage + 1}
             </PaginationLink>
           </PaginationItem>
@@ -84,7 +84,7 @@ export function PaginationCn({
 
         {lastPage > currentPage + 1 && (
           <PaginationItem>
-            <PaginationEllipsis />
+            <PaginationEllipsis className="cursor-default hidden xs:flex" />
           </PaginationItem>
         )}
 
