@@ -48,7 +48,8 @@ const ImageDrop = (props: Props) => {
   }, [watchValues]);
 
   return (
-    <div className="grid grid-cols-4 items-center gap-4">
+    // <div className="grid grid-cols-4 items-center gap-4">
+    <div className="flex flex-col gap-4">
       <p>Pictures</p>
       <Input
         {...register("pictures", {
@@ -62,10 +63,10 @@ const ImageDrop = (props: Props) => {
         className="col-span-3"
       />
       {errors.pictures && (
-        <p className="text-destructive col-span-4">{`${errors.pictures.message}`}</p>
+        <p className="text-destructive ">{`${errors.pictures.message}`}</p>
       )}
       {imgBlobUrl.length && images ? (
-        <div className="space-y-2 col-span-4">
+        <div className="space-y-2">
           <p>Thumbnail with pictures</p>
           <SelectedImages
             images={images}

@@ -105,7 +105,7 @@ const ItemForm = ({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="max-h-[90vh] flex flex-col gap-5"
+      className="max-h-[80vh] flex flex-col gap-5"
     >
       <ScrollArea className="flex flex-col pr-3">
         <div className="flex flex-col gap-5 p-1">
