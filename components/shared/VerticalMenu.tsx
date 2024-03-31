@@ -22,7 +22,6 @@ const VerticalMenu = ({
   const [active, setActive] = useState(current);
   const { setLastParams } = useUpdateSearchParams([
     { name: paramName, value: current },
-    { name: "page", value: "1" },
   ]);
 
   const handleClick = useCallback(
