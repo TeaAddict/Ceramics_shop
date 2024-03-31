@@ -1,6 +1,7 @@
 import { setFormError } from "@/components/admin/ItemForm/setFormError";
 import { addItem } from "@/utils/itemFunctions";
 import { QueryClient, useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { SetStateAction } from "react";
 import { UseFormReset, UseFormSetError } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -21,6 +22,7 @@ export function useAddItemMutation(
   setError: UseFormSetError<MyFormData>,
   setOpen: (value: SetStateAction<boolean>) => void
 ) {
+  const router = useRouter();
   return useMutation({
     mutationFn: async (data: { data: FormData; images: FileList }) =>
       await addItem(data.data),
@@ -32,6 +34,7 @@ export function useAddItemMutation(
       }
       if (data.success) {
         await queryClient.invalidateQueries({ queryKey: ["items"] });
+        router.refresh();
         setOpen(false);
         reset();
         toast.success("Successfully added item!");

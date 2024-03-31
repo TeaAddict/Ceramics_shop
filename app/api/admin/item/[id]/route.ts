@@ -10,6 +10,7 @@ import { isPicUrl } from "@/utils/server/item/isPicUrl";
 import { uploadImagesToUploadthing } from "@/utils/functions/admin/uploadImagesToUploadthing";
 import { utapi } from "@/utils/uploadthing";
 import { getPicKeys } from "@/utils/functions/item/getPicKeys";
+import { revalidatePath } from "next/cache";
 
 type Pictures = {
   name: string;

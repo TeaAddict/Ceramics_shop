@@ -1,6 +1,7 @@
 import { setFormError } from "@/components/admin/ItemForm/setFormError";
 import { updateItem } from "@/utils/itemFunctions";
 import { QueryClient, useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { SetStateAction } from "react";
 import { UseFormReset, UseFormSetError } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -21,6 +22,7 @@ export function useEditItemMutation(
   setError: UseFormSetError<MyFormData>,
   setOpen: (value: SetStateAction<boolean>) => void
 ) {
+  const router = useRouter();
   return useMutation({
     mutationFn: async (data: { data: FormData; id: string }) =>
       await updateItem(data),
@@ -31,6 +33,7 @@ export function useEditItemMutation(
         return false;
       }
       if (data.success) {
+        router.refresh();
         setOpen(false);
         reset();
         await queryClient.invalidateQueries({ queryKey: ["items"] });

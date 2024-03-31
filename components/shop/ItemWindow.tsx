@@ -46,7 +46,7 @@ const ItemWindow = async ({
           </div>
 
           <div>
-            {item.stock > 1 && (
+            {item.stock > 0 && (
               <ItemCartInterface
                 item={item}
                 params={params}
