@@ -22,12 +22,16 @@ const VerticalMenu = ({
   const [active, setActive] = useState(current);
   const { setLastParams } = useUpdateSearchParams([
     { name: paramName, value: current },
+    { name: "page", value: "1" },
   ]);
 
   const handleClick = useCallback(
     (key: string) => {
       setActive(key);
-      setLastParams([{ name: paramName, value: key }]);
+      setLastParams([
+        { name: paramName, value: key },
+        { name: "page", value: "1" },
+      ]);
     },
     [setLastParams, paramName]
   );

@@ -33,7 +33,10 @@ export function MobileFilterByModal({
   const { setLastParams } = useUpdateSearchParams();
 
   function handleClick(value: string) {
-    setLastParams([{ name: "category", value: value }]);
+    setLastParams([
+      { name: "category", value: value },
+      { name: "page", value: "1" },
+    ]);
     setOpen(false);
   }
 
