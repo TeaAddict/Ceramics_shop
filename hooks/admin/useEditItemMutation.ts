@@ -40,5 +40,8 @@ export function useEditItemMutation(
       toast.error("Problem adding item");
       return false;
     },
+    onError: (e) => {
+      toast.error(e.message);
+    },
   });
 }
