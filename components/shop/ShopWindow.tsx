@@ -79,7 +79,8 @@ const ShopWindow = ({
     }
   }, [uniqueCategories, category, pathname, router, searchParams]);
 
-  if (isLoading || (!category && data?.length)) return <LoadPage />;
+  if (isLoading || (!category && data?.length))
+    return <LoadPage minHeight={true} />;
   if (!items || (items?.length === 0 && !adminPageAuth))
     return <CustomReturnMessage text={t("shopClosed")} />;
   if (!items || (items?.length === 0 && adminPageAuth))

@@ -1,9 +1,13 @@
 import React from "react";
 import LoadSpinner from "./LoadSpinner";
 
-const LoadPage = () => {
+const LoadPage = ({ minHeight = false }: { minHeight?: boolean }) => {
   return (
-    <div className="flex flex-1 h-full w-full justify-center items-center">
+    <div
+      className={`flex flex-1 ${
+        minHeight ? "min-h-[50vh]" : "h-full"
+      } w-full justify-center items-center`}
+    >
       <LoadSpinner />
     </div>
   );

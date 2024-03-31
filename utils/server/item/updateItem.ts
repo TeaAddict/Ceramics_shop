@@ -13,9 +13,9 @@ export async function updateItem(
   id: string,
   parsed: ParsedItem,
   data: pictureData,
-  picsToDelete: string[]
+  picsToDelete: string[],
+  isUrl: boolean
 ) {
-  // update data in db
   try {
     const item = await prisma.item.update({
       where: { id: id },
@@ -25,22 +25,27 @@ export async function updateItem(
         stock: parsed.stock,
         category: parsed.category,
         description: parsed.description,
-        pictures: data[0].name
+
+        pictures: !isUrl
           ? {
               deleteMany: { key: { in: picsToDelete } },
-              createMany: {
-                data: data.map(({ name, width, height }) => ({
-                  name: name!,
-                  width: width!,
-                  height: height!,
-                })),
-              },
+              ...(data.length
+                ? {
+                    createMany: {
+                      data: data.map(({ name, width, height }) => ({
+                        name: name!,
+                        width: width!,
+                        height: height!,
+                      })),
+                    },
+                  }
+                : {}),
             }
           : {},
       },
     });
 
-    if (data[0].name) {
+    if (!isUrl) {
       await prisma.item.update({
         data: { thumbnail: { connect: { name: parsed.thumbnailPicture } } },
         where: { id: item.id },

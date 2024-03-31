@@ -97,7 +97,6 @@ export async function whatToSaveDeleteLeave(
     });
     const oldPictureNames = oldPictures.map((pic) => pic.name);
     const newPictureNames = pictureData.map((pic) => pic.name);
-    console.log(newPictureNames, "NEW PIC NAMES");
     const deletePicNames = oldPictureNames.filter(
       (str) => !newPictureNames.includes(str)
     );

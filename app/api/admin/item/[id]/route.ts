@@ -54,7 +54,8 @@ export async function PUT(
       id,
       parsed,
       picListToUpdate,
-      picturesToDeleteMain
+      picturesToDeleteMain,
+      isUrl
     );
 
     if (!isUrl && !errors) {
