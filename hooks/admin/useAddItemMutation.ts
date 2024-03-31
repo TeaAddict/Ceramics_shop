@@ -37,5 +37,8 @@ export function useAddItemMutation(
         toast.success("Successfully added item!");
       }
     },
+    onError: (e) => {
+      toast.error(e.message);
+    },
   });
 }
