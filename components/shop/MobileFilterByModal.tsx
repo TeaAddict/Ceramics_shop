@@ -13,6 +13,12 @@ import useCurrentLanguage from "@/hooks/useCurrentLanguage";
 import { useTranslation } from "@/app/i18n/client";
 import { capitalizeFirstLetter } from "@/utils/helper";
 import { useUpdateSearchParams } from "@/hooks/useUpdateSearchParams";
+import {
+  ScrollArea,
+  ScrollAreaScrollbar,
+  ScrollAreaThumb,
+  ScrollAreaViewport,
+} from "@radix-ui/react-scroll-area";
 
 export function MobileFilterByModal({
   categories,
@@ -42,22 +48,29 @@ export function MobileFilterByModal({
         <DialogHeader>
           <DialogTitle>{t("categories")}</DialogTitle>
         </DialogHeader>
-        <div className="flex flex-col gap-3 divide-y-2">
-          {categories.map((el) => (
-            <LabelButton
-              isActive={filterBy === el.label}
-              onClick={() => handleClick(el.label)}
-              key={el.label}
-            >
-              <div className="flex gap-5 items-center">
-                <p>{capitalizeFirstLetter(el.label)}</p>
-                <div className="flex items-center justify-center border-2 rounded-full w-10 h-10">
-                  <p className="">{el.value}</p>
-                </div>
-              </div>
-            </LabelButton>
-          ))}
-        </div>
+        <ScrollArea type="always">
+          <ScrollAreaViewport className="max-h-[70vh] mr-3">
+            <div className="flex flex-col gap-3 divide-y-2">
+              {categories.map((el) => (
+                <LabelButton
+                  isActive={filterBy === el.label}
+                  onClick={() => handleClick(el.label)}
+                  key={el.label}
+                >
+                  <div className="flex gap-5 items-center">
+                    <p>{capitalizeFirstLetter(el.label)}</p>
+                    <div className="flex items-center justify-center border-2 rounded-full w-10 h-10">
+                      <p className="">{el.value}</p>
+                    </div>
+                  </div>
+                </LabelButton>
+              ))}
+            </div>
+          </ScrollAreaViewport>
+          <ScrollAreaScrollbar orientation="vertical">
+            <ScrollAreaThumb className="flex bg-black relative border-2 rounded-md" />
+          </ScrollAreaScrollbar>
+        </ScrollArea>
       </DialogContent>
     </Dialog>
   );

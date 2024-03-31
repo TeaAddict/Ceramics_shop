@@ -1,11 +1,12 @@
 "use client";
 
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import OrderStatusBadge from "./OrderStatusBadge";
 import { sortTableBody } from "@/utils/orderFunctions/sortTableBody";
 import { useUpdateSearchParams } from "@/hooks/useUpdateSearchParams";
 import { addAscOrDesc } from "../../../utils/functions/addAscOrDesc";
 import {
+  ScrollArea,
+  ScrollAreaScrollbar,
   ScrollAreaThumb,
   ScrollAreaViewport,
 } from "@radix-ui/react-scroll-area";
@@ -52,7 +53,7 @@ const OrderTableDynamic = ({
 
   return (
     <ScrollArea className="pb-5" type="always">
-      <ScrollAreaViewport className="max-h-screen">
+      <ScrollAreaViewport className="max-h-[70vh] w-full h-full">
         <table className="text-left w-full text-sm">
           <thead className="uppercase">
             <tr className="border-b-4">
@@ -90,7 +91,12 @@ const OrderTableDynamic = ({
           </tbody>
         </table>
       </ScrollAreaViewport>
-      <ScrollBar orientation="horizontal" className="h-4" />
+      <ScrollAreaScrollbar orientation="vertical">
+        <ScrollAreaThumb className="border-2 rounded-md" />
+      </ScrollAreaScrollbar>
+      <ScrollAreaScrollbar orientation="horizontal">
+        <ScrollAreaThumb className="border-2 rounded-md" />
+      </ScrollAreaScrollbar>
     </ScrollArea>
   );
 };

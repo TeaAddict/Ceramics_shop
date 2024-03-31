@@ -30,7 +30,7 @@ const CheckBox = ({
       />
       <label
         htmlFor={label}
-        className="text-md leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+        className="text-md leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
       >
         {label}
       </label>

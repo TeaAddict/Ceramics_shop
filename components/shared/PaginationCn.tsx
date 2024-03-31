@@ -46,7 +46,7 @@ export function PaginationCn({
             className={
               currentPage > 1
                 ? "border-2 bg-background cursor-pointer"
-                : "cursor-default"
+                : "cursor-default hover:bg-transparent"
             }
             onClick={handlePrevious}
           />
@@ -54,20 +54,20 @@ export function PaginationCn({
 
         {currentPage > 2 && (
           <PaginationItem>
-            <PaginationEllipsis className="cursor-default hidden xs:flex" />
+            <PaginationEllipsis className="cursor-default hover:bg-transparent hidden xs:flex" />
           </PaginationItem>
         )}
 
         {currentPage > 1 && (
           <PaginationItem>
-            <PaginationLink className="cursor-default hidden xs:flex">
+            <PaginationLink className="cursor-default hover:bg-transparent hidden xs:flex">
               {currentPage - 1}
             </PaginationLink>
           </PaginationItem>
         )}
         <PaginationItem>
           <PaginationLink
-            className="hover:bg-background cursor-default hidden xs:flex"
+            className="cursor-default hover:bg-transparent hidden xs:flex"
             isActive
           >
             {currentPage}
@@ -76,7 +76,7 @@ export function PaginationCn({
 
         {lastPage > currentPage && (
           <PaginationItem>
-            <PaginationLink className="cursor-default hidden xs:flex">
+            <PaginationLink className="cursor-default hover:bg-transparent hidden xs:flex">
               {currentPage + 1}
             </PaginationLink>
           </PaginationItem>
@@ -84,7 +84,7 @@ export function PaginationCn({
 
         {lastPage > currentPage + 1 && (
           <PaginationItem>
-            <PaginationEllipsis className="cursor-default hidden xs:flex" />
+            <PaginationEllipsis className="cursor-default hover:bg-transparent hidden xs:flex" />
           </PaginationItem>
         )}
 
@@ -93,7 +93,7 @@ export function PaginationCn({
             className={
               lastPage > currentPage
                 ? "border-2 bg-background cursor-pointer"
-                : "cursor-default"
+                : "cursor-default hover:bg-transparent"
             }
             onClick={handleNext}
           />
