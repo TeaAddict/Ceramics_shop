@@ -24,16 +24,13 @@ const VerticalMenu = ({
     { name: paramName, value: current },
   ]);
 
-  const handleClick = useCallback(
-    (key: string) => {
-      setActive(key);
-      setLastParams([
-        { name: paramName, value: key },
-        { name: "page", value: "1" },
-      ]);
-    },
-    [setLastParams, paramName]
-  );
+  const handleClick = (key: string) => {
+    setActive(key);
+    setLastParams([
+      { name: paramName, value: key },
+      { name: "page", value: "1" },
+    ]);
+  };
 
   useEffect(() => {
     if (!menuList.find((val) => val.label === current)) {
