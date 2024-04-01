@@ -14,10 +14,10 @@ const DeleteItemButton = ({ id }: { id: string }) => {
     mutationFn: deleteItem,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["items"] });
-      toast.success("Successfully deleted item!");
+      toast.success(t("toast.successDelete"));
     },
     onError: () => {
-      toast.error("Problem deleting item");
+      toast.error(t("toast.errorDelete"));
     },
   });
 
@@ -25,7 +25,11 @@ const DeleteItemButton = ({ id }: { id: string }) => {
     mutation.mutate(id);
   }
   return (
-    <Button onClick={() => handleClick()} variant={"destructive"}>
+    <Button
+      onClick={() => handleClick()}
+      variant={"destructive"}
+      disabled={mutation.isPending}
+    >
       {t("delete")}
     </Button>
   );

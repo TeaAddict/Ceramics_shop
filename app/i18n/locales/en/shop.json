@@ -24,6 +24,15 @@
     "editItem": "Edit item"
   },
 
+  "toast": {
+    "successAdd": "Successfully added item!",
+    "errorAdd": "Problem adding item",
+    "successEdit": "Successfully updated item!",
+    "errorEdit": "Problem editing item",
+    "successDelete": "Successfully deleted item!",
+    "errorDelete": "Problem deleting item"
+  },
+
   "soldOut": "sold out",
   "delete": "Delete",
   "edit": "Edit",

@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { SetStateAction } from "react";
 import { UseFormReset, UseFormSetError } from "react-hook-form";
 import toast from "react-hot-toast";
+import useCurrentLanguage from "../useCurrentLanguage";
+import { useTranslation } from "@/app/i18n/client";
 
 type MyFormData = {
   title: string;
@@ -22,6 +24,8 @@ export function useEditItemMutation(
   setError: UseFormSetError<MyFormData>,
   setOpen: (value: SetStateAction<boolean>) => void
 ) {
+  const lng = useCurrentLanguage();
+  const { t } = useTranslation(lng, "shop");
   const router = useRouter();
   return useMutation({
     mutationFn: async (data: { data: FormData; id: string }) =>
@@ -29,7 +33,7 @@ export function useEditItemMutation(
     onSuccess: async (data) => {
       if (data.errors) {
         setFormError(setError, data.errors);
-        toast.error("Problem adding item");
+        toast.error(t("toast.errorEdit"));
         return false;
       }
       if (data.success) {
@@ -37,10 +41,10 @@ export function useEditItemMutation(
         setOpen(false);
         reset();
         await queryClient.invalidateQueries({ queryKey: ["items"] });
-        toast.success("Successfully added item!");
+        toast.success(t("toast.successEdit"));
         return true;
       }
-      toast.error("Problem adding item");
+      toast.error(t("toast.errorEdit"));
       return false;
     },
     onError: (e) => {

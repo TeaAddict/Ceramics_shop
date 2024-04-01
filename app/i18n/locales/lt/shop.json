@@ -24,6 +24,15 @@
     "editItem": "Redaguoti produkta"
   },
 
+  "toast": {
+    "successAdd": "Produktas sėkmingai pridėtas!",
+    "errorAdd": "Pridedant produktą kilo problema",
+    "successEdit": "Produktas sėkmingai atnaujintas!",
+    "errorEdit": "Problema redaguojant produktą",
+    "successDelete": "Produktas sėkmingai ištrintas!",
+    "errorDelete": "Problema ištrinant produktą"
+  },
+
   "soldOut": "Išparduota",
   "delete": "Ištrinti",
   "edit": "Redaguoti",
