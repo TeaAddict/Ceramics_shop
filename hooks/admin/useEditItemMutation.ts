@@ -37,10 +37,10 @@ export function useEditItemMutation(
         return false;
       }
       if (data.success) {
-        router.refresh();
         setOpen(false);
         reset();
         await queryClient.invalidateQueries({ queryKey: ["items"] });
+        router.refresh();
         toast.success(t("toast.successEdit"));
         return true;
       }
