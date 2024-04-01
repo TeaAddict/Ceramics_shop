@@ -4,16 +4,19 @@ import { deleteItem } from "@/utils/itemFunctions";
 import toast from "react-hot-toast";
 import { useTranslation } from "@/app/i18n/client";
 import useCurrentLanguage from "@/hooks/useCurrentLanguage";
+import { useRouter } from "next/navigation";
 
 const DeleteItemButton = ({ id }: { id: string }) => {
   const lng = useCurrentLanguage();
   const { t } = useTranslation(lng, "shop");
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   const mutation = useMutation({
     mutationFn: deleteItem,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["items"] });
+      router.refresh();
       toast.success(t("toast.successDelete"));
     },
     onError: () => {

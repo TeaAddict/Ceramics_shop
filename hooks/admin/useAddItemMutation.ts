@@ -38,9 +38,9 @@ export function useAddItemMutation(
       }
       if (data.success) {
         await queryClient.invalidateQueries({ queryKey: ["items"] });
-        router.refresh();
         setOpen(false);
         reset();
+        router.refresh();
         toast.success(t("toast.successAdd"));
       }
     },
