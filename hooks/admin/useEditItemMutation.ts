@@ -1,7 +1,6 @@
 import { setFormError } from "@/components/admin/ItemForm/setFormError";
 import { updateItem } from "@/utils/itemFunctions";
 import { QueryClient, useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
 import { SetStateAction } from "react";
 import { UseFormReset, UseFormSetError } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -26,7 +25,6 @@ export function useEditItemMutation(
 ) {
   const lng = useCurrentLanguage();
   const { t } = useTranslation(lng, "shop");
-  const router = useRouter();
   return useMutation({
     mutationFn: async (data: { data: FormData; id: string }) =>
       await updateItem(data),
@@ -39,8 +37,10 @@ export function useEditItemMutation(
       if (data.success) {
         setOpen(false);
         reset();
-        await queryClient.invalidateQueries({ queryKey: ["items"] });
-        router.refresh();
+        await queryClient.invalidateQueries({
+          queryKey: ["items"],
+          refetchType: "active",
+        });
         toast.success(t("toast.successEdit"));
         return true;
       }
