@@ -3,7 +3,7 @@
 import { useUpdateSearchParams } from "@/hooks/useUpdateSearchParams";
 import { capitalizeFirstLetter } from "@/utils/helper";
 import { useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const VerticalMenu = ({
   menuList,
