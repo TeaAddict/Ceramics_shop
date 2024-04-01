@@ -50,7 +50,11 @@ export function SelectCn({
       >
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent
+        ref={(ref) =>
+          ref?.addEventListener("touchend", (e) => e.preventDefault())
+        }
+      >
         <SelectGroup>
           <SelectLabel>{selectLabel}</SelectLabel>
           {selectOptions.map((option) => (
