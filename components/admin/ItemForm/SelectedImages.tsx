@@ -30,7 +30,8 @@ const SelectedImages = ({
 
   return (
     <ScrollArea
-      className={`flex justify-center h-64 ${
+      type="always"
+      className={`flex justify-center h-48 ${
         isLoading && "opacity-40 cursor-not-allowed"
       } `}
     >
