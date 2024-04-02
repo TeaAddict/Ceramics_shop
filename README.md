@@ -1,5 +1,5 @@
 ## Ceramics shop
-Ceramics-shop: I created this project as an online platform to enhance my programming skills while also showcasing and selling exquisite ceramic works. Built with Next.js, TypeScript, and Tailwind CSS, Prisma, PostgreSQL.
+Ceramics-shop: I created this project as an online platform to enhance my programming skills while also showcasing and selling exquisite ceramic works. Built with Next.js, TypeScript, Tailwind CSS, Prisma, PostgreSQL.
 
 Key Features:
 1. Home Page: Engage visitors with a hero section, a carousel showcasing featured ceramic works, and an informative Frequently Asked Questions section.
