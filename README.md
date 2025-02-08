@@ -1,14 +1,41 @@
-## Ceramics shop
-Ceramics-shop: I created this project as an online platform to enhance my programming skills while also showcasing and selling exquisite ceramic works. Built with Next.js, TypeScript, Tailwind CSS, Prisma, PostgreSQL.
+# Ceramics Shop
 
-Key Features:
-1. Home Page: Engage visitors with a hero section, a carousel showcasing featured ceramic works, and an informative Frequently Asked Questions section.
-2. Shop Page: Browse through a collection of ceramic pieces, with options to sort by price or date, filter by category, and easily navigate through pagination.
-3. Product Page: Explore individual products in detail, complete with a zoom-in image carousel and comprehensive descriptions. Users can conveniently add items to their cart with online purchasing enabled.
-4. Cart Page: Review selected items with detailed information, easily adjust quantities or remove products, and view a comprehensive summary of the entire cart.
-5. Additional Pages: Delve into further information about the brand, its products, and how to purchase through dedicated pages like Contacts and About.
-6. Translation Support: Seamlessly switch between English and Lithuanian translations to cater to a diverse audience.
-7. Admin Panel: Securely manage the website's backend with an intuitive admin dashboard. View and manage online orders, update product information, and adjust site settings with ease.
+**Ceramics Shop** is an online platform created to enhance my programming skills while showcasing and selling exquisite ceramic works. Built with **Next.js**, **TypeScript**, **Tailwind CSS**, **Prisma**, and **PostgreSQL**, this project combines modern web technologies with a passion for ceramics.
 
-link: https://ceramics-shop.vercel.app/  
-video (if you want to see admin page features): https://www.youtube.com/watch?v=Hjx8vgaFqB4
+## Key Features
+
+### Home Page
+- **Hero Section:** Captivates visitors with an engaging introduction.
+- **Featured Carousel:** Showcases selected ceramic works.
+- **FAQ Section:** Provides answers to frequently asked questions.
+
+### Shop Page
+- **Product Catalog:** Browse through a diverse collection of ceramic pieces.
+- **Sorting & Filtering:** Sort by price or date, and filter by category.
+- **Pagination:** Navigate easily through multiple pages of products.
+
+### Product Page
+- **Detailed View:** Explore individual products with a zoom-in image carousel and in-depth descriptions.
+- **Seamless Purchasing:** Add items to your cart and complete online purchases.
+
+### Cart Page
+- **Item Overview:** Review selected products with detailed information.
+- **Quantity Control:** Adjust quantities or remove items effortlessly.
+- **Cart Summary:** Get a comprehensive overview of your cart's contents.
+
+### Additional Pages
+- **Contacts & About:** Learn more about the brand, its products, and the purchasing process.
+- **Informative Guides:** Access dedicated pages for additional information.
+
+### Translation Support
+- **Multilingual:** Easily switch between English and Lithuanian to cater to a diverse audience.
+
+### Admin Panel
+- **Secure Dashboard:** Manage the website's backend efficiently.
+- **Order Management:** View and process online orders.
+- **Product Management:** Update product details and adjust site settings with ease.
+
+## Demo
+
+- **Live Site:** [Ceramics Shop](https://ceramics-shop.vercel.app/)
+- **Admin Panel Features Video:** [Watch on YouTube](https://www.youtube.com/watch?v=Hjx8vgaFqB4)
