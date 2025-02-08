@@ -10,3 +10,5 @@ Key Features:
 6. Translation Support: Seamlessly switch between English and Lithuanian translations to cater to a diverse audience.
 7. Admin Panel: Securely manage the website's backend with an intuitive admin dashboard. View and manage online orders, update product information, and adjust site settings with ease.
 
+link: https://ceramics-shop.vercel.app/
+video (if you want to see admin page features): https://www.youtube.com/watch?v=Hjx8vgaFqB4
